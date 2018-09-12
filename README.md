@@ -3,10 +3,9 @@
 
 #### Project_Structure
 ```
+
     // Used for autoloading / bootstrapping things
 ├── bootstrap.php
-│    // Cache used by Twig when compiling templates
-├── cache
 │    // Regular old autoloading composer.json file
 ├── composer.json
 ├── composer.lock
@@ -17,12 +16,28 @@
 │    // Where all the classes and fun stuff resides, the root for autoloading
 │    // as defined in composer.json
 ├── src
-│   ├── ExampleController.php
-│   └── interfaces
-│       └── IController.php
-│   // The views directory used by Twig
-└── views
-    └── index.twig
+│    // This is where you store your controllers 
+│   ├── controllers
+│   │   └── ExampleController.php
+│    // Database client
+│   ├── Database.php
+│    // Interfaces used for controlling how controllers/middleware look
+│   ├── interfaces
+│   │   ├── IController.php
+│   │   ├── IMiddleware.php
+│   │   └── IRouter.php
+│    // Middleware, basically a function that should run before letting these routes get used
+│   ├── middleware
+│   │   └── ExampleMiddleware.php
+│    // The class used for routing / handling middleware
+│   └── Router.php
+│    // where all the views reside (using Blade)
+├── views
+│   ├── 404.blade.php
+│   └── index.blade.php
+│    // example sql file which is currently used as an example
+└── voorbeeldsql.sql
+
 ```
 Command for re-generating the project structure (linux): `tree -I vendor`
 
@@ -31,7 +46,7 @@ Command for re-generating the project structure (linux): `tree -I vendor`
 Packages used in this project are
 ```
 phpdotenv
-    his is used to handle .env file contents
-twig
+    this is used to handle .env file contents
+blade
     this is used for 'rendering' a view
 ```
