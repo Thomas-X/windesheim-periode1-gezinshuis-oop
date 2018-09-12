@@ -29,7 +29,6 @@
 │   // The views directory used by Twig
 └── views
     └── index.twig
-
 ```
 Command for re-generating the project structure (linux): `tree -I vendor`
 
