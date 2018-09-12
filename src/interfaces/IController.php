@@ -2,6 +2,6 @@
 
 namespace TestApp\interfaces;
 
-interface Controller {
+interface IController {
     public function show();
 }

@@ -3,10 +3,10 @@
 
 namespace TestApp;
 
-use TestApp\interfaces\Controller;
+use TestApp\interfaces\IController;
 
 
-class Test implements Controller
+class ExampleController implements IController
 {
     public function show()
     {
