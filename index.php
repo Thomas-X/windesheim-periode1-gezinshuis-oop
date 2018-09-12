@@ -12,6 +12,7 @@ $exampleMiddlewareArray = [ExampleMiddleware::class];
 Router::post('/example', ExampleController::class);
 
 // Add routes here
+// TODO handle/research middleware because I think I might've implemented it wrong here
 Router::middleware($exampleMiddlewareArray, function () {
 
     Router::get('/', ExampleController::class);
