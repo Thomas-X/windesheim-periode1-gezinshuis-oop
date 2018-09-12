@@ -47,6 +47,6 @@ Packages used in this project are
 ```
 phpdotenv
     this is used to handle .env file contents
-twig
+blade
     this is used for 'rendering' a view
 ```
