@@ -1,13 +1,7 @@
 <h1 align="center">Project 1 gezinshuis</h1>
 <h3 align="center">Made by: Tuan, Mick, Romy Mae, Ricardo en Thomas</h3>
 
-#### Table of contents
-[Project structure]('#Project_Structure')
-<br/>
-[Packages used]('#Packages')
-
-
-<h5 id='Project_Structure'>Project structure</h5>
+#### Project_Structure
 ```
     // Used for autoloading / bootstrapping things
 ├── bootstrap.php
@@ -29,13 +23,15 @@
 │   // The views directory used by Twig
 └── views
     └── index.twig
-
 ```
 Command for re-generating the project structure (linux): `tree -I vendor`
 
-<h5 id='Packages'>Packages</h5>
-Packages used in this project are:
-* phpdotenv
-    * this is used to handle .env file contents
-* twig
-    * this is used for 'rendering' a view
+
+#### Packages
+Packages used in this project are
+```
+phpdotenv
+    his is used to handle .env file contents
+twig
+    this is used for 'rendering' a view
+```
