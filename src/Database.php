@@ -2,6 +2,9 @@
 
 namespace Qui;
 
+/*
+ * A wrapper around the PDO class, pulls DB data from .env for a connection.
+ * */
 class Database
 {
     public static $pdo;
@@ -29,11 +32,20 @@ class Database
         }
     }
 
+    /*
+     * A little short hand for a query statement.
+     * */
     public static function execute($sql, $values = [])
     {
         $results = [];
         $stmt = Database::$pdo->prepare($sql);
         $stmt->execute($values);
+        // If the query is a INSERT/UPDATE/DELETE type then ->fetch is undefined ofcourse
+        // Hence why were just returning the boolean here
+        if (gettype($stmt) == 'boolean') {
+            return $stmt;
+        }
+
         while ($row = $stmt->fetch()) {
             $results[] = $row;
         }

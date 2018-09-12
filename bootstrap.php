@@ -17,6 +17,7 @@ use Qui\Database;
 $dotenv = new Dotenv\Dotenv(__DIR__);
 $dotenv->load();
 
+// Initialize database connection
 Database::init();
 
 /*
@@ -28,7 +29,7 @@ function dd ($data) {
 }
 
 /*
- * Render a 'view' via Twig, the template engine used
+ * Render a 'view' via Blade, the template engine used
  * */
 function view($viewNameWithoutExtension, $data=[]) {
     $blade = new Blade('views', 'cache');

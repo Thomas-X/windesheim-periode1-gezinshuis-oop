@@ -4,11 +4,18 @@
 require 'bootstrap.php';
 
 use Qui\controllers\ExampleController;
+use Qui\middleware\ExampleMiddleware;
 use Qui\Router;
 
-// Add routes here
-Router::get('/', ExampleController::class);
+$exampleMiddlewareArray = [ExampleMiddleware::class];
+
 Router::post('/example', ExampleController::class);
 
-// Determine which routes should be used
+// Add routes here
+Router::middleware($exampleMiddlewareArray, function () {
+
+    Router::get('/', ExampleController::class);
+});
+
+// Determine which routes should be used (and which shouldn't depending on the outcome of middleware)
 Router::serve();
