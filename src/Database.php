@@ -2,6 +2,8 @@
 
 namespace Qui;
 
+use Illuminate\Database\Capsule\Manager as Capsule;
+
 /*
  * A wrapper around the PDO class, pulls DB data from .env for a connection.
  * */
@@ -12,6 +14,7 @@ class Database
     public static function init()
     {
         try {
+            // use PDO next to Eloquent
             $DB_CLIENT = $_ENV['DB_CLIENT'];
             $DB_HOST = $_ENV['DB_HOST'];
             $DB_NAME = $_ENV['DB_NAME'];
@@ -27,9 +30,35 @@ class Database
             }
 
             Database::$pdo = new \PDO($dsn, $DB_USERNAME, $DB_PASSWORD, [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
+
+            static::setupEloquent(compact('DB_CLIENT', 'DB_HOST', 'DB_NAME', 'DB_PORT', 'DB_USERNAME', 'DB_PASSWORD', 'DB_UNIX_SOCKET'));
         } catch (Exception $err) {
             dd($err);
         }
+    }
+
+    private static function setupEloquent($opts)
+    {
+        $capsule = new Capsule;
+
+        $capsule->addConnection([
+            'driver'    => $opts['DB_CLIENT'],
+            'host'      => $opts['DB_HOST'],
+            'database'  => $opts['DB_NAME'],
+            'username'  => $opts['DB_USERNAME'],
+            'password'  => $opts['DB_PASSWORD'],
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'unix_socket' => $opts['DB_UNIX_SOCKET'] ?? ''
+        ]);
+
+        // Make this Capsule instance available globally via static methods
+        $capsule->setAsGlobal();
+
+        // Setup the Eloquent ORM
+        $capsule->bootEloquent();
+
     }
 
     /*

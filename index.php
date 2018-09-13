@@ -9,14 +9,12 @@ use Qui\Router;
 
 $exampleMiddlewareArray = [ExampleMiddleware::class];
 
-Router::post('/example', ExampleController::class);
-
 // Add routes here
-// TODO handle/research middleware because I think I might've implemented it wrong here
-Router::middleware($exampleMiddlewareArray, function () {
+Router::middleware($exampleMiddlewareArray, [
+    [Router::GET, '/something', ExampleController::class],
+]);
 
-    Router::get('/', ExampleController::class);
-});
+Router::get('/', ExampleController::class);
 
-// Determine which routes should be used (and which shouldn't depending on the outcome of middleware)
+// Determine which routes should be used
 Router::serve();

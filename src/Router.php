@@ -14,6 +14,8 @@ use Qui\interfaces\IRouter;
  * */
 class Router implements IRouter {
     private static $routes = [];
+    public const GET = 'GET';
+    public const POST = 'POST';
 
     private static function return404 () {
         http_response_code(404);
@@ -21,48 +23,79 @@ class Router implements IRouter {
     }
 
     public static function serve(): void {
-        $rendered = false;
+        $routeMatches = false;
         foreach (Router::$routes as $route) {
-            $path = $_SERVER['REQUEST_URI'];
-            $httpRequestType = $_SERVER['REQUEST_METHOD'];
+            $routeMatches = Router::determineIfRouteMatches($route);
 
-            if ($path == $route['path']) {
-                // TODO add middleware?
-                $controllerInstance = new $route['controller'];
-
-                switch ($httpRequestType) {
-                    case 'GET':
-                        echo $controllerInstance->get();
-                        $rendered = true;
-                        return;
-                    case 'POST':
-                        echo $controllerInstance->post();
-                        $rendered = true;
-                        return;
-                }
+            if ($routeMatches) {
+                Router::runController($route['controller']);
             }
         }
         // If we're here, we've 404'ed because otherwise we would've returned.
-        if (!$rendered) {
+        if (!$routeMatches) {
             Router::return404();
         }
-
     }
 
-    public static function middleware($middlewares=[], $funcToAddRoutes): void
+    /*
+     * First check if path matches, then if yes, run middleware, then if middleware passes, add it to the routes array to be served
+     * If the middleware returns false then it's never added to the array of routes to serve, if the user is on said route and the middleware
+     * fails, we return a 401 unauthorized page
+     * */
+    public static function middleware($middlewares=[], array $routes): void
     {
+        $routeMatches = false;
+        foreach ($routes as $route) {
+            $routeMatches = Router::determineIfRouteMatches(['path' => $route[1]]);
+        }
+        if (!$routeMatches) {
+            return;
+        }
+
         foreach ($middlewares as $middleware) {
             $middlewareInstance = new $middleware();
             $pass = $middlewareInstance->next();
             if ($pass) {
+                // for every route given in array add it to the routes array (to serve up, since the middleware passed)
+                foreach ($routes as $route) {
+                    switch ($route[0]) {
+                        case static::GET:
+                            Router::get($route[1], $route[2]);
+                            break;
+                        case static::POST:
+                            Router::post($route[1], $route[2]);
+                            break;
+                    }
+                }
                 // I know it's verbose to say continue here, but I find it more readable
-                $funcToAddRoutes();
                 continue;
             } else if (!$pass) {
                 // If middleware fails, then return 401 and exit to avoid request bubbling up to the 404 page
                 header("HTTP/1.0 401 Unauthorized");
                 exit;
             }
+        }
+    }
+
+    private static function determineIfRouteMatches ($route) {
+        $path = $_SERVER['REQUEST_URI'];
+        if ($path == $route['path']) {
+            return true;
+        }
+        return false;
+    }
+
+    private static function runController ($controllerNameSpaced) {
+        $controllerInstance = new $controllerNameSpaced;
+        $httpRequestType = $_SERVER['REQUEST_METHOD'];
+
+        switch ($httpRequestType) {
+            case 'GET':
+                echo $controllerInstance->get();
+                return true;
+            case 'POST':
+                echo $controllerInstance->post();
+                return true;
         }
     }
 

@@ -12,5 +12,5 @@ namespace Qui\interfaces;
 interface IRouter
 {
     public static function serve () : void;
-    public static function middleware ($middlewares, $funcToAddRoutes) : void;
+    public static function middleware (array $middlewares, array $routes) : void;
 }

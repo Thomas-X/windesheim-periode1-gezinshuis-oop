@@ -4,6 +4,8 @@ require 'vendor/autoload.php';
 
 use Jenssegers\Blade\Blade;
 use Qui\Database;
+use Illuminate\Database\Capsule\Manager as DB;
+
 /*
  * Logic for using the phpdotenv package.
  * All constants declared in .env are stored in a superglobal called $_ENV
