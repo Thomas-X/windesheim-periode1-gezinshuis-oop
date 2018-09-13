@@ -51,5 +51,5 @@ blade
     this is used for 'rendering' a view
 illuminate/database
     this is used for query building with Eloquents query builder (not used for modelling, just the query builder)
-    see (docs)[https://laravel.com/docs/5.7/queries]
+    see https://laravel.com/docs/5.7/queries
 ```
