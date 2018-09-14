@@ -61,7 +61,7 @@ class Router implements IRouter
         foreach ($middlewares as $middleware) {
             $value = explode('@', $middleware);
             $middlewareName = $value[0];
-            $middlewareMethod = $value[1];
+            $middlewareMethod = $value[1] ?? 'next';
             $middlewareNameSpaced = "Qui" . '\\' . 'middleware' . '\\' . $middlewareName;
             $middlewareInstance = new $middlewareNameSpaced;
 
@@ -101,7 +101,8 @@ class Router implements IRouter
     {
         $value = explode('@', $controllerNameSpaced);
         $controllerName = $value[0];
-        $controllerMethod = $value[1];
+        $controllerMethod = $value[1] ?? 'show';
+
         $controllerNameSpaced = "Qui" . '\\' . 'controllers' . '\\' . $controllerName;
         $controllerInstance = new $controllerNameSpaced;
 //        $httpRequestType = $_SERVER['REQUEST_METHOD'];
