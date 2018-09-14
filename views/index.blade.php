@@ -11,7 +11,7 @@
 <h1>User names stored in DB</h1>
 <ul>
     @foreach ($users as $user)
-        {{ $user['username'] }}
+        {{ $user->username }}
     @endforeach
 </ul>
 </body>

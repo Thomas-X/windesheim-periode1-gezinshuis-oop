@@ -3,18 +3,16 @@
 // Used for autoloading
 require 'bootstrap.php';
 
-use Qui\controllers\ExampleController;
-use Qui\middleware\ExampleMiddleware;
 use Qui\Router;
 
-$exampleMiddlewareArray = [ExampleMiddleware::class];
+$exampleMiddlewareArray = ['ExampleMiddleware@next'];
 
 // Add routes here
 Router::middleware($exampleMiddlewareArray, [
-    [Router::GET, '/something', ExampleController::class],
+    [Router::GET, '/something', 'ExampleController@showSomething'],
 ]);
 
-Router::get('/', ExampleController::class);
+Router::get('/', 'ExampleController@showHome');
 
 // Determine which routes should be used
 Router::serve();

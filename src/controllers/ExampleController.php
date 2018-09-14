@@ -17,26 +17,19 @@ use Qui\interfaces\IController;
 
 class ExampleController implements IController
 {
-    public function get()
+
+    public function showHome()
     {
-        // example
-        $id = "1";
-        $sql = "SELECT username FROM user WHERE id=?";
-        $users = Database::execute($sql, [$id]);
-
-        // example with Eloquent query builder (if that's preferred)
-        // for full documentation read Laravel's documentation on it:
-        // https://laravel.com/docs/5.7/queries#introduction
-        $result = Manager::table('user')
-            ->where('id', '>=', $id)
-            ->get();
-
-        dd($result);
-
+        $users = Manager::table('user')->get();
         return view('index', compact('users'));
     }
 
-    public function post()
+    public function showSomething()
+    {
+        return 'hello';
+    }
+
+    public static function post()
     {
         return json_encode([
             'message' => 'hello world'

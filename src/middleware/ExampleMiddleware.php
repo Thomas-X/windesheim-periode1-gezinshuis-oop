@@ -23,6 +23,6 @@ use Qui\interfaces\IMiddleware;
 class ExampleMiddleware implements IMiddleware
 {
     public function next(): bool {
-        return false;
+        return true;
     }
 }
