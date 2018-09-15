@@ -10,8 +10,13 @@
 <body>
 <h1>User names stored in DB</h1>
 <ul>
+    <form method="post" action="/bla">
+        <input type="email" name="email" id="email">
+        <input type="submit" value="enter">
+        {{-- add CSRF protection https://stackoverflow.com/a/31683058 --}}
+    </form>
     @foreach ($users as $user)
-        {{ $user->username }}
+        <li>{{ $user->username }}</li>
     @endforeach
 </ul>
 </body>
