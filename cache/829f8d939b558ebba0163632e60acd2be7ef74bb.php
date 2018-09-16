@@ -11,12 +11,12 @@
 
     <link href="css/app.css" rel="stylesheet"/>
 
-    <title>Gezinshuis - @yield('title')</title>
+    <title>Gezinshuis - <?php echo $__env->yieldContent('title'); ?></title>
 </head>
 <body>
 
 <div>
-    @yield('content')
+    <?php echo $__env->yieldContent('content'); ?>
 </div>
 
 </body>

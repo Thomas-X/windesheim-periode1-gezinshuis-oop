@@ -13,7 +13,7 @@ class View
 {
     public function render($viewNameWithoutExtension, $data = [])
     {
-        $blade = new Blade('views', 'cache');
+        $blade = new Blade(__DIR__ . '/../../views', __DIR__ . '/../../cache');
         return $blade->make($viewNameWithoutExtension, $data);
     }
 }

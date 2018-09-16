@@ -24,11 +24,11 @@ class ExampleController implements IController
 
     public function showHome(Request $req, Response $res)
     {
-//        $users = DB::table('user')->get();
-//        return View::render('index', compact('users'));
-
-        $validation = Validator::isEmail(8789)->isString(22)->validate();
-        return $res->json(compact('validation'));
+        $users = DB::table('user')->get();
+        return View::render('index', compact('users'));
+//
+//        $validation = Validator::isEmail(8789)->isString(22)->validate();
+//        return $res->json(compact('validation'));
     }
 
     public function showSomething()

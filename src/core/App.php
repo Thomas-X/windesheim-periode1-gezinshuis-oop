@@ -50,4 +50,14 @@ class App
 
         return static::$registry[$key];
     }
+
+    public static function setupRoutes()
+    {
+        require  __DIR__ . '/../../routes/web.php';
+    }
+
+    public static function run()
+    {
+        static::$registry['router']->serve();
+    }
 }
