@@ -2,8 +2,13 @@
 
 namespace Qui\controllers;
 
-use Illuminate\Database\Capsule\Manager;
-use Qui\Database;
+use Qui\core\App;
+use Qui\core\facades\DB;
+use Qui\core\facades\Util;
+use Qui\core\facades\Validator;
+use Qui\core\facades\View;
+use Qui\core\Request;
+use Qui\core\Response;
 use Qui\interfaces\IController;
 
 /*
@@ -14,14 +19,16 @@ use Qui\interfaces\IController;
  * See index.php for the exact usage of using a controller for a view
  *
  * */
-
 class ExampleController implements IController
 {
 
-    public function showHome()
+    public function showHome(Request $req, Response $res)
     {
-        $users = Manager::table('user')->get();
-        return view('index', compact('users'));
+//        $users = DB::table('user')->get();
+//        return View::render('index', compact('users'));
+
+        $validation = Validator::isEmail(8789)->isString(22)->validate();
+        return $res->json(compact('validation'));
     }
 
     public function showSomething()
@@ -29,12 +36,4 @@ class ExampleController implements IController
         return 'hello';
     }
 
-    public static function post()
-    {
-        return json_encode([
-            'message' => 'hello world'
-        ]);
-
-        // TODO: Implement post() method.
-    }
 }

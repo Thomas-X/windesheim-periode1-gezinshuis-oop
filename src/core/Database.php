@@ -1,6 +1,6 @@
 <?php
 
-namespace Qui;
+namespace Qui\core;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 
@@ -9,12 +9,12 @@ use Illuminate\Database\Capsule\Manager as Capsule;
  * */
 class Database
 {
-    public static $pdo;
+    public $pdo;
+    public $eloquent;
 
-    public static function init()
+    public function __construct()
     {
         try {
-            // use PDO next to Eloquent
             $DB_CLIENT = $_ENV['DB_CLIENT'];
             $DB_HOST = $_ENV['DB_HOST'];
             $DB_NAME = $_ENV['DB_NAME'];
@@ -22,22 +22,26 @@ class Database
             $DB_USERNAME = $_ENV['DB_USERNAME'];
             $DB_PASSWORD = $_ENV['DB_PASSWORD'];
             $DB_UNIX_SOCKET = $_ENV['DB_UNIX_SOCKET'];
-
-            $dsn = "{$DB_CLIENT}:host={$DB_HOST};dbname={$DB_NAME};port={$DB_PORT}";
-
-            if ($DB_UNIX_SOCKET) {
-                $dsn = "{$DB_CLIENT}:unix_socket={$DB_UNIX_SOCKET};dbname={$DB_NAME}";
-            }
-
-            Database::$pdo = new \PDO($dsn, $DB_USERNAME, $DB_PASSWORD, [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
-
-            static::setupEloquent(compact('DB_CLIENT', 'DB_HOST', 'DB_NAME', 'DB_PORT', 'DB_USERNAME', 'DB_PASSWORD', 'DB_UNIX_SOCKET'));
+            $opts = compact('DB_CLIENT', 'DB_HOST', 'DB_NAME', 'DB_PORT', 'DB_USERNAME', 'DB_PASSWORD', 'DB_UNIX_SOCKET');
+            $this->setupPDO($opts);
+            $this->setupEloquent($opts);
         } catch (Exception $err) {
             dd($err);
         }
     }
 
-    private static function setupEloquent($opts)
+    private function setupPDO($opts) {
+
+        $dsn = "{$opts['DB_CLIENT']}:host={$opts['DB_HOST']};dbname={$opts['DB_NAME']};port={$opts['DB_PORT']}";
+
+        if ($opts['DB_UNIX_SOCKET']) {
+            $dsn = "{$opts['DB_CLIENT']}:unix_socket={$opts['DB_UNIX_SOCKET']};dbname={$opts['DB_NAME']}";
+        }
+
+        $this->pdo = new \PDO($dsn, $opts['DB_USERNAME'], $opts['DB_PASSWORD'], [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
+    }
+
+    private function setupEloquent($opts)
     {
         $capsule = new Capsule;
 
@@ -59,15 +63,16 @@ class Database
         // Setup the Eloquent ORM
         $capsule->bootEloquent();
 
+        $this->eloquent = $capsule;
     }
 
     /*
      * A little short hand for a query statement.
      * */
-    public static function execute($sql, $values = [])
+    public function execute($sql, $values = [])
     {
         $results = [];
-        $stmt = Database::$pdo->prepare($sql);
+        $stmt = $this->pdo->prepare($sql);
         $stmt->execute($values);
         // If the query is a INSERT/UPDATE/DELETE type then ->fetch is undefined ofcourse
         // Hence why were just returning the boolean here

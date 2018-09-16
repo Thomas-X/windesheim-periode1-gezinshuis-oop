@@ -2,6 +2,9 @@
 
 namespace Qui\middleware;
 
+use Qui\core\Request;
+use Qui\core\Response;
+use Qui\core\Util;
 use Qui\interfaces\IMiddleware;
 
 /**
@@ -20,9 +23,13 @@ use Qui\interfaces\IMiddleware;
  * if true:
  *      just keep on truckin' on (adding the routes to the routes array to be served)
  * */
-class ExampleMiddleware implements IMiddleware
+class ExampleMiddleware
 {
-    public function next(): bool {
+    public function continue(Request $req, Response $res): bool {
+        if (!$req->secure) {
+            $res->redirect('/');
+            return false;
+        }
         return true;
     }
 }

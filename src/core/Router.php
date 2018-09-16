@@ -1,9 +1,13 @@
 <?php
 
-namespace Qui;
+namespace Qui\core;
 
-use Qui\controllers\ExampleController;
 use Qui\interfaces\IRouter;
+use Qui\core\facades\View;
+use Qui\core\App;
+use Qui\core\Request;
+use Qui\core\Response;
+
 
 /* A simple 'router'
  * Iterate over routes when serve() is called and depending if the path/requestType matches the route show the correct controller/method.
@@ -16,30 +20,28 @@ use Qui\interfaces\IRouter;
 
 class Router implements IRouter
 {
-    private static $routes = [];
-    public const GET = 'GET';
-    public const POST = 'POST';
+    private $routes = [];
 
-    private static function return404()
+    private function return404()
     {
         http_response_code(404);
-        echo view('404');
+        echo View::render('404');
     }
 
-    public static function serve(): void
+    public function serve(): void
     {
         $routeMatches = false;
-        foreach (Router::$routes as $route) {
-            $routeMatches = Router::determineIfRouteMatches($route);
+        foreach ($this->routes as $route) {
+            $routeMatches = $this->determineIfRouteMatches($route);
 
             if ($routeMatches) {
-                Router::runController($route['controller']);
+                $this->runController($route['controller']);
                 break;
             }
         }
         // If we're here, we've 404'ed because otherwise we would've returned.
         if (!$routeMatches) {
-            Router::return404();
+            $this->return404();
         }
     }
 
@@ -48,11 +50,11 @@ class Router implements IRouter
      * If the middleware returns false then it's never added to the array of routes to serve, if the user is on said route and the middleware
      * fails, we return a 401 unauthorized page
      * */
-    public static function middleware($middlewares = [], array $routes): void
+    public function middleware($middlewares = [], array $routes): void
     {
         $routeMatches = false;
         foreach ($routes as $route) {
-            $routeMatches = Router::determineIfRouteMatches(['path' => $route[1]]);
+            $routeMatches = $this->determineIfRouteMatches(['path' => $route[1]]);
         }
         if (!$routeMatches) {
             return;
@@ -65,16 +67,18 @@ class Router implements IRouter
             $middlewareNameSpaced = "Qui" . '\\' . 'middleware' . '\\' . $middlewareName;
             $middlewareInstance = new $middlewareNameSpaced;
 
-            $pass = $middlewareInstance->$middlewareMethod();
+            $req = new Request();
+            $res = new Response();
+            $pass = $middlewareInstance->$middlewareMethod($req, $res);
             if ($pass) {
                 // for every route given in array add it to the routes array (to serve up, since the middleware passed)
                 foreach ($routes as $route) {
                     switch ($route[0]) {
-                        case Router::GET:
-                            Router::get($route[1], $route[2]);
+                        case App::GET:
+                            $this->get($route[1], $route[2]);
                             break;
-                        case Router::POST:
-                            Router::post($route[1], $route[2]);
+                        case App::POST:
+                            $this->post($route[1], $route[2]);
                             break;
                     }
                 }
@@ -88,7 +92,7 @@ class Router implements IRouter
         }
     }
 
-    private static function determineIfRouteMatches($route)
+    private function determineIfRouteMatches($route)
     {
         $path = $_SERVER['REQUEST_URI'];
         if ($path == $route['path']) {
@@ -97,7 +101,7 @@ class Router implements IRouter
         return false;
     }
 
-    private static function runController($controllerNameSpaced)
+    private function runController($controllerNameSpaced)
     {
         $value = explode('@', $controllerNameSpaced);
         $controllerName = $value[0];
@@ -105,38 +109,28 @@ class Router implements IRouter
 
         $controllerNameSpaced = "Qui" . '\\' . 'controllers' . '\\' . $controllerName;
         $controllerInstance = new $controllerNameSpaced;
-//        $httpRequestType = $_SERVER['REQUEST_METHOD'];
-
-        echo $controllerInstance->$controllerMethod();
+        $req = new Request();
+        $res = new Response();
+        echo $controllerInstance->$controllerMethod($req, $res);
         return true;
 
-//        switch ($httpRequestType) {
-//            case Router::GET:
-//                echo $controllerInstance->get();
-//                return true;
-//            case Router::POST:
-//                echo $controllerInstance->post();
-//                return true;
-//        }
     }
 
-    public static function get($path, $controller)
+    public function get($path, $controller)
     {
-        Router::$routes[] = [
+        $this->routes[] = [
             'path' => $path,
             'controller' => $controller,
-            'httpRequestType' => Router::GET
+            'httpRequestType' => App::GET
         ];
     }
 
-    public static function post($path, $controller)
+    public function post($path, $controller)
     {
-        Router::$routes[] = [
+        $this->routes[] = [
             'path' => $path,
             'controller' => $controller,
-            'httpRequestType' => Router::POST
+            'httpRequestType' => App::POST
         ];
     }
-
-
 }
