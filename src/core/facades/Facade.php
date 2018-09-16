@@ -22,10 +22,21 @@ use Qui\core\App;
  * tl;dr: when Route::get gets called, the magic method __callStatic is called because it's undefined, then we pass the instance that's in the App and use the method of that
  * this is actually pretty cool.
  * */
+
+/**
+ * Class Facade
+ * @package Qui\core\facades
+ */
 class Facade
 {
     protected static $resolvedInstance;
 
+    /**
+     * @param $method
+     * @param $args
+     * @return mixed
+     * @throws \Exception
+     */
     public static function __callStatic($method, $args)
     {
         $instance = static::getFacadeRoot();
@@ -35,11 +46,20 @@ class Facade
         return $instance->$method(...$args);
     }
 
+    /**
+     * @return mixed|\Qui\core\BoundMethodWrapper
+     * @throws \Exception
+     */
     public static function getFacadeRoot()
     {
         return static::resolveFacadeInstance(static::getFacadeAccessor());
     }
 
+    /**
+     * @param $name
+     * @return mixed|\Qui\core\BoundMethodWrapper
+     * @throws \Exception
+     */
     protected static function resolveFacadeInstance($name)
     {
         if (is_object($name)) {

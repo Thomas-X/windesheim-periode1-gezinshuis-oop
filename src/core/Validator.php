@@ -20,11 +20,23 @@ namespace Qui\core;
 
  * */
 
+/*
+ * the specific methods don't need much explaining, the naming should speak for how the method works, e.g isEmail()
+ * */
+
+/**
+ * Class Validator
+ * @package Qui\core
+ */
 class Validator
 {
     private $validators = [];
     private const EMAIL_REGEX = '/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/';
 
+    /**
+     * @param $value
+     * @param $message
+     */
     private function addValidator($value, $message)
     {
         $this->validators[] = [
@@ -33,6 +45,13 @@ class Validator
         ];
     }
 
+    /**
+     * @param $val
+     * @param $type
+     * @param array $messages
+     * @param bool $isNot
+     * @return $this
+     */
     private function typeValidator($val, $type, array $messages, $isNot=false)
     {
         if (gettype($val) == $type) {
@@ -47,6 +66,10 @@ class Validator
         return $this;
     }
 
+    /**
+     * @param $val
+     * @param array $messages
+     */
     private function nonTypeValidator($val, array $messages)
     {
 
@@ -58,6 +81,10 @@ class Validator
         }
     }
 
+    /**
+     * @param $field
+     * @return array
+     */
     private function message($field)
     {
         return [
@@ -67,26 +94,53 @@ class Validator
     }
 
     // Chainable type/regex checkers
+
+    /**
+     * @param $string
+     * @param string $field
+     * @return Validator
+     */
     public function isString($string, $field='isString')
     {
         return $this->typeValidator($string, 'string', $this->message($field));
     }
 
+    /**
+     * @param $int
+     * @param string $field
+     * @return Validator
+     */
     public function isInt($int, $field='isInt')
     {
         return $this->typeValidator($int, 'integer', $this->message($field));
     }
 
+    /**
+     * @param $float
+     * @param string $field
+     * @return Validator
+     */
     public function isFloat($float, $field='isFloat')
     {
         return $this->typeValidator($float, 'double', $this->message($field));
     }
 
+    /**
+     * @param $value
+     * @param string $field
+     * @return Validator
+     */
     public function isNotNull($value, $field='isNotNull')
     {
         return $this->typeValidator($value, 'NULL', $this->message($field));
     }
 
+    /**
+     * @param $value
+     * @param $len
+     * @param string $field
+     * @return $this
+     */
     public function isLen($value, $len, $field='isLen')
     {
         if (gettype($value) == 'string') {
@@ -107,6 +161,11 @@ class Validator
         return $this;
     }
 
+    /**
+     * @param string $value
+     * @param string $field
+     * @return $this
+     */
     public function isAlphaNumeric(string $value, $field='isAlphaNumeric')
     {
         if (ctype_alnum($value)) {
@@ -117,6 +176,11 @@ class Validator
         return $this;
     }
 
+    /**
+     * @param $value
+     * @param string $field
+     * @return $this
+     */
     public function isEmail($value, $field='isEmail')
     {
         $result = preg_match_all(Validator::EMAIL_REGEX, $value);
@@ -129,7 +193,11 @@ class Validator
     }
 
     // End of chain
-    public function validate()
+
+    /**
+     * @return array
+     */
+    public function validate(): array
     {
         $messages = [];
         foreach ($this->validators as $validator) {

@@ -9,25 +9,32 @@ use Qui\core\Request;
 use Qui\core\Response;
 
 
-/* A simple 'router'
- * Iterate over routes when serve() is called and depending if the path/requestType matches the route show the correct controller/method.
- * Since the value of controller is namespaced, make an instance of said controller and call the get() / post() function on it.
- * This can be done since every controller must implement the IController interface
+/*
+ * A simple 'router'
+ * Uses middleware to check if certain routes should be added to the routes array or not (so they can be served if they're in the routes array)
  *
- * The middleware is nothing more than a method getting called and having to return true or false if it meets the test
- * given by the middleware.
  * */
 
+/**
+ * Class Router
+ * @package Qui\core
+ */
 class Router implements IRouter
 {
     private $routes = [];
 
+    /*
+     * Returns the 404 page if no path can be matched
+     * */
     private function return404()
     {
         http_response_code(404);
         echo View::render('404');
     }
 
+    /*
+     * Loops through the routes array and checks if a route matches, if yes, it runs the controller associated with the matched route
+     * */
     public function serve(): void
     {
         $routeMatches = false;
@@ -50,6 +57,10 @@ class Router implements IRouter
      * If the middleware returns false then it's never added to the array of routes to serve, if the user is on said route and the middleware
      * fails, we return a 401 unauthorized page
      * */
+    /**
+     * @param array $middlewares
+     * @param array $routes
+     */
     public function middleware($middlewares = [], array $routes): void
     {
         $routeMatches = false;
@@ -92,6 +103,13 @@ class Router implements IRouter
         }
     }
 
+    /*
+     * checks the path and checks if it corresponds with the requested path
+     * */
+    /**
+     * @param $route
+     * @return bool
+     */
     private function determineIfRouteMatches($route)
     {
         $path = $_SERVER['REQUEST_URI'];
@@ -101,6 +119,13 @@ class Router implements IRouter
         return false;
     }
 
+    /*
+     * explodes the 'ExampleController@showHome' string and defaults to 'show' if no method was given
+     * checks the project root \ controllers for the controller name given
+     * */
+    /**
+     * @param $controllerNameSpaced
+     */
     private function runController($controllerNameSpaced)
     {
         $value = explode('@', $controllerNameSpaced);
@@ -112,10 +137,15 @@ class Router implements IRouter
         $req = new Request();
         $res = new Response();
         echo $controllerInstance->$controllerMethod($req, $res);
-        return true;
-
     }
 
+    /*
+     * adds a GET route to the routes array, binding the path and controller to an assoc array
+     * */
+    /**
+     * @param $path
+     * @param $controller
+     */
     public function get($path, $controller)
     {
         $this->routes[] = [
@@ -125,6 +155,13 @@ class Router implements IRouter
         ];
     }
 
+    /*
+     * adds a POST route to the routes array, binding the path and controller to an assoc array
+     * */
+    /**
+     * @param $path
+     * @param $controller
+     */
     public function post($path, $controller)
     {
         $this->routes[] = [

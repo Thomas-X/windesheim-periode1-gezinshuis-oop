@@ -8,8 +8,15 @@
 
 namespace Qui\core\facades;
 
+/**
+ * Class DB
+ * @package Qui\core\facades
+ */
 class DB extends Facade
 {
+    /**
+     * @return string
+     */
     protected static function getFacadeAccessor()
     {
         return 'database';

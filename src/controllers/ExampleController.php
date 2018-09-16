@@ -19,9 +19,19 @@ use Qui\interfaces\IController;
  * See index.php for the exact usage of using a controller for a view
  *
  * */
+
+/**
+ * Class ExampleController
+ * @package Qui\controllers
+ */
 class ExampleController implements IController
 {
 
+    /**
+     * @param Request $req
+     * @param Response $res
+     * @return mixed
+     */
     public function showHome(Request $req, Response $res)
     {
         $users = DB::table('user')->get();
@@ -31,6 +41,9 @@ class ExampleController implements IController
 //        return $res->json(compact('validation'));
     }
 
+    /**
+     * @return string
+     */
     public function showSomething()
     {
         return 'hello';

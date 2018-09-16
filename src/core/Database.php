@@ -6,7 +6,13 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 /*
  * A wrapper around the PDO class, pulls DB data from .env for a connection.
+ * Also exposes an eloquent query builder instance, which is the adapter the DB facade uses
  * */
+
+/**
+ * Class Database
+ * @package Qui\core
+ */
 class Database
 {
     public $pdo;
@@ -31,6 +37,9 @@ class Database
         }
     }
 
+    /**
+     * @param $opts
+     */
     private function setupPDO($opts) {
 
         $dsn = "{$opts['DB_CLIENT']}:host={$opts['DB_HOST']};dbname={$opts['DB_NAME']};port={$opts['DB_PORT']}";
@@ -42,6 +51,9 @@ class Database
         $this->pdo = new \PDO($dsn, $opts['DB_USERNAME'], $opts['DB_PASSWORD'], [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
     }
 
+    /**
+     * @param $opts
+     */
     private function setupEloquent($opts)
     {
         $capsule = new Capsule;
@@ -70,6 +82,11 @@ class Database
     /*
      * A little short hand for a query statement.
      * */
+    /**
+     * @param $sql
+     * @param array $values
+     * @return array
+     */
     public function execute($sql, $values = [])
     {
         $results = [];

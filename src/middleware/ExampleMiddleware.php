@@ -15,9 +15,9 @@ use Qui\interfaces\IMiddleware;
  */
 
 /*
- * This is an example middleware, middleware should always implement IMiddleware
- * The next method gets called and depending on the outcome different things happen.
- *
+ * This is an example middleware
+ * The method thats defined in web.php gets called and depending on the outcome different things happen.
+ * The default method for getting called is next()
  * if false:
  *      stop request and respond with a 401 unauthorized
  * if true:
@@ -25,6 +25,11 @@ use Qui\interfaces\IMiddleware;
  * */
 class ExampleMiddleware
 {
+    /**
+     * @param Request $req
+     * @param Response $res
+     * @return bool
+     */
     public function continue(Request $req, Response $res): bool {
         if (!$req->secure) {
             $res->redirect('/');

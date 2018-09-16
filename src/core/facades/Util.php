@@ -9,8 +9,15 @@
 namespace Qui\core\facades;
 
 
+/**
+ * Class Util
+ * @package Qui\core\facades
+ */
 class Util extends Facade
 {
+    /**
+     * @return string
+     */
     protected static function getFacadeAccessor()
     {
         return 'util';

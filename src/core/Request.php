@@ -13,6 +13,10 @@ namespace Qui\core;
  * is easier manageable / testable, nothing special going on here
  * */
 
+/**
+ * Class Request
+ * @package Qui\core
+ */
 class Request
 {
     public $params;

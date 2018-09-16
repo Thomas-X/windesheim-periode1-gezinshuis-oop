@@ -9,8 +9,15 @@
 namespace Qui\core\facades;
 
 
+/**
+ * Class View
+ * @package Qui\core\facades
+ */
 class View extends Facade
 {
+    /**
+     * @return string
+     */
     protected function getFacadeAccessor()
     {
         return 'view';

@@ -9,7 +9,14 @@
 namespace Qui\interfaces;
 
 
+/**
+ * Interface IMiddleware
+ * @package Qui\interfaces
+ */
 interface IMiddleware
 {
+    /**
+     * @return bool
+     */
     public function next() : bool;
 }

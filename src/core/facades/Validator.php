@@ -9,8 +9,15 @@
 namespace Qui\core\facades;
 
 
+/**
+ * Class Validator
+ * @package Qui\core\facades
+ */
 class Validator extends Facade
 {
+    /**
+     * @return string
+     */
     protected static function getFacadeAccessor()
     {
         return 'validator';

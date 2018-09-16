@@ -9,12 +9,20 @@
 namespace Qui\core;
 
 
+/**
+ * Class Util
+ * @package Qui\core
+ */
 class Util
 {
 
     /*
      * Simple dump and die function, idea stolen from laravel :)
      * */
+    /**
+     * @param $value
+     * @param null $extraValues
+     */
     public function dd($value, $extraValues=null)
     {
         $args = func_get_args();

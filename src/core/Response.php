@@ -8,7 +8,14 @@
 
 namespace Qui\core;
 
+/*
+ * A class that contains certain methods for ease of use, redirecting, returning json and the likes
+ * */
 
+/**
+ * Class Response
+ * @package Qui\core
+ */
 class Response
 {
 
@@ -18,11 +25,20 @@ class Response
     }
 
 
+    /**
+     * @param $object
+     * @return false|string
+     */
     public function json($object)
     {
         return json_encode($object);
     }
 
+    /**
+     * @param $path
+     * @param int $code
+     * @param bool $permanent
+     */
     public function redirect($path, $code = 302, $permanent=false)
     {
         http_response_code($permanent ? 301 : $code);

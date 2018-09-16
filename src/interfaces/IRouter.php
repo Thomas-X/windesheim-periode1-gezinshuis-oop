@@ -9,8 +9,17 @@
 namespace Qui\interfaces;
 
 
+/**
+ * Interface IRouter
+ * @package Qui\interfaces
+ */
 interface IRouter
 {
     public function serve () : void;
+
+    /**
+     * @param array $middlewares
+     * @param array $routes
+     */
     public function middleware (array $middlewares, array $routes) : void;
 }

@@ -8,8 +8,15 @@
 
 namespace Qui\core\facades;
 
+/**
+ * Class DB_PDO
+ * @package Qui\core\facades
+ */
 class DB_PDO extends Facade
 {
+    /**
+     * @return string
+     */
     protected static function getFacadeAccessor()
     {
         return 'pdo';

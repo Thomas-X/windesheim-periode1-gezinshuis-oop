@@ -2,5 +2,9 @@
 
 namespace Qui\interfaces;
 
+/**
+ * Interface IController
+ * @package Qui\interfaces
+ */
 interface IController {
 }
