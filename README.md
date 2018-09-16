@@ -39,7 +39,7 @@
 └── voorbeeldsql.sql
 
 ```
-Command for re-generating the project structure (linux): `tree -I vendor`
+Command for re-generating the project structure (linux): `tree -I 'vendor|cache'`
 
 
 #### Packages
