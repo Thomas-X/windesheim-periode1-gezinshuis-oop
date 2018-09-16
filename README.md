@@ -80,4 +80,4 @@ illuminate/database
 
 #### TODO
 * ❌ give middleware the option to pass req/res via a cb function passed to said middleware
-* ❌ add more comments
+* ✅ add more comments
