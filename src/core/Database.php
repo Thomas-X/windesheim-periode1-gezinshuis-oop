@@ -15,6 +15,7 @@ class Database
     public function __construct()
     {
         try {
+            // We can't use App::get('env') here since (most likely) it's yet to be defineds
             $DB_CLIENT = $_ENV['DB_CLIENT'];
             $DB_HOST = $_ENV['DB_HOST'];
             $DB_NAME = $_ENV['DB_NAME'];

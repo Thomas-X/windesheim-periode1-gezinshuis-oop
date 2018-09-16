@@ -28,7 +28,7 @@ class App
     }
 
     /*
-     * creates an anonymous function out of a method.
+     * creates an anonymous function out of a method. (currently unused after facades, could be used in the future so not removing)
      * */
     public static function bindMethod($key, $methodName, $classNamespaced) {
         static::$registry[$key] = [
@@ -40,7 +40,7 @@ class App
     public static function get($key)
     {
         if (!array_key_exists($key, static::$registry)) {
-            throw new \Exception('{$key} not found in App DI container');
+            throw new \Exception("{$key} not found in App DI container, did you remove a required dependency?");
         }
         static::$val = static::$registry[$key];
         // If is a method binding
@@ -49,6 +49,19 @@ class App
         }
 
         return static::$registry[$key];
+    }
+
+    public static function setupDependencies($deps)
+    {
+        // Bind dependencies to DI container
+        foreach ($deps as $key => $dep) {
+            App::bind($key, $dep);
+        }
+        $requireds = ['view', 'database', 'validator', 'router'];
+        foreach ($requireds as $required) {
+            // let it throw an error if key is undefined
+            static::get($required);
+        }
     }
 
     public static function setupRoutes()
