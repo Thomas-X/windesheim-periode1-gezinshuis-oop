@@ -34,8 +34,17 @@ class ExampleController implements IController
      */
     public function showHome(Request $req, Response $res)
     {
-        $users = DB::execute("SELECT * FROM user", []);
-        return View::render('pages.Home', compact('users'));
+//        $id = 1;
+//        $users = DB::execute("SELECT * FROM user WHERE id=?", [$id]);
+//        return View::render('pages.Home', compact('users'));
+
+        $validation = Validator::isEmail(22)
+            ->isString(1.111)
+            ->isNotNull(null)
+            ->isFloat('nope not a float')
+            ->isString('a string! wooooh!!')
+            ->validate();
+        return $res->json($validation);
     }
 
     /**

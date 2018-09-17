@@ -35,5 +35,6 @@ class View
         $pagePath = $viewDir . $pagePath . '.php';
         // pass dynamic navbar / footer values perhaps?
         require($viewDir . 'layouts/app.php');
+        return false;
     }
 }

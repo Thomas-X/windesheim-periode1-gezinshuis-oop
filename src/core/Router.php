@@ -137,7 +137,12 @@ class Router implements IRouter
         $req = new Request();
         $res = new Response();
         // dont echo because we're using requires and not a templating engine
-        $controllerInstance->$controllerMethod($req, $res);
+        // unless we're returning something else than false (which the View::render method returns)
+        // which means we're returning JSON or something else
+        $rval = $controllerInstance->$controllerMethod($req, $res);
+        if ($rval != false) {
+            echo $rval;
+        }
     }
 
     /*

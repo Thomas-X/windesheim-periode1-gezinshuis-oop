@@ -54,10 +54,11 @@ class Validator
      */
     private function typeValidator($val, $type, array $messages, $isNot=false)
     {
-        if (gettype($val) == $type) {
+        $typeMatches = gettype($val) == $type;
+        if ($typeMatches && $isNot == false) {
             $this->addValidator(true, $messages['messageTrue']);
         } else {
-            if ($isNot) {
+            if ($isNot && !$typeMatches) {
                 $this->addValidator(true, $messages['messageTrue']);
             } else {
                 $this->addValidator(false, $messages['messageFalse']);
@@ -132,7 +133,7 @@ class Validator
      */
     public function isNotNull($value, $field='isNotNull')
     {
-        return $this->typeValidator($value, 'NULL', $this->message($field));
+        return $this->typeValidator($value, 'NULL', $this->message($field), true);
     }
 
     /**
