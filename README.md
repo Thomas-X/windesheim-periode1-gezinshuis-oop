@@ -68,7 +68,7 @@ Command for re-generating the project structure (linux): `tree -I 'vendor|cache'
 
 #### Packages
 Packages used on the older branches are: 
-No dependencies are used on the master branch.
+<br/>No dependencies are used on the master branch.
 ```
 phpdotenv
     this is used to handle .env file contents
