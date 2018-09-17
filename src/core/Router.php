@@ -29,7 +29,7 @@ class Router implements IRouter
     private function return404()
     {
         http_response_code(404);
-        echo View::render('404');
+        echo View::render('pages.404');
     }
 
     /*
@@ -136,7 +136,8 @@ class Router implements IRouter
         $controllerInstance = new $controllerNameSpaced;
         $req = new Request();
         $res = new Response();
-        echo $controllerInstance->$controllerMethod($req, $res);
+        // dont echo because we're using requires and not a templating engine
+        $controllerInstance->$controllerMethod($req, $res);
     }
 
     /*

@@ -31,7 +31,8 @@ class Database
             $DB_UNIX_SOCKET = $_ENV['DB_UNIX_SOCKET'];
             $opts = compact('DB_CLIENT', 'DB_HOST', 'DB_NAME', 'DB_PORT', 'DB_USERNAME', 'DB_PASSWORD', 'DB_UNIX_SOCKET');
             $this->setupPDO($opts);
-            $this->setupEloquent($opts);
+            // no eloquent 4 u
+//            $this->setupEloquent($opts);
         } catch (Exception $err) {
             dd($err);
         }
@@ -78,7 +79,7 @@ class Database
 
         $this->eloquent = $capsule;
     }
-
+    
     /*
      * A little short hand for a query statement.
      * */

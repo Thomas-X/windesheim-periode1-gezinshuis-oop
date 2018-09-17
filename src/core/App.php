@@ -94,6 +94,15 @@ class App
     }
 
     /*
+     *
+     * */
+    public static function setupENV()
+    {
+        ENV::setup();
+    }
+
+
+    /*
      *  require the web.php so the routes get added
      * */
     public static function setupRoutes()

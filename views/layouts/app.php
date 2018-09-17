@@ -11,13 +11,14 @@
 
     <link href="css/app.css" rel="stylesheet"/>
 
-    <title>Gezinshuis - @yield('title')</title>
+    <title>Gezinshuis - <?= $title ?></title>
 </head>
 <body>
-
+<div class="rotate amazingexample">some navbar perhaps</div>
 <div>
-    @yield('content')
+    <?php require($pagePath) ?>
 </div>
+<div class="rotate amazingexample">some footer perhaps</div>
 
 </body>
 </html>

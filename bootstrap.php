@@ -12,5 +12,5 @@ require 'vendor/autoload.php';
  * echo $_ENV['MY_DB_PASSWORD']
  * >> secret
  * */
-$dotenv = new Dotenv\Dotenv(__DIR__);
-$dotenv->load();
+//$dotenv = new Dotenv\Dotenv(__DIR__);
+//$dotenv->load();

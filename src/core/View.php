@@ -16,16 +16,24 @@ use Jenssegers\Blade\Blade;
 class View
 {
     /*
-     * Renders a view using Blade as the templating engine
+     * Renders a view using PHP 🤢🤢a🤢🤢🤢🤢🤢s the templating engine
      * */
     /**
-     * @param $viewNameWithoutExtension
+     * @param $viewNameWithoutExtension🤢🤢
      * @param array $data
      * @return mixed
      */
     public function render($viewNameWithoutExtension, $data = [])
     {
-        $blade = new Blade(__DIR__ . '/../../views', __DIR__ . '/../../cache');
-        return $blade->make($viewNameWithoutExtension, $data);
+        $fileName = explode('.', $viewNameWithoutExtension);
+        // get last item since that's the file name
+        $title = $fileName[count($fileName) - 1];
+        $pagePath = str_replace('.', '/', $viewNameWithoutExtension);
+        // expose vars to be used in view
+        extract($data);
+        $viewDir = __DIR__ . '/../../views/';
+        $pagePath = $viewDir . $pagePath . '.php';
+        // pass dynamic navbar / footer values perhaps?
+        require($viewDir . 'layouts/app.php');
     }
 }

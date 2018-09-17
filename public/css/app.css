@@ -1,7 +1,29 @@
 body {
     font-family: 'Roboto', sans-serif;
-
 }
-h4 {
-    font-size:50px;
+
+.rotate {
+    -webkit-animation: rotate 4s linear infinite;
+    animation: rotate 4s linear infinite;
+}
+
+.amazingexample {
+    padding: 0.5em;
+    width: 30%;
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@-webkit-keyframes rotate {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes rotate {
+    to {
+        transform: rotate(360deg);
+    }
 }
