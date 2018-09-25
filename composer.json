@@ -4,5 +4,7 @@
 			"Qui\\": "src"
 		}
 	},
-	"require": {}
+	"require": {
+		"phpdocumentor/phpdocumentor": "2.*"
+	}
 }

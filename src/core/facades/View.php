@@ -8,7 +8,6 @@
 
 namespace Qui\core\facades;
 
-
 /**
  * Class View
  * @package Qui\core\facades

@@ -10,6 +10,8 @@ namespace Qui\core;
 
 use Qui\core\BoundMethodWrapper;
 
+
+
 /*
  *  A simple DI container named App.
  * */
@@ -27,6 +29,8 @@ class App
     // tmp scoping variable for 'monkey' patching a bound method
     private static $val;
 
+    // TODO hello world
+
     /**
      * @param $key
      * @param $value
@@ -35,6 +39,8 @@ class App
     {
         static::$registry[$key] = $value;
     }
+
+
 
     /*
      * creates an anonymous function out of a method. (currently unused after facades, could be used in the future so not removing)

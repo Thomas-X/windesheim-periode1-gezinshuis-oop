@@ -26,9 +26,11 @@ class Router
         // check the path and if one of the routes matches the current route of the request, run that controller
         $rendered = false;
         foreach ($this->routes as $route) {
+            // path of the request
             $path = $_SERVER['REQUEST_URI'];
             if ($path == $route['path']) {
                 $controllerAndMethod = explode('@', $route['controller']);
+
 
                 // all controllers should be in src/controllers
                 $controller = 'BasicRouting' . '\\' . 'controllers' . '\\' . $controllerAndMethod[0];

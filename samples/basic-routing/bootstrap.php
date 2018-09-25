@@ -17,6 +17,10 @@ $router->setRoutes([
     [
         'path' => '/',
         'controller' => 'MyController@showHome'
+    ],
+    [
+        'path' => '/oef',
+        'controller' => 'OefController@showOef'
     ]
 ]);
 $router->checkWhichControllerToRun();

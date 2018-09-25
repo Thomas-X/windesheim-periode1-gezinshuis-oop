@@ -104,4 +104,14 @@ class Database
         }
         return $results;
     }
+
+    public function selectAll(string $table)
+    {
+        return $this->execute("SELECT * FROM {$table}");
+    }
+
+    public function select(string $fields, string $table)
+    {
+        return $this->execute("SELECT {$fields} FROM ${table}");
+    }
 }

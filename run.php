@@ -7,3 +7,6 @@ $eol = PHP_EOL;
 // i cant be bothered to figure it out
 print_r("Server ready on port {$port} {$eol}");
 shell_exec("php -S localhost:{$port} -t public/");
+
+// to run phpdoc do:
+// phpdoc -d ./src -t ./docs

@@ -7,7 +7,6 @@
  */
 
 namespace Qui\core;
-use Jenssegers\Blade\Blade;
 
 /**
  * Class View

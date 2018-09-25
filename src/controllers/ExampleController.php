@@ -10,6 +10,7 @@ use Qui\core\facades\View;
 use Qui\core\Request;
 use Qui\core\Response;
 use Qui\interfaces\IController;
+use Qui\core\facades\Auth;
 
 /*
  * This is an example controller
@@ -34,17 +35,21 @@ class ExampleController implements IController
      */
     public function showHome(Request $req, Response $res)
     {
-//        $id = 1;
-//        $users = DB::execute("SELECT * FROM user WHERE id=?", [$id]);
-//        return View::render('pages.Home', compact('users'));
+        // TODO create AUTH class that generates an app key by randomly generating a string and base64 encoding it using base64_encode
+        $id = 1;
 
-        $validation = Validator::isEmail(22)
-            ->isString(1.111)
-            ->isNotNull(null)
-            ->isFloat('nope not a float')
-            ->isString('a string! wooooh!!')
-            ->validate();
-        return $res->json($validation);
+        Util::dd(Auth::login('Thomas', 'internetcat'));
+
+        $users = DB::execute("SELECT * FROM user WHERE id=?", [$id]);
+        return View::render('pages.Home', compact('users'));
+
+//        $validation = Validator::isEmail(22)
+//            ->isString(1.111)
+//            ->isNotNull(null)
+//            ->isFloat('nope not a float')
+//            ->isString('a string! wooooh!!')
+//            ->validate();
+//        return $res->json($validation);
     }
 
     /**
