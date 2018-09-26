@@ -13,7 +13,6 @@ use Illuminate\Database\Capsule\Manager as Capsule;
  * Class Database
  * @package Qui\core
  */
-// TODO add CRUD query methods
 class Database
 {
     public $pdo;
@@ -87,69 +86,22 @@ class Database
     /**
      * @param $sql
      * @param array $values
-     * @return array | bool
+     * @return array
      */
     public function execute($sql, $values = [])
     {
-//        if (count($values) > 0) {
-//            Util::dd($sql);
-//        }
+        $results = [];
         $stmt = $this->pdo->prepare($sql);
-        $val = $stmt->execute($values);
+        $stmt->execute($values);
         // If the query is a INSERT/UPDATE/DELETE type then ->fetch is undefined ofcourse
         // Hence why were just returning the boolean here
-
-        // if it was a select statement, we can fetch the rows
-        if (strpos($stmt->queryString, 'SELECT') !== false) {
-            $results = [];
-            while ($row = $stmt->fetch()) {
-                $results[] = $row;
-            }
-            return $results;
-        } else {
-            // anything else must be an INSERT/UPDATE/DELETE query. bad_code
-
-            // if the CUD query actually changed something, return true, otherwise the query failed because CUD queries should always update 1 row, at least
-            if ($stmt->rowCount() > 0) {
-                return true;
-            }
-            return false;
+        if (gettype($stmt) == 'boolean') {
+            return $stmt;
         }
-    }
 
-    /*
-     * Update an entry in the database, could be any table you want.
-     * Usage:
-     * DB::updateEntry(1337, 'user', ['name' => 'HELLO WORLD', 'email' => 'Thomas-22']);
-     * */
-
-    // TODO avoid SQL injection (because right now the values are put straight into the query)
-    public function updateEntry($id, $table, array $values)
-    {
-        $query = "UPDATE {$table} SET ";
-        $idx = 0;
-        $rowValues = [];
-        foreach ($values as $rowKey => $value) {
-            // first loop, meaning we shouldn't prepend a , before the value
-            if ($idx == 0) {
-                $query = $query . "{$rowKey} = ?";
-            } else {
-                $query = $query . ", {$rowKey} = ?";
-            }
-            $rowValues[] = $value;
-            $idx++;
+        while ($row = $stmt->fetch()) {
+            $results[] = $row;
         }
-        $query = $query . " WHERE (`id` = {$id})";
-        return $this->execute($query, $rowValues);
-    }
-
-    public function selectAll(string $table)
-    {
-        return $this->execute("SELECT * FROM {$table}");
-    }
-
-    public function select(string $fields, string $table)
-    {
-        return $this->execute("SELECT {$fields} FROM ${table}");
+        return $results;
     }
 }

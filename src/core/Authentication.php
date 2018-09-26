@@ -15,6 +15,9 @@ class Authentication
 {
     // increase this when hardware can handle more salting rounds
     const SALTING_ROUNDS = 10;
+    const HASHING_OPTIONS = [
+        'cost' => Authentication::SALTING_ROUNDS
+    ];
 
     public static function login($email, $password)
     {
@@ -24,7 +27,8 @@ class Authentication
 
     private static function generateHash($string)
     {
-        return password_hash($string, PASSWORD_BCRYPT, ['cost' => static::SALTING_ROUNDS]);
+        // password_default = bcrypt but can change in newer versions, in case it does hashes are re-generated
+        return password_hash($string, PASSWORD_DEFAULT, Authentication::HASHING_OPTIONS);
     }
 
     private static function verifyHash(string $hash, string $password)
@@ -38,7 +42,13 @@ class Authentication
         foreach ($users as $user) {
             // if matches, user has filled in correct password
             if (static::verifyHash($user['password'], $password) && $email == $user['email']) {
-                //TODO re-hash with newer algo's maybe? using password_needs_rehash
+                if (password_needs_rehash($user['password'], PASSWORD_BCRYPT, HASHING_OPTIONS)) {
+                    // since the password is verified to be the correct one we can use the user input here to hash
+                    $hash = static::generateHash($password);
+                    DB::updateEntry(2, 'user', [
+                        'password' => "{$hash}",
+                    ]);
+                }
                 return true;
             }
         }
