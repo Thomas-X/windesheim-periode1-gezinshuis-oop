@@ -15,25 +15,23 @@
 </head>
 <body>
 <!-- <div class="rotate amazingexample">some navbar perhaps</div> -->
-	<nav >
+	<nav>
+		<div class="mainContainer">
 				<div class="row">
-					<div class="colcol-sm-2">
-		            <img style="width: 100%;" src="imgs/GezinshuisRegterink_logo_breed.png"alt="logo"/>
+					<div class="col col-sm-4">
+		           <a href="/"> <img style="width: 100%; height:100%;" src="imgs/GezinshuisRegterink_logo_breed.png"alt="logo"/></a>
 	                </div>
-	                <divclass="col-sm-10">
+	                <div class="col-sm-8">
 
 	             <div class="flexContainer">
-	                 <a class="navLink" href="/">Home</a>
-	                 		<a class="navLink" href="/about">About us</a>
-	                 		<a class="navLink" href="/contact">Contact</a>
+	                 <a class="navLink nav-link" href="/">Home</a>
+	                 		<a class="navLink nav-link" href="/about">About us</a>
+	                 		<a class="navLink nav-link" href="/contact">Contact</a>
 	             </div>
 	         </div>
          </div>
+      </div>
 	</nav>
-<div>
-<nav class="navbar navbar-expand-md navbar-light">
-		test
-</nav>
 <div class="mainContainer">
     <?php require($pagePath) ?>
 </div>

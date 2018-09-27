@@ -34,27 +34,26 @@ body {
     margin: auto;
     padding: 1em;
 }
-
-@media screen and (max-width: 768px){
-    .mainContainer {
-        width: 95vw;
-    }
-}
-@media screen and (max-width: 768px){
-    .mainContainer {
-        width: 100vw;
-    }
-}
 .flexContainer {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
+    height: 100%;
 }
 .navLink {
-    padding: 0.5em;
+    padding: 0 0.5em 0 0.5em;
 }
 
 nav {
     padding: 0.5em 0 0.5em 0;
+    background-color: #f3f3f3;
+}
+@media screen and (max-width: 560px){
+    .mainContainer {
+        width: 100vw;
+    }
+    .flexContainer {
+        flex-direction: column;
+    }
 }
