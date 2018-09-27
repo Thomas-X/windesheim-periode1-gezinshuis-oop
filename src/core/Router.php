@@ -40,8 +40,10 @@ class Router
         $routeMatches = false;
         foreach ($this->routes as $route) {
             $routeMatches = $this->determineIfRouteMatches($route);
+            $requestedMethod = $_SERVER['REQUEST_METHOD'];
+            $routeMethod = $route['httpRequestType'];
 
-            if ($routeMatches) {
+            if ($routeMatches && $routeMethod == $requestedMethod) {
                 $this->runController($route['controller']);
                 break;
             }

@@ -21,7 +21,7 @@ class Database
 
     public function __construct()
     {
-       // Util::dd((\PDO::getAvailableDrivers()));
+        // Util::dd((\PDO::getAvailableDrivers()));
         try {
             // We can't use App::get('env') here since (most likely) it's yet to be defineds
             $DB_CLIENT = $_ENV['DB_CLIENT'];
@@ -43,7 +43,8 @@ class Database
     /**
      * @param $opts
      */
-    private function setupPDO($opts) {
+    private function setupPDO($opts)
+    {
 
         $dsn = "{$opts['DB_CLIENT']}:host={$opts['DB_HOST']};dbname={$opts['DB_NAME']};port={$opts['DB_PORT']}";
 
@@ -62,14 +63,14 @@ class Database
         $capsule = new Capsule;
 
         $capsule->addConnection([
-            'driver'    => $opts['DB_CLIENT'],
-            'host'      => $opts['DB_HOST'],
-            'database'  => $opts['DB_NAME'],
-            'username'  => $opts['DB_USERNAME'],
-            'password'  => $opts['DB_PASSWORD'],
-            'charset'   => 'utf8',
+            'driver' => $opts['DB_CLIENT'],
+            'host' => $opts['DB_HOST'],
+            'database' => $opts['DB_NAME'],
+            'username' => $opts['DB_USERNAME'],
+            'password' => $opts['DB_PASSWORD'],
+            'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
-            'prefix'    => '',
+            'prefix' => '',
             'unix_socket' => $opts['DB_UNIX_SOCKET'] ?? ''
         ]);
 
@@ -81,7 +82,7 @@ class Database
 
         $this->eloquent = $capsule;
     }
-    
+
     /*
      * A little short hand for a query statement.
      * */
@@ -116,13 +117,55 @@ class Database
     }
 
     /*
+     * Insert an entry in the database, could be any table you want.
+     * */
+    public function insertEntry(string $table, array $values)
+    {
+        $columns = ($this->concatValue(array_keys($values), "", "", true))['query'];
+        $query = "INSERT INTO {$table} " . "({$columns}) ";
+        $valuesEscaped = ($this->concatValue($values, ""))['query'];
+        $query = $query . "VALUES ({$valuesEscaped})";
+        $flattenedAssocArray = [];
+        foreach ($values as $key => $value) {
+            $flattenedAssocArray[] = $value;
+        }
+        $this->execute($query, $flattenedAssocArray);
+    }
+
+    /*
+     * a function for concatanating strings with or without ','. Optional inserting values instead of ? where values should be
+     * */
+    private function concatValue(array $values, string $query, bool $appendString = null, bool $insertValues = false): array
+    {
+        $idx = 0;
+        $rowValues = [];
+
+        foreach ($values as $rowKey => $value) {
+            $insertValue = $insertValues ? "`{$value}`" : "?";
+            if ($idx == 0) {
+                $query = $query . "" . "{$insertValue}" . $appendString ?? "";
+            } else {
+                $query = $query . "," . "{$insertValue}" . $appendString ?? "";
+            }
+            $rowValues[] = $value;
+            $idx++;
+        }
+
+        return [
+            'rowValues' => $rowValues,
+            'query' => $query
+        ];
+    }
+
+    /*
      * Update an entry in the database, could be any table you want.
      * Usage:
-     * DB::updateEntry(1337, 'user', ['name' => 'HELLO WORLD', 'email' => 'Thomas-22']);
+     * DB::updateEntry(1337, 'users', ['name' => 'HELLO WORLD', 'email' => 'Thomas-22']);
      * */
 
-    // TODO avoid SQL injection (because right now the values are put straight into the query)
-    public function updateEntry($id, $table, array $values)
+    // DONE avoid SQL injection (because right now the values are put straight into the query)
+    // TODO replace query concatanation here with $this->concatValue()
+    public function updateEntry(int $id, string $table, array $values)
     {
         $query = "UPDATE {$table} SET ";
         $idx = 0;
@@ -148,6 +191,11 @@ class Database
 
     public function select(string $fields, string $table)
     {
-        return $this->execute("SELECT {$fields} FROM ${table}");
+        return $this->execute("SELECT {$fields} FROM {$table}");
+    }
+
+    public function selectWhere(string $fields, string $table, string $key, string $identifier)
+    {
+        return $this->execute("SELECT {$fields} FROM {$table} WHERE {$key}=?", [$identifier]);
     }
 }

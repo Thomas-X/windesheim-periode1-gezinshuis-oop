@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -8,63 +8,22 @@
 
     <!-- Roboto font -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <!-- Bootstrap things -->
 	 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="css/app.css" rel="stylesheet"/>
 
     <title>Gezinshuis - <?= $title ?></title>
 </head>
 <body>
-<!-- <div class="rotate amazingexample">some navbar perhaps</div> -->
-	<nav>
-		<div class="mainContainer">
-				<div class="row">
-					<div class="col col-sm-4">
-		           <a href="/"> <img style="width: 100%; height:100%;" src="imgs/GezinshuisRegterink_logo_breed.png"alt="logo"/></a>
-	                </div>
-	                <div class="col-sm-8">
 
-	             <div class="flexContainer">
-	                 <a class="navLink nav-link" href="/">Home</a>
-	                 		<a class="navLink nav-link" href="/about">About us</a>
-	                 		<a class="navLink nav-link" href="/contact">Contact</a>
-	             </div>
-	         </div>
-         </div>
-      </div>
-	</nav>
+<?php require(__DIR__ . '/../partials/nav.php') ?>
+
 <div class="mainContainer" style="min-height: 100vh;">
     <?php require($pagePath) ?>
 </div>
-<!--<div class="rotate amazingexample">some footer perhaps</div> -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="mx-auto ml-md-auto col-md-4 fiftyWidth">
-                <h3>
-                    Contact gegevens
-                </h3>
-                <a>
-                    Email: lorem@ipsum.nl
-                </a>
-                <br>
-                <a>
-                    Telefoonnummer: 020-1234567
-                </a>
-            </div>
-            <div class="mx-auto mx-md-0 col-md-4 fiftyWidth">
-                <h3>
-                    Links
-                </h3>
-                <a href="/about">
-                    About us
-                </a>
-                <br>
-                <a href="/contact">
-                    Contact
-                </a>
-            </div>
-        </div>
-    </div>
-</footer>
+
+<?php require(__DIR__ . '/../partials/footer.php') ?>
+
 </body>
 </html>
