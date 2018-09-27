@@ -27,3 +27,21 @@ body {
         transform: rotate(360deg);
     }
 }
+
+.mainContainer {
+    width: 80vw;
+    max-width: 800px;
+    margin: auto;
+    padding: 1em;
+}
+
+@media screen and (max-width: 768px){
+    .mainContainer {
+        width: 95vw;
+    }
+}
+@media screen and (max-width: 768px){
+    .mainContainer {
+        width: 100vw;
+    }
+}

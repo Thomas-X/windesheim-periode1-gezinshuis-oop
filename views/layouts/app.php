@@ -17,7 +17,7 @@
 <nav class="navbar navbar-expand-md navbar-light">
 		test
 </nav>
-<div>
+<div class="mainContainer">
     <?php require($pagePath) ?>
 </div>
 <div class="rotate amazingexample">some footer perhaps</div>
