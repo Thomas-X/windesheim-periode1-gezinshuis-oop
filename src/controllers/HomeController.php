@@ -25,9 +25,8 @@ use Qui\core\facades\Auth;
  * Class ExampleController
  * @package Qui\controllers
  */
-class ExampleController implements IController
+class HomeController implements IController
 {
-
     /**
      * @param Request $req
      * @param Response $res
@@ -35,12 +34,9 @@ class ExampleController implements IController
      */
     public function showHome(Request $req, Response $res)
     {
-        // TODO create AUTH class that generates an app key by randomly generating a string and base64 encoding it using base64_encode
-        $id = 1;
-
+//        $id = 1;
 //        Util::dd(Auth::login('Thomas', 'internetcat'));
-
-        $users = DB::execute("SELECT * FROM user WHERE id=?", [$id]);
+//        $users = DB::execute("SELECT * FROM user WHERE id=?", [$id]);
         return View::render('pages.Home', compact('users'));
 
 //        $validation = Validator::isEmail(22)
@@ -51,13 +47,4 @@ class ExampleController implements IController
 //            ->validate();
 //        return $res->json($validation);
     }
-
-    /**
-     * @return string
-     */
-    public function showSomething()
-    {
-        return View::render();
-    }
-
 }
