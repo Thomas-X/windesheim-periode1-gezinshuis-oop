@@ -15,32 +15,22 @@
 </head>
 <body>
 <!-- <div class="rotate amazingexample">some navbar perhaps</div> -->
-	<nav class="navbar navbar-expand-md navbar-light bg-light">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-2">
-		            <a class="navbar-brand" href="/">
-		            	<div>
-		                    <img style="width: 100%;" src="imgs/GezinshuisRegterink_logo_breed.png"alt="logo"/>
-	                </div>
-	                </a>
-					</div>
-				
-	             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-	                 <!-- Left Side Of Navbar -->
-	                 <ul class="navbar-nav mr-auto">
-	                 	
-	                 </ul>
-	                 <!-- Right Side Of Navbar -->
-	                 <ul class="navbar-nav mr-auto float-right">
-	                 		<li><a class="nav-link" href="/">Home</a></li>
-	                 		<li><a class="nav-link" href="/about">About us</a></li>
-	                 		<li><a class="nav-link" href="/contact">Contact</a></li>
-	                 </ul>
-	             </div>
-	         </div>
-         </div>
-	</nav>
+<nav>
+	<div class="row">
+		<div class="col col-sm-2">
+			<img style="width: 100%;" src="imgs/GezinshuisRegterink_logo_breed.png"alt="logo"/>
+		</div>
+		<div class="col-sm-10">
+			<div class="flexContainer">
+	                 		<a class="navLink" href="/">Home</a>
+	                 		<a  class="navLink" href="/about">About us</a>
+	                 		<a  class="navLink"href="/contact">Contact</a>
+	              </div>
+			
+		</div>
+
+	</div>
+</nav>
 <div>
     <?php require($pagePath) ?>
 </div>
