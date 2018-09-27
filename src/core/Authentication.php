@@ -42,7 +42,7 @@ class Authentication
         foreach ($users as $user) {
             // if matches, user has filled in correct password
             if (static::verifyHash($user['password'], $password) && $email == $user['email']) {
-                if (password_needs_rehash($user['password'], PASSWORD_BCRYPT, HASHING_OPTIONS)) {
+                if (password_needs_rehash($user['password'], PASSWORD_BCRYPT, Authentication::HASHING_OPTIONS)) {
                     // since the password is verified to be the correct one we can use the user input here to hash
                     $hash = static::generateHash($password);
                     DB::updateEntry(2, 'user', [

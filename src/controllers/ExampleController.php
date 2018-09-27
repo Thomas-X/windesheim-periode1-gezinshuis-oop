@@ -38,7 +38,7 @@ class ExampleController implements IController
         // TODO create AUTH class that generates an app key by randomly generating a string and base64 encoding it using base64_encode
         $id = 1;
 
-        Util::dd(Auth::login('Thomas', 'internetcat'));
+//        Util::dd(Auth::login('Thomas', 'internetcat'));
 
         $users = DB::execute("SELECT * FROM user WHERE id=?", [$id]);
         return View::render('pages.Home', compact('users'));
