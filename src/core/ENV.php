@@ -30,7 +30,7 @@ class ENV
                 if (strlen($keypair[1]) <= 0) {
                     $keypair[1] = null;
                 }
-                $_ENV[$keypair[0]] = $keypair[1];
+                $_ENV[$keypair[0]] = trim($keypair[1]);
             }
         };
 
