@@ -16,6 +16,27 @@ body {
     align-items: center;
 }
 
+.fiftyWidth {
+    width: 51%;
+}
+
+footer {
+    padding: 0.5em 0;
+    width: 100%;
+    background-color: #333333;
+    color: #ffffff;
+}
+
+footer a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+footer a:hover {
+    text-decoration: none;
+    color: #ffffff
+}
+
 @-webkit-keyframes rotate {
     to {
         -webkit-transform: rotate(360deg);
