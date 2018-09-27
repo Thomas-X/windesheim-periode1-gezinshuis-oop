@@ -12,7 +12,6 @@ use Qui\core\Authentication;
 use Qui\core\Validator;
 
 $_ENV = [];
-
 // setup ENV variables before setting up database classes etc
 App::setupENV();
 

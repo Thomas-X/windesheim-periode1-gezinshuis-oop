@@ -1,8 +1,9 @@
-<h1 align="center">Project 1 gezinshuis</h1>
+﻿<h1 align="center">Project 1 gezinshuis</h1>
 <h3 align="center">Made by: Tuan, Mick, Romy Mae, Ricardo en Thomas</h3>
 
 #### Project_Structure
 ```
+
     // used for autoloading and setting up phpdotenv
 ├── bootstrap.php
     // packages list / autoloading root
