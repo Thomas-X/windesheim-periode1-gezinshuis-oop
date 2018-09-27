@@ -32,7 +32,7 @@
          </div>
       </div>
 	</nav>
-<div class="mainContainer">
+<div class="mainContainer" style="min-height: 100vh;">
     <?php require($pagePath) ?>
 </div>
 <!--<div class="rotate amazingexample">some footer perhaps</div> -->
