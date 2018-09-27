@@ -21,6 +21,7 @@ class Database
 
     public function __construct()
     {
+       // Util::dd((\PDO::getAvailableDrivers()));
         try {
             // We can't use App::get('env') here since (most likely) it's yet to be defineds
             $DB_CLIENT = $_ENV['DB_CLIENT'];
