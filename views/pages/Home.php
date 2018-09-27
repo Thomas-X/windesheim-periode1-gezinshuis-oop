@@ -3,7 +3,7 @@
     <img src="http://placekitten.com/700/300" style="width: 100%;"/>
 </div>
 <br>
-    
+
 <div class="container">
     <div class="row">
         <div class="col-sm-4">
