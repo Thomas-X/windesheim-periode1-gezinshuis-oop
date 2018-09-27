@@ -19,7 +19,7 @@ use Qui\core\Response;
  * Class Router
  * @package Qui\core
  */
-class Router implements IRouter
+class Router 
 {
     private $routes = [];
 

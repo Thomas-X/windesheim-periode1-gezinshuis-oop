@@ -14,7 +14,10 @@
     <title>Gezinshuis - <?= $title ?></title>
 </head>
 <body>
-<div class="rotate amazingexample">some navbar perhaps</div>
+<!-- <div class="rotate amazingexample">some navbar perhaps</div> -->
+<nav class="navbar navbar-expand-md navbar-light">
+		test
+</nav>
 <div>
     <?php require($pagePath) ?>
 </div>
