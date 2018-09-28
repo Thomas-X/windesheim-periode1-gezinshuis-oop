@@ -1,9 +1,26 @@
 ﻿<h1 align="center">Project 1 gezinshuis</h1>
 <h3 align="center">Made by: Tuan, Mick, Romy Mae, Ricardo en Thomas</h3>
 
-#### Project_Structure
+#### Usage and Requirements
+```
+For this project you need:
+
+Composer
+PHP >= 7
+NodeJS >= 10.0.0
+
+installed
+
+Usage (development):
+node run.js
+
+Usage (production):
+npm run build
+php run.php
 ```
 
+#### Project_Structure
+```
     // used for autoloading and setting up phpdotenv
 ├── bootstrap.php
     // packages list / autoloading root

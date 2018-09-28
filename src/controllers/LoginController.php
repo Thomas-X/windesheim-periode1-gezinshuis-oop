@@ -22,11 +22,6 @@ class LoginController
     public function showLogin()
     {
         // GET /login
-        DB::insertEntry('users', [
-            'email' => 'Thomas-X',
-            'password' => 'helloosomething',
-            'roles_id' => 1,
-        ]);
         View::render('pages.Login');
     }
 
