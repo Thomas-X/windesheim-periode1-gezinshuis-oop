@@ -10,6 +10,7 @@ $routes = [
     'login' => '/login',
     'logout' => '/logout',
     'register' => '/register',
+    'onRegister' => '/register',
 ];
 
 //$middleware = ['ExampleMiddleware@continue'];
@@ -32,3 +33,4 @@ Router::get($routes['register'], 'RegisterController@showRegister');
  * POST
  * */
 Router::post($routes['login'], 'LoginController@onLogin');
+Router::post($routes['onRegister'], 'RegisterController@onRegister');

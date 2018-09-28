@@ -27,7 +27,11 @@ class Authentication
         if ($user['isValid'] == true) {
             // 1 week cookie time()+60*60*24*365 sec = 1 week
             // TODO enable secure option to avoi man-in-the-middle attacks
-            setcookie('token', $user['rememberMeToken'], time() + 60 * 60 * 24 * 7, '/');
+            if (App::isDevelopmentEnviroment()) {
+                setcookie('token', $user['rememberMeToken'], time() + 60 * 60 * 24 * 7, '/');
+            } else if (App::isProductionEnviroment()) {
+                setcookie('token', $user['rememberMeToken'], time() + 60 * 60 * 24 * 7, '/', "", true);
+            }
             $res->redirect('/', 200);
         } else {
             $res->redirect('/', 401);
@@ -37,11 +41,15 @@ class Authentication
     public static function logout(Request $req, Response $res)
     {
         $token = $req->cookies['token'] ?? false;
-        if (!token) {
+        if (!$token) {
             // for some reason $res->redirect is undefined here, I can't be bothered
             header("Location: /");
         } else {
-            setcookie('token', null, time() + 1, '/');
+            if (App::isDevelopmentEnviroment()) {
+                setcookie('token', null, time() + 1, '/');
+            } else if (App::isProductionEnviroment()) {
+                setcookie('token', null, time() + 1, '/', "", true);
+            }
             header("Location: /");
         }
     }
@@ -60,21 +68,23 @@ class Authentication
     /*
      * TODO implement register (generate random string and hash it for the rememberMeToken)
      * */
-    public static function register(Request $req, Response $res)
+    public static function register($params)
     {
         // check / validate parameters with Validator
-        $rememberMeToken = static::generateRandomHash();
-        $params = $req->params;
-        DB::insertEntry('users', [
-            'fname' => $params['fname'],
-            'lname' => $params['lname'],
-            'email' => $params['email'],
-            'mobile' => $params['mobile'],
-            'roles_id' => $params['roles_id'],
-            'password' => static::generateHash($params['password']),
-            'rememberMeToken' => $rememberMeToken
-        ]);
-        // DB::insertEntry();
+        // pray that the token isn't the same
+        // TODO replace this token with a UUID
+        try {
+            $rememberMeToken = static::generateRandomHash();
+            DB::insertEntry('users', array_merge($params, [
+                'roles_id' => 1,
+                'password' => static::generateHash($params['password']),
+                'rememberMeToken' => $rememberMeToken
+            ]));
+            return true;
+        } catch (\Exception $exception) {
+            Util::dd($exception);
+            return false;
+        }
     }
 
     /**

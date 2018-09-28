@@ -17,6 +17,7 @@
                     // if NOT logged in
                     if (!$loggedIn) {
                         echo "<a class=\"navLink nav-link\" href=\"/login\">Login</a>";
+                        echo "<a class=\"navLink nav-link\" href=\"/register\">Register</a>";
                     }
                     // if logged in
                     if ($loggedIn) {
