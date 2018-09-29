@@ -126,7 +126,10 @@ phpdoc -d ./src -t ./docs/
 │       └── nav.php
 └── webpack.config.js
 ```
-Command for re-generating the project structure (linux): `tree -I 'vendor|docs|cache|node_modules|samples|logogezinshuis'`
+Command for re-generating the project structure (linux): <br/>
+```
+tree -I 'vendor|docs|cache|node_modules|samples|logogezinshuis'
+```
 
 
 #### Packages
