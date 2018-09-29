@@ -95,6 +95,9 @@ blade
 illuminate/database
     this is used for query building with Eloquents query builder (not used for modelling, just the query builder)
     see https://laravel.com/docs/5.7/queries
+webpack
+    used for compiling modern javascript so there's support for older browsers
+    also nice for minifying and structurering the javascript setup
 ```
 
 #### TODO
