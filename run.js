@@ -38,7 +38,7 @@ ${chalk.bold.cyan('====================')}
  \`Y8bood8P'Ybd'  \`V88V"V8P' o888o              
 ${chalk.keyword('lime').bold('All is set, PHP webserver is running on port 8000')}
 ${chalk.keyword('lime').bold('Webpack JS files are compiled. Edit javascript files in /views/javacript/')}
-${chalk.keyword('lime').bold(`You'll see the webpack compiler and PHP webserver output in this terminal.`)}
+${chalk.keyword('lime').bold(`You'll see the webpack transpiler and PHP webserver output in this terminal.`)}
 ${chalk.bold.cyan('====================')}`);
 }, 3500);
 
