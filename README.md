@@ -17,6 +17,9 @@ node run.js
 Usage (production):
 npm run build
 php run.php
+
+Usage (phpdoc build. you need to have phpdocumentor globally installed):
+phpdoc -d ./src -t ./docs/
 ```
 
 #### Project_Structure
