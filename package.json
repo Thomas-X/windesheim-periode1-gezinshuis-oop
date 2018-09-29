@@ -5,8 +5,8 @@
   "main": "views/javascript/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack --watch",
-    "build": "webpack"
+    "dev": "webpack --watch --enviroment development",
+    "build": "webpack --enviroment production"
   },
   "author": "Thomas-X",
   "license": "MIT",

@@ -23,3 +23,5 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
+
+<script src="js/register.js"></script>

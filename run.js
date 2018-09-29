@@ -1,8 +1,9 @@
 const exec = require('child_process').exec;
 const webpack = exec('npm run dev');
-const php = exec('php run.php');
+const php = exec('php executePHP.php');
 
 function bindPipes(childProcess) {
+    // standard EventEmitter logic, nothing special here
     childProcess.stdout.on('data', (data) => {
         console.log(`${data}`);
     });

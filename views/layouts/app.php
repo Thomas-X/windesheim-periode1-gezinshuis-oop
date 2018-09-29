@@ -25,6 +25,6 @@
 
 <?php require(__DIR__ . '/../partials/footer.php') ?>
 
-<script src="js/bundle.js"></script>
+<script src="js/global.js"></script>
 </body>
 </html>

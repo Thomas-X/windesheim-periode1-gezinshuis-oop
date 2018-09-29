@@ -4,5 +4,7 @@ composer.phar
 /cache/
 /.idea/
 /node_modules/
-/public/js/bundle.js
-/public/js/bundle.js.map
+# add all files to ignore list
+/public/js/*
+# except our buddy .gitkeep since otherwise the js folder is not committed
+!/public/js/.gitkeep
