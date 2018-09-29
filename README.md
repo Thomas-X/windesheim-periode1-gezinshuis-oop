@@ -24,38 +24,60 @@ phpdoc -d ./src -t ./docs/
 
 #### Project_Structure
 ```
-    // used for autoloading and setting up phpdotenv
 ├── bootstrap.php
-    // packages list / autoloading root
 ├── composer.json
 ├── composer.lock
+├── executePHP.php
 ├── LICENSE
-    // public folder for serving static files
+├── output
+│   └── build
+├── package.json
+├── package-lock.json
 ├── public
 │   ├── css
 │   │   └── app.css
-    // the root of it all, here is where the app DI container gets setup and ran
-│   └── index.php
+│   ├── imgs
+│   │   └── GezinshuisRegterink_logo_breed.png
+│   ├── index.php
+│   └── js
+│       ├── 404.js
+│       ├── 404.js.map
+│       ├── about.js
+│       ├── about.js.map
+│       ├── contact.js
+│       ├── contact.js.map
+│       ├── global.js
+│       ├── global.js.map
+│       ├── home.js
+│       ├── home.js.map
+│       ├── login.js
+│       ├── login.js.map
+│       ├── register.js
+│       └── register.js.map
 ├── README.md
-    // routes folder containing routes that are being used
 ├── routes
 │   └── web.php
-    // a simple php script (like 2 lines simple) for running this project, run it with php run.php
-├── run.php
-    // the folder where SQL database dumps should be in (ERD per example)
+├── run.js
 ├── sql
+│   ├── db1.sql
+│   ├── db2.sql
 │   └── voorbeeldsql.sql
-    // the autoloading root (the root name is Qui)
 ├── src
-        // place your favorite controllers here
 │   ├── controllers
-│   │   └── ExampleController.php
-        // the 'core' classes of the 'framework', see comments inside the files for more info
+│   │   ├── AboutController.php
+│   │   ├── ContactController.php
+│   │   ├── HomeController.php
+│   │   ├── LoginController.php
+│   │   ├── LogoutController.php
+│   │   └── RegisterController.php
 │   ├── core
 │   │   ├── App.php
+│   │   ├── Authentication.php
 │   │   ├── BoundMethodWrapper.php
 │   │   ├── Database.php
+│   │   ├── ENV.php
 │   │   ├── facades
+│   │   │   ├── Auth.php
 │   │   │   ├── DB_PDO.php
 │   │   │   ├── DB.php
 │   │   │   ├── Facade.php
@@ -69,22 +91,45 @@ phpdoc -d ./src -t ./docs/
 │   │   ├── Util.php
 │   │   ├── Validator.php
 │   │   └── View.php
-        // place some interfaces you need here
 │   ├── interfaces
 │   │   ├── IController.php
 │   │   ├── IMiddleware.php
 │   │   └── IRouter.php
-        // place some middleware for example for authing user. must always return a boolean (currently can't pass values to req/res)
 │   └── middleware
 │       └── ExampleMiddleware.php
-    // place your views here, check laravel's blade documentation for more info
-└── views
-    ├── 404.blade.php
-    ├── index.blade.php
-    └── layouts
-        └── app.blade.php
+├── views
+│   ├── javascript
+│   │   ├── 404
+│   │   │   └── 404.js
+│   │   ├── About
+│   │   │   └── about.js
+│   │   ├── Contact
+│   │   │   └── contact.js
+│   │   ├── global.js
+│   │   ├── Home
+│   │   │   └── home.js
+│   │   ├── Login
+│   │   │   └── login.js
+│   │   └── Register
+│   │       └── register.js
+│   ├── layouts
+│   │   └── app.php
+│   ├── pages
+│   │   ├── 404.php
+│   │   ├── About.php
+│   │   ├── Contact.php
+│   │   ├── Home.php
+│   │   ├── Login.php
+│   │   └── Register.php
+│   └── partials
+│       ├── footer.php
+│       └── nav.php
+└── webpack.config.js
 ```
-Command for re-generating the project structure (linux): `tree -I 'vendor|cache'`
+Command for re-generating the project structure (linux): <br/>
+```
+tree -I 'vendor|docs|cache|node_modules|samples|logogezinshuis'
+```
 
 
 #### Packages
