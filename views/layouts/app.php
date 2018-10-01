@@ -20,10 +20,8 @@
 
 <?php require(__DIR__ . '/../partials/nav.php') ?>
 
-<div class="mainContainer" style="min-height: 100vh;">
-    <?php require($pagePath) ?>
-</div>
-<div class="rotate amazingexample">some footer perhaps</div>
+<?php require($pagePath) ?>
+
 
 <?php require(__DIR__ . '/../partials/footer.php') ?>
 
