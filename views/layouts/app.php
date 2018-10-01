@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -8,22 +8,25 @@
 
     <!-- Roboto font -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <!-- Bootstrap things -->
 	 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link href="css/app.css" rel="stylesheet"/>
+
     <title>Gezinshuis - <?= $title ?></title>
 </head>
 <body>
-<!-- <div class="rotate amazingexample">some navbar perhaps</div> -->
-<nav class="navbar navbar-expand-md navbar-light" style="height: 70px;border:1px solid grey;">
-		Navbar hier
-</nav>
-<div>
+
+<?php require(__DIR__ . '/../partials/nav.php') ?>
+
+<div class="mainContainer" style="min-height: 100vh;">
     <?php require($pagePath) ?>
 </div>
-<!--<div class="rotate amazingexample">-->
-<!--    some footer perhaps-->
-<!--</div>-->
+<div class="rotate amazingexample">some footer perhaps</div>
 
+<?php require(__DIR__ . '/../partials/footer.php') ?>
+
+<script src="js/global.js"></script>
 </body>
 </html>

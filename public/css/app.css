@@ -28,6 +28,26 @@ body {
 }
 
 
+.fiftyWidth {
+    width: 51%;
+}
+
+footer {
+    padding: 1.5em 0;
+    width: 100%;
+    background-color: #333333;
+    color: #ffffff;
+}
+footer a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+footer a:hover {
+    text-decoration: none;
+    color: #ffffff
+}
+
 @-webkit-keyframes rotate {
     to {
         -webkit-transform: rotate(360deg);
@@ -37,5 +57,35 @@ body {
 @keyframes rotate {
     to {
         transform: rotate(360deg);
+    }
+}
+
+.mainContainer {
+    width: 80vw;
+    max-width: 800px;
+    margin: auto;
+    padding: 1em;
+}
+.flexContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+}
+.navLink {
+    padding: 0 0.5em 0 0.5em;
+}
+
+nav {
+    padding: 0.5em 0 0.5em 0;
+    background-color: #f3f3f3;
+}
+@media screen and (max-width: 560px){
+    .mainContainer {
+        width: 100vw;
+    }
+    .flexContainer {
+        flex-direction: column;
     }
 }

@@ -2,6 +2,8 @@
 
 require 'vendor/autoload.php';
 
+
+
 /*
  * Logic for using the phpdotenv package.
  * All constants declared in .env are stored in a superglobal called $_ENV and in $_SERVER

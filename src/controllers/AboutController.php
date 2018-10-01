@@ -3,17 +3,17 @@
  * Created by PhpStorm.
  * User: thomas
  * Date: 27/09/18
- * Time: 13:35
+ * Time: 13:34
  */
 
 namespace Qui\controllers;
 
 use Qui\core\facades\View;
 
-class ContactController
+class AboutController
 {
-    public function showContact()
+    public function showAbout()
     {
-        return View::render('pages.Contact');
+        return View::render('pages.About');
     }
 }

@@ -5,16 +5,32 @@ use Qui\core\facades\Router;
 
 $routes = [
     'home' => '/',
-    'something' => '/something',
-    'contact' => '/contact'
+    'about' => '/about',
+    'contact' => '/contact',
+    'login' => '/login',
+    'logout' => '/logout',
+    'register' => '/register',
+    'onRegister' => '/register',
 ];
 
-$middleware = ['ExampleMiddleware@continue'];
+//$middleware = ['ExampleMiddleware@continue'];
 
-Router::middleware($middleware, [
-[App::GET, $routes['something'], 'ExampleController@showSomething']
-]);
+//Router::middleware($middleware, [
+//[App::GET, $routes['something'], 'ExampleController@showSomething']
+//]);
 
-Router::get($routes['home'], 'ExampleController@showHome');
+/*
+ * GET
+ * */
+Router::get($routes['home'], 'HomeController@showHome');
+Router::get($routes['about'], 'AboutController@showAbout');
+Router::get($routes['contact'], 'ContactController@showContact');
+Router::get($routes['login'], 'LoginController@showLogin');
+Router::get($routes['logout'], 'LogoutController@onLogout');
+Router::get($routes['register'], 'RegisterController@showRegister');
 
-Router::get($routes['contact'], 'ContactController@show');
+/*
+ * POST
+ * */
+Router::post($routes['login'], 'LoginController@onLogin');
+Router::post($routes['onRegister'], 'RegisterController@onRegister');
