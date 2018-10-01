@@ -7,13 +7,12 @@
  */
 
 namespace Qui\lib;
-use Jenssegers\Blade\Blade;
 
 /**
  * Class View
  * @package Qui\core
  */
-class View
+class CView
 {
     /*
      * Renders a view using PHP 🤢🤢a🤢🤢🤢🤢🤢s the templating engine
@@ -31,7 +30,7 @@ class View
         $pagePath = str_replace('.', '/', $viewNameWithoutExtension);
         // expose vars to be used in view
         extract($data);
-        $viewDir = __DIR__ . '/../../views/';
+        $viewDir = __DIR__ . '/../../resources/views/';
         $pagePath = $viewDir . $pagePath . '.php';
         // pass dynamic navbar / footer values perhaps?
         require($viewDir . 'layouts/app.php');

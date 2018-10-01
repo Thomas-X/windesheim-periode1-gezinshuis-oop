@@ -11,7 +11,6 @@ namespace Qui\lib;
 use Qui\core\BoundMethodWrapper;
 
 
-
 /*
  *  A simple DI container named App.
  * */
@@ -50,7 +49,8 @@ class App
      * @param $methodName
      * @param $classNamespaced
      */
-    public static function bindMethod(string $key, $methodName, $classNamespaced) {
+    public static function bindMethod(string $key, $methodName, $classNamespaced)
+    {
         static::$registry[$key] = [
             'method' => $methodName,
             'class' => $classNamespaced
@@ -111,16 +111,38 @@ class App
     /*
      *  require the web.php so the routes get added
      * */
-    public static function setupRoutes()
+    public static function setupRoutes($relativeRoutesPath)
     {
-        require  __DIR__ . '/../../routes/web.php';
+        require $relativeRoutesPath;
     }
 
     /*
-     *  grab the router from the internal registry and serve, meaning
+     *  grab the router from the internal registry and serve
      * */
     public static function run()
     {
         static::$registry['router']->serve();
+    }
+
+    public static function isDevelopmentEnviroment()
+    {
+        return static::_checkEnv("development");
+    }
+
+    private static function _checkEnv($_env)
+    {
+        $env = $_ENV['ENVIROMENT'];
+        if (!$env) {
+            throw new Exception ("Key ENVIROMENT not set in .env file. Set it to development or production depending on the enviroment");
+        }
+        if ($env == $_env) {
+            return true;
+        }
+        return false;
+    }
+
+    public static function isProductionEnviroment()
+    {
+        return static::_checkEnv("production");
     }
 }

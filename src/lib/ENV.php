@@ -22,15 +22,17 @@ class ENV
     public static function load()
     {
         $str = file_get_contents(__DIR__ . '/../../.env');
-        $str = explode(PHP_EOL, $str);
+        $str = explode("\n", $str);
         foreach ($str as $value) {
             $keypair = explode('=', $value);
+
             if (strlen($keypair[0]) > 0) {
                 if (strlen($keypair[1]) <= 0) {
                     $keypair[1] = null;
                 }
-                $_ENV[$keypair[0]] = $keypair[1];
+                $_ENV[$keypair[0]] = trim($keypair[1]);
             }
         };
+
     }
 }

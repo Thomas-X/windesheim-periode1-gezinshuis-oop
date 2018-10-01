@@ -2,11 +2,10 @@
 
 namespace Qui\lib;
 
-use Qui\interfaces\IRouter;
-use Qui\core\facades\View;
-use Qui\core\App;
-use Qui\core\Request;
-use Qui\core\Response;
+use Qui\lib\facades\View;
+use Qui\lib\App;
+use Qui\lib\Request;
+use Qui\lib\Response;
 
 
 /*
@@ -19,7 +18,7 @@ use Qui\core\Response;
  * Class Router
  * @package Qui\core
  */
-class Router implements IRouter
+class CRouter
 {
     private $routes = [];
 
@@ -40,8 +39,10 @@ class Router implements IRouter
         $routeMatches = false;
         foreach ($this->routes as $route) {
             $routeMatches = $this->determineIfRouteMatches($route);
+            $requestedMethod = $_SERVER['REQUEST_METHOD'];
+            $routeMethod = $route['httpRequestType'];
 
-            if ($routeMatches) {
+            if ($routeMatches && $routeMethod == $requestedMethod) {
                 $this->runController($route['controller']);
                 break;
             }
@@ -75,7 +76,7 @@ class Router implements IRouter
             $value = explode('@', $middleware);
             $middlewareName = $value[0];
             $middlewareMethod = $value[1] ?? 'next';
-            $middlewareNameSpaced = "Qui" . '\\' . 'middleware' . '\\' . $middlewareName;
+            $middlewareNameSpaced = "Qui" . '\\' . 'app' . '\\' . 'http' . '\\' . 'middleware' . '\\' . $middlewareName;
             $middlewareInstance = new $middlewareNameSpaced;
 
             $req = new Request();
@@ -132,7 +133,7 @@ class Router implements IRouter
         $controllerName = $value[0];
         $controllerMethod = $value[1] ?? 'show';
 
-        $controllerNameSpaced = "Qui" . '\\' . 'controllers' . '\\' . $controllerName;
+        $controllerNameSpaced = "Qui" . '\\' . 'app' . '\\' . 'http' . '\\' . 'controllers' . '\\' . $controllerName;
         $controllerInstance = new $controllerNameSpaced;
         $req = new Request();
         $res = new Response();

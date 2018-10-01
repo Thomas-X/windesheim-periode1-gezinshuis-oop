@@ -13,7 +13,7 @@ namespace Qui\lib;
  * Class Util
  * @package Qui\core
  */
-class Util
+class CUtil
 {
 
     /*

@@ -24,14 +24,25 @@ namespace Qui\lib;
  * the specific methods don't need much explaining, the naming should speak for how the method works, e.g isEmail()
  * */
 
+use Symfony\Component\Validator\Constraints\Valid;
+
 /**
  * Class Validator
  * @package Qui\core
  */
-class Validator
+class CValidator
 {
     private $validators = [];
     private const EMAIL_REGEX = '/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/';
+    public const OPTIONAL = 'optional';
+    public const REQUIRED = 'required';
+    public const BOOLEAN = 'boolean';
+    public const INTEGER = 'integer';
+    public const FLOAT = 'double';
+    public const STRING = 'string';
+    public const ARRAY = 'array';
+    public const OBJECT = 'object';
+    public const NULL = 'NULL';
 
     /**
      * @param $value
@@ -52,7 +63,7 @@ class Validator
      * @param bool $isNot
      * @return $this
      */
-    private function typeValidator($val, $type, array $messages, $isNot=false)
+    private function typeValidator($val, $type, array $messages, $isNot = false)
     {
         $typeMatches = gettype($val) == $type;
         if ($typeMatches && $isNot == false) {
@@ -99,41 +110,56 @@ class Validator
     /**
      * @param $string
      * @param string $field
-     * @return Validator
+     * @return CValidator
      */
-    public function isString($string, $field='isString')
+    public function isString($string, $field = 'isString')
     {
-        return $this->typeValidator($string, 'string', $this->message($field));
+        return $this->typeValidator($string, CValidator::STRING, $this->message($field));
     }
 
     /**
      * @param $int
      * @param string $field
-     * @return Validator
+     * @return CValidator
      */
-    public function isInt($int, $field='isInt')
+    public function isInt($int, $field = 'isInt')
     {
-        return $this->typeValidator($int, 'integer', $this->message($field));
+        return $this->typeValidator($int, CValidator::INTEGER, $this->message($field));
     }
 
     /**
      * @param $float
      * @param string $field
-     * @return Validator
+     * @return CValidator
      */
-    public function isFloat($float, $field='isFloat')
+    public function isFloat($float, $field = 'isFloat')
     {
-        return $this->typeValidator($float, 'double', $this->message($field));
+        return $this->typeValidator($float, CValidator::FLOAT, $this->message($field));
+    }
+
+    public function isBool($bool, $field = 'isBool')
+    {
+        return $this->typeValidator($bool, CValidator::BOOLEAN, $this->message($field));
+    }
+
+    public function isArray($array, $field = 'isArray')
+    {
+        return $this->typeValidator($array, CValidator::ARRAY, $this->message($field));
     }
 
     /**
      * @param $value
      * @param string $field
-     * @return Validator
+     * @return CValidator
      */
-    public function isNotNull($value, $field='isNotNull')
+    public function isNotNull($value, $field = 'isNotNull')
     {
-        return $this->typeValidator($value, 'NULL', $this->message($field), true);
+        return $this->typeValidator($value, CValidator::NULL, $this->message($field), true);
+    }
+
+    public function isNull($value, $field = 'isNull')
+    {
+        return $this->typeValidator($value, CValidator::NULL, $this->message($field));
     }
 
     /**
@@ -142,7 +168,7 @@ class Validator
      * @param string $field
      * @return $this
      */
-    public function isLen($value, $len, $field='isLen')
+    public function isLen($value, $len, $field = 'isLen')
     {
         if (gettype($value) == 'string') {
             if (strlen($value) == $len) {
@@ -167,7 +193,7 @@ class Validator
      * @param string $field
      * @return $this
      */
-    public function isAlphaNumeric(string $value, $field='isAlphaNumeric')
+    public function isAlphaNumeric(string $value, $field = 'isAlphaNumeric')
     {
         if (ctype_alnum($value)) {
             $this->nonTypeValidator(true, $this->message($field));
@@ -182,9 +208,9 @@ class Validator
      * @param string $field
      * @return $this
      */
-    public function isEmail($value, $field='isEmail')
+    public function isEmail($value, $field = 'isEmail')
     {
-        $result = preg_match_all(Validator::EMAIL_REGEX, $value);
+        $result = preg_match_all(CValidator::EMAIL_REGEX, $value);
         if ($result == 1) {
             $this->nonTypeValidator(true, $this->message($field));
         } else {
@@ -213,5 +239,51 @@ class Validator
         $passed = count($messages) == 0;
 
         return compact('passed', 'messages');
+    }
+
+    // $isValid = Validator::checkMultiple($req->params, ['email' => 'required|string']);
+
+    /*
+     * A function for validating fields in an assoc array. Useful for parameter validation
+     *
+     * usage:
+     * $errors = Validator::validateRequest([
+            'email' => 'thomas@zwarts.codes',
+        ],
+            [
+                'email' => 'required|string',
+                'fname' => 'required|string'
+            ]);
+*
+     *
+     * if (count($errors) >= 1) /* do some error handling stuff here?
+    */
+    public function validateRequest($values, $requirements)
+    {
+        $errors = [];
+            foreach ($requirements as $requirementName => $requirement) {
+                if (!isset($values[$requirementName])) {
+                    $errors[] = [
+                        'field' => $requirementName,
+                        'isValid' => false
+                    ];
+                    continue;
+                }
+                foreach ($values as $valueKey => $value) {
+                    if ($valueKey == $requirementName) {
+                    $keypair = explode('|', $requirement);
+                    $conditional = $keypair[0];
+                    $type = $keypair[1];
+                    if ($conditional == CValidator::REQUIRED && gettype($value) != $type) {
+                        // if type is invalid, add it to the errors arrays
+                        $errors[] = [
+                            'field' => $requirementName,
+                            'isValid' => false
+                        ];
+                    }
+                }
+            }
+        }
+        return $errors;
     }
 }

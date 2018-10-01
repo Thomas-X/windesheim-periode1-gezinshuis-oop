@@ -3,22 +3,22 @@
  * Created by PhpStorm.
  * User: thomas
  * Date: 15/09/18
- * Time: 23:14
+ * Time: 23:25
  */
 
 namespace Qui\lib\facades;
 
 /**
- * Class DB
+ * Class View
  * @package Qui\core\facades
  */
-class DB extends Facade
+class View extends Facade
 {
     /**
      * @return string
      */
-    protected static function getFacadeAccessor()
+    protected function getFacadeAccessor()
     {
-        return 'database';
+        return 'view';
     }
 }

@@ -9,7 +9,7 @@
 namespace Qui\lib\facades;
 
 
-use Qui\core\App;
+use Qui\lib\App;
 
 /*
  * This facade uses a magic method, __callStatic. This is called when a static method is called that doesn't exist

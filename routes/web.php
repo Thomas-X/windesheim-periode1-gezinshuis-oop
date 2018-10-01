@@ -1,7 +1,7 @@
 <?php
 
-use Qui\core\App;
-use Qui\core\facades\Router;
+use Qui\lib\App;
+use Qui\lib\facades\Router;
 
 $routes = [
     'home' => '/',

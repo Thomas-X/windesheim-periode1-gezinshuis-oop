@@ -2,7 +2,7 @@
   "name": "windesheim-periode1-gezinshuis-oop-javascript",
   "version": "1.0.0",
   "description": "Javascript with webpack loader thing for use with ",
-  "main": "views/javascript/index.js",
+  "main": "resources/javascript/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack --watch --enviroment development",
