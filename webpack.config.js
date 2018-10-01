@@ -56,7 +56,7 @@ module.exports = (env, argv) => {
         }
     }
     
-    Object.assign(config.entry, javascriptDirectoryHelper([
+    obj.entry = Object.assign(obj.entry, javascriptDirectoryHelper([
                 '404',
                 'about',
                 'contact',
@@ -64,5 +64,5 @@ module.exports = (env, argv) => {
                 'login',
                 'register'
             ]));
-    return config;
+    return obj;
 }
