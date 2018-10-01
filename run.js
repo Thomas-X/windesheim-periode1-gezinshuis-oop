@@ -41,4 +41,3 @@ ${chalk.keyword('lime').bold('Webpack JS files are compiled. Edit javascript fil
 ${chalk.keyword('lime').bold(`You'll see the webpack transpiler and PHP webserver output in this terminal.`)}
 ${chalk.bold.cyan('====================')}`);
 }, 3500);
-

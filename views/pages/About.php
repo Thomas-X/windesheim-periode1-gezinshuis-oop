@@ -14,7 +14,7 @@
             </p>
         </div>
     </div>
-    <br/>>
+    <br/>
     <br/>
     <div class="row">
         <!-- second row -->
@@ -31,7 +31,5 @@
             <img src="https://placekitten.com/1920/1080" style="width: 100%;"/>
         </div>
     </div
+    <script src="js/about.js"></script>
 </div>
-
-
-<script src="js/about.js"></script>

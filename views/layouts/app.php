@@ -22,7 +22,6 @@
 
 <?php require($pagePath) ?>
 
-
 <?php require(__DIR__ . '/../partials/footer.php') ?>
 
 <script src="js/global.js"></script>
