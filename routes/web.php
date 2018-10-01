@@ -5,7 +5,8 @@ use Qui\core\facades\Router;
 
 $routes = [
     'home' => '/',
-    'something' => '/something'
+    'something' => '/something',
+    'contact' => '/contact'
 ];
 
 $middleware = ['ExampleMiddleware@continue'];
@@ -15,3 +16,5 @@ Router::middleware($middleware, [
 ]);
 
 Router::get($routes['home'], 'ExampleController@showHome');
+
+Router::get($routes['contact'], 'ContactController@show');

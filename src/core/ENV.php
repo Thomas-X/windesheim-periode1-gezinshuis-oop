@@ -25,7 +25,7 @@ class ENV
         $str = explode("\n", $str);
         foreach ($str as $value) {
             $keypair = explode('=', $value);
-           
+
             if (strlen($keypair[0]) > 0) {
                 if (strlen($keypair[1]) <= 0) {
                     $keypair[1] = null;
