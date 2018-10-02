@@ -10,6 +10,7 @@ use Qui\lib\CRouter;
 use Qui\lib\CUtil;
 use Qui\lib\CAuthentication;
 use Qui\lib\CValidator;
+use Qui\lib\CMailer;
 
 $_ENV = [];
 // setup ENV variables before setting up database classes etc
@@ -21,15 +22,17 @@ $validator = new CValidator();
 $view = new CView();
 $router = new CRouter();
 $auth = new CAuthentication();
+$mailer = new CMailer();
 
 App::setupDependencies([
-    'database'  => $db, // eloquent was used here but now it's not anymore, because packages can't be used
-    'pdo'       => $db->pdo,
-    'validator' => $validator,
-    'view'      => $view,
-    'router'    => $router,
-    'util'      => $util,
-    'authentication'      => $auth,
+    'database'                  => $db, // eloquent was used here but now it's not anymore, because packages can't be used
+    'pdo'                       => $db->pdo,
+    'validator'                 => $validator,
+    'view'                      => $view,
+    'router'                    => $router,
+    'util'                      => $util,
+    'authentication'            => $auth,
+    'mailer'                    => $mailer,
 ]);
 App::setupRoutes(__DIR__ . '/../routes/web.php');
 App::run();

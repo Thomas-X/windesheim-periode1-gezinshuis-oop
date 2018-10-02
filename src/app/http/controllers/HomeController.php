@@ -4,9 +4,11 @@ namespace Qui\app\http\controllers;
 
 use Qui\lib\App;
 use Qui\lib\facades\DB;
+use Qui\lib\facades\Mailer;
 use Qui\lib\facades\Util;
 use Qui\lib\facades\Validator;
 use Qui\lib\facades\View;
+use Qui\lib\CMailer;
 use Qui\lib\Request;
 use Qui\lib\Response;
 use Qui\lib\facades\Authentication;
@@ -33,6 +35,11 @@ class HomeController
      */
     public function showHome(Request $req, Response $res)
     {
+//        Mailer::setupMail()
+//            ->to('team11.windesheim@gmail.com')
+//            ->subject('VERKOOP OPLADERS HIER KOOOOOOPEN')
+//            ->body("<html lang='en'><body><img src='https://media.giphy.com/media/sIIhZliB2McAo/giphy.gif'/><h1>HELLOOO WOOOORLD</h1></body></html>")
+//            ->send();
 //        $id = 1;
 //        Util::dd(Auth::login('Thomas', 'internetcat'));
 //        $users = DB::execute("SELECT * FROM user WHERE id=?", [$id]);

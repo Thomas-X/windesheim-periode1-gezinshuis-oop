@@ -55,12 +55,20 @@ class CAuthentication
     }
 
     /*
+     * generate random string based on the UNIX epoch timestamp and md5 hashing it
+     * */
+    public function generateRandomString()
+    {
+        return substr(str_shuffle(MD5(microtime())), 0, 99);
+    }
+
+    /*
      * not uniquely random (not researched at least) but since the chances of that are so abysmal its fine by me
      * */
     public function generateRandomHash()
     {
         // generate random string
-        $str = substr(str_shuffle(MD5(microtime())), 0, 99);
+        $str = $this->generateRandomString();
         return $this->generateHash((string) $str);
     }
 
