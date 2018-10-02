@@ -9,6 +9,10 @@
 namespace Qui\app\http\controllers;
 
 
+use Qui\lib\facades\Authentication;
+use Qui\lib\facades\DB;
+use Qui\lib\facades\Mailer;
+use Qui\lib\facades\View;
 use Qui\lib\Request;
 use Qui\lib\Response;
 
@@ -27,6 +31,53 @@ class AuthenticationController
     public function showForgotPassword(Request $req, Response $res)
     {
         return View::render('pages.ForgotPassword', [], 'Wachtwoord vergeten');
+    }
+
+    public function showResetPassword(Request $req, Response $res)
+    {
+        return View::render('pages.ResetPassword', [], 'Wachtwoord resetten');
+    }
+
+    public function onResetPassword(Request $req, Response $res)
+    {
+        $forgotPasswordToken = $req->params['forgotPasswordToken'];
+        $password = $req->params['password'];
+        if (!isset($password) || !isset($forgotPasswordToken)) {
+            return $res->redirect('/', 401);
+        }
+        // TODO DRY i know
+        $users = DB::selectWhere('email, id', 'users', 'forgotPasswordToken', $req->params['forgotPasswordToken']);
+        if (!isset($users)) {
+            return $res->redirect('/', 401);
+        } else if (count($users) > 1) {
+            return $res->redirect('/', 401);
+        }
+        $user = $users[0];
+        $password = Authentication::generateHash($password);
+        DB::updateEntry($user['id'], 'users', compact('password'));
+        // TODO maybe show a popup here..
+        $res->redirect('/', 200);
+    }
+
+    public function onForgotPassword(Request $req, Response $res)
+    {
+        if (!isset($req->params['email'])) $res->redirect('/');
+
+        $users = DB::selectWhere('email, id', 'users', 'email', $req->params['email']);
+        if (!isset($users)) {
+            return $res->redirect('/', 401);
+        } else if (count($users) > 1) {
+            return $res->redirect('/', 401);
+        }
+        $user = $users[0];
+        $forgotPasswordToken = Authentication::generateRandomString();
+        DB::updateEntry($user['id'], 'users', compact('forgotPasswordToken'));
+        Mailer::setupMail()
+            ->to($user['email'])
+            ->subject('Reset password')
+            ->body("<html lang='en'><body><h3>Klik op deze link om je wachtwoord te resetten: http://localhost:8000/resetpassword?forgotPasswordToken={$forgotPasswordToken}</h3><br/><h5>Met vriendelijke groet, <br/><br/> Team 11</h5></body></html>")
+            ->send();
+        $res->redirect('/forgotpassword?success=true');
     }
 
     public function onRegister(Request $req, Response $res)

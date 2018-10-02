@@ -11,13 +11,9 @@ $routes = [
     'logout' => '/logout',
     'register' => '/register',
     'onRegister' => '/register',
+    'resetPassword' => '/resetpassword',
+    'forgotPassword' => '/forgotpassword'
 ];
-
-//$middleware = ['ExampleMiddleware@continue'];
-
-//Router::middleware($middleware, [
-//[App::GET, $routes['something'], 'ExampleController@showSomething']
-//]);
 
 /*
  * GET
@@ -25,12 +21,34 @@ $routes = [
 Router::get($routes['home'], 'HomeController@showHome');
 Router::get($routes['about'], 'AboutController@showAbout');
 Router::get($routes['contact'], 'ContactController@showContact');
-Router::get($routes['login'], 'LoginController@showLogin');
-Router::get($routes['logout'], 'LogoutController@onLogout');
-Router::get($routes['register'], 'RegisterController@showRegister');
+Router::get($routes['login'], 'AuthenticationController@showLogin');
+Router::get($routes['logout'], 'AuthenticationController@onLogout');
+Router::get($routes['register'], 'AuthenticationController@showRegister');
+Router::get($routes['forgotPassword'], 'AuthenticationController@showForgotPassword');
+
+/*
+ * MIDDLEWARE
+ * */
+Router::middleware(['AuthenticationMiddleware@resetPassword'], [
+    [
+        App::GET, $routes['resetPassword'], 'AuthenticationController@showResetPassword'
+    ],
+    [
+        App::POST, $routes['resetPassword'], 'AuthenticationController@onResetPassword'
+    ]
+]);
+
+// If the user should NOT be logged in (i.e login/register page should be hidden)
+// TODO remove /register page but for tmp testing its useful
+Router::middleware(['AuthenticationMiddleware@shouldNotBeLoggedIn'], [
+    [
+
+    ]
+]);
 
 /*
  * POST
  * */
-Router::post($routes['login'], 'LoginController@onLogin');
-Router::post($routes['onRegister'], 'RegisterController@onRegister');
+Router::post($routes['login'], 'AuthenticationController@onLogin');
+Router::post($routes['onRegister'], 'AuthenticationController@onRegister');
+Router::post($routes['forgotPassword'], 'AuthenticationController@onForgotPassword');

@@ -72,6 +72,7 @@ class CAuthentication
         return $this->generateHash((string) $str);
     }
 
+    // TODO remove / refactor this (superadmin should only be able to do this)
     public function register($params)
     {
         // TODO check / validate parameters with Validator
@@ -81,7 +82,8 @@ class CAuthentication
             DB::insertEntry('users', array_merge($params, [
                 'roles_id' => 1,
                 'password' => $this->generateHash($params['password']),
-                'rememberMeToken' => $rememberMeToken
+                'rememberMeToken' => $rememberMeToken,
+                'forgotPasswordToken' => '',
             ]));
             return true;
         } catch (\Exception $exception) {
@@ -110,7 +112,7 @@ class CAuthentication
         }
     }
 
-    private function generateHash(string $string)
+    public function generateHash(string $string)
     {
         // password_default = bcrypt but can change in newer versions, in case it does hashes are re-generated
         return password_hash($string, PASSWORD_DEFAULT, CAuthentication::HASHING_OPTIONS);
