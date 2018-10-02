@@ -11,6 +11,8 @@ $routes = [
     'logout' => '/logout',
     'register' => '/register',
     'onRegister' => '/register',
+    'showUpload' => '/upload',
+    'upload' => '/upload'
 ];
 
 //$middleware = ['ExampleMiddleware@continue'];
@@ -28,9 +30,11 @@ Router::get($routes['contact'], 'ContactController@showContact');
 Router::get($routes['login'], 'LoginController@showLogin');
 Router::get($routes['logout'], 'LogoutController@onLogout');
 Router::get($routes['register'], 'RegisterController@showRegister');
+Router::get($routes['showUpload'], 'TreatmentDocumentController@showUpload');
 
 /*
  * POST
  * */
 Router::post($routes['login'], 'LoginController@onLogin');
 Router::post($routes['onRegister'], 'RegisterController@onRegister');
+Router::post($routes['upload'], 'TreatmentDocumentController@upload');
