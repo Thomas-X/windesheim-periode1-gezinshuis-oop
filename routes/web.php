@@ -40,11 +40,12 @@ Router::middleware(['AuthenticationMiddleware@resetPassword'], [
 
 // If the user should NOT be logged in (i.e login/register page should be hidden)
 // TODO remove /register page but for tmp testing its useful
-Router::middleware(['AuthenticationMiddleware@shouldNotBeLoggedIn'], [
-    [
-
-    ]
-]);
+// TODO implement this (I have no time left to do this)
+//Router::middleware(['AuthenticationMiddleware@shouldNotBeLoggedIn'], [
+//    [
+//
+//    ]
+//]);
 
 /*
  * POST

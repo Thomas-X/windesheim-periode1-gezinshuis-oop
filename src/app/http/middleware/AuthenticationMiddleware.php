@@ -15,6 +15,11 @@ use Qui\lib\Response;
 
 class AuthenticationMiddleware
 {
+    public function shouldNotBeLoggedIn(Request $req, Response $res)
+    {
+        // TODO implement this
+        return true;
+    }
     public function resetPassword(Request $req, Response $res)
     {
         $forgotPasswordToken = $req->params['forgotPasswordToken'] ?? null;
