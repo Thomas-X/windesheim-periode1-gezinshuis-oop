@@ -113,7 +113,7 @@ class CRouter
      */
     private function determineIfRouteMatches($route)
     {
-        $path = $_SERVER['REQUEST_URI'];
+        $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
         if ($path == $route['path']) {
             return true;
         }
