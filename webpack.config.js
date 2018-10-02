@@ -8,25 +8,17 @@ const javascriptDirectoryHelper = (pages) => {
     function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
-    const arr = [];
+    const obj = {};
     for (const page of pages) {
-        arr.push(`${dir}/${capitalizeFirstLetter(page)}/${page}.js`);
+        obj[page] = `${dir}/${capitalizeFirstLetter(page)}/${page}.js`;
     }
-    return arr
+    return obj
 }
 
 module.exports = (env, argv) => {
-    return {
+    const obj = {
         mode: argv.enviroment === 'production' ? 'production' : 'development',
         entry: {
-            ...javascriptDirectoryHelper([
-                '404',
-                'about',
-                'contact',
-                'home',
-                'login',
-                'register'
-            ]),
             global: `${dir}/global.js`,
             // add extra files here as well (we need different entry points so javascript that shouldn't be on a page doesn't get executed)
             // cross-file imports should be:
@@ -63,4 +55,14 @@ module.exports = (env, argv) => {
             ]
         }
     }
+    
+    obj.entry = Object.assign(obj.entry, javascriptDirectoryHelper([
+                '404',
+                'about',
+                'contact',
+                'home',
+                'login',
+                'register'
+            ]));
+    return obj;
 }
