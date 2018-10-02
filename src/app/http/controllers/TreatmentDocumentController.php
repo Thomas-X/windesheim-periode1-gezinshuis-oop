@@ -16,6 +16,13 @@ class TreatmentDocumentController
 {
     public function showUpload(Request $req, Response $res)
     {
+        $clients= [
+            1 => "kid 1",
+            2 => "kid 2",
+            3 => "kid 3"
+        ];
+
+        return View::render('pages.Treatment', compact('clients'));
     }
 
     public function upload(Request $req, Response $res)
