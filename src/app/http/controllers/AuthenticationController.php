@@ -12,6 +12,7 @@ namespace Qui\app\http\controllers;
 use Qui\lib\facades\Authentication;
 use Qui\lib\facades\DB;
 use Qui\lib\facades\Mailer;
+use Qui\lib\facades\NotifierParser;
 use Qui\lib\facades\View;
 use Qui\lib\Request;
 use Qui\lib\Response;
@@ -77,7 +78,8 @@ class AuthenticationController
             ->subject('Reset password')
             ->body("<html lang='en'><body><h3>Klik op deze link om je wachtwoord te resetten: http://localhost:8000/resetpassword?forgotPasswordToken={$forgotPasswordToken}</h3><br/><h5>Met vriendelijke groet, <br/><br/> Team 11</h5></body></html>")
             ->send();
-        $res->redirect('/forgotpassword?success=true');
+        // TODO NOTIFICATION
+//        return View::render('pages.ForgotPassword', );
     }
 
     public function onRegister(Request $req, Response $res)

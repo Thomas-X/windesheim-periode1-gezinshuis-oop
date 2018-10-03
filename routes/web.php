@@ -16,18 +16,26 @@ $routes = [
 ];
 
 /*
+ *
+ * No middleware routes should be placed before middleware routes (is nice)
+ *
+ * */
+
+/*
  * GET
  * */
 Router::get($routes['home'], 'HomeController@showHome');
 Router::get($routes['about'], 'AboutController@showAbout');
 Router::get($routes['contact'], 'ContactController@showContact');
-Router::get($routes['login'], 'AuthenticationController@showLogin');
-Router::get($routes['logout'], 'AuthenticationController@onLogout');
-Router::get($routes['register'], 'AuthenticationController@showRegister');
-Router::get($routes['forgotPassword'], 'AuthenticationController@showForgotPassword');
 
 /*
+ *
  * MIDDLEWARE
+ *
+ * */
+
+/*
+ * Forgot password token verification middleware
  * */
 Router::middleware(['AuthenticationMiddleware@resetPassword'], [
     [
@@ -38,18 +46,35 @@ Router::middleware(['AuthenticationMiddleware@resetPassword'], [
     ]
 ]);
 
-// If the user should NOT be logged in (i.e login/register page should be hidden)
-// TODO remove /register page but for tmp testing its useful
-// TODO implement this (I have no time left to do this)
-//Router::middleware(['AuthenticationMiddleware@shouldNotBeLoggedIn'], [
-//    [
-//
-//    ]
-//]);
+/*
+ * Should be logged in middleware
+ * */
+Router::middleware(['AuthenticationMiddleware@shouldBeLoggedIn'], [
+    [
+        App::GET, $routes['logout'], 'AuthenticationController@onLogout'
+    ]
+]);
 
 /*
- * POST
+ * Should not be logged in middleware
  * */
-Router::post($routes['login'], 'AuthenticationController@onLogin');
-Router::post($routes['onRegister'], 'AuthenticationController@onRegister');
-Router::post($routes['forgotPassword'], 'AuthenticationController@onForgotPassword');
+Router::middleware(['AuthenticationMiddleware@shouldNotBeLoggedIn'], [
+    [
+        App::GET, $routes['login'], 'AuthenticationController@showLogin'
+    ],
+    [
+        App::GET, $routes['register'], 'AuthenticationController@showRegister'
+    ],
+    [
+        App::GET, $routes['forgotPassword'], 'AuthenticationController@showForgotPassword'
+    ],
+    [
+        App::POST, $routes['login'], 'AuthenticationController@onLogin'
+    ],
+    [
+        App::POST, $routes['onRegister'], 'AuthenticationController@onRegister'
+    ],
+    [
+        App::POST, $routes['forgotPassword'], 'AuthenticationController@onForgotPassword'
+    ]
+]);

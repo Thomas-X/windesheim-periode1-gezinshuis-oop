@@ -9,6 +9,7 @@
 namespace Qui\app\http\middleware;
 
 
+use Qui\lib\facades\Authentication;
 use Qui\lib\facades\DB;
 use Qui\lib\Request;
 use Qui\lib\Response;
@@ -17,9 +18,17 @@ class AuthenticationMiddleware
 {
     public function shouldNotBeLoggedIn(Request $req, Response $res)
     {
-        // TODO implement this
-        return true;
+        return !$this->shouldBeLoggedIn($req, $res);
     }
+
+    public function shouldBeLoggedIn(Request $req, Response $res)
+    {
+        if (Authentication::verify()) {
+            return true;
+        }
+        return false;
+    }
+
     public function resetPassword(Request $req, Response $res)
     {
         $forgotPasswordToken = $req->params['forgotPasswordToken'] ?? null;

@@ -5,6 +5,7 @@ namespace Qui\app\http\controllers;
 use Qui\lib\App;
 use Qui\lib\facades\DB;
 use Qui\lib\facades\Mailer;
+use Qui\lib\facades\NotifierParser;
 use Qui\lib\facades\Util;
 use Qui\lib\facades\Validator;
 use Qui\lib\facades\View;
@@ -35,11 +36,29 @@ class HomeController
      */
     public function showHome(Request $req, Response $res)
     {
+        $notify = [
+            'notify' => NotifierParser::newNotify()
+                ->condition(true)
+                ->message('All good!')
+                ->newNotify()
+                ->condition(false)
+                ->message('Not all good!')
+        ];
+//        dd($notify);
+
+        $users = [
+            [
+                'name' => 'thomas',
+                'fname' => 'zwarts'
+            ]
+        ];
+
+        $users = DB::selectWhere('*', 'users', 'roles_id', 1);
+
+        return View::render('pages.Test', compact('users'));
 //        $id = 1;
 //        Util::dd(Auth::login('Thomas', 'internetcat'));
 //        $users = DB::execute("SELECT * FROM user WHERE id=?", [$id]);
-        return View::render('pages.Home', compact('users'));
-
 //        $validation = Validator::isEmail(22)
 //            ->isString(1.111)
 //            ->isNotNull(null)

@@ -89,3 +89,40 @@ nav {
         flex-direction: column;
     }
 }
+
+
+/* Notify CSS */
+.alert {
+    margin: 0 !important;
+    position: fixed;
+    z-index: 1000;
+    bottom: 0;
+    width: 100%;
+    border-radius: 0px;
+}
+
+@media screen and (max-width: 768px) {
+
+}
+
+@media (min-width: 576px) {
+    .alert {
+        width: 100%;
+        left: 0;
+    }
+}
+
+@media (min-width: 768px) {
+    .alert {
+        width: 50%;
+        left: 25%;
+    }
+}
+
+@media (min-width: 992px) {
+
+}
+
+@media (min-width: 1200px) {
+
+}
