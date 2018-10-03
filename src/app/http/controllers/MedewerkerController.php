@@ -17,13 +17,13 @@ use Qui\lib\Request;
 
 class MedewerkerController
 {
-    // Home page with all the people
+    // read
     public function index()
     { 
         $users=DB::selectWhere("*", "users", "roles_id", 1);
         View::render('pages.test',$users);
     }
-    // update
+    // create
     public function create(Request $request)
     { 
 
@@ -37,8 +37,17 @@ class MedewerkerController
             'rememberMeToken'=>"asd"
         ]);
 
-        print_r("asd");die;
+        print_r("updated");die;
         View::render('pages.test');
+    }
+    //update
+    public function update(Request $request,$id){
+
+        // DB::updateEntry($id,'users',);
+    }
+    //delete
+    public function delete(Request $request,$id){
+
     }
 
 }
