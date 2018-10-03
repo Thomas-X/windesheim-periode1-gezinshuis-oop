@@ -2,6 +2,7 @@
 
 namespace Qui\lib;
 
+use Qui\lib\facades\Util;
 use Qui\lib\facades\View;
 use Qui\lib\App;
 use Qui\lib\Request;
@@ -21,6 +22,7 @@ use Qui\lib\Response;
 class CRouter
 {
     private $routes = [];
+    private $routeMatches = false;
 
     /*
      * Returns the 404 page if no path can be matched
@@ -64,14 +66,23 @@ class CRouter
      */
     public function middleware($middlewares = [], array $routes): void
     {
-        $routeMatches = false;
+        $this->routeMatches = false;
+        $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+
+        $arr = [];
         foreach ($routes as $route) {
-            $routeMatches = $this->determineIfRouteMatches(['path' => $route[1]]);
+            $arr[] = [
+                '1' => $route[1],
+                '2' => $path,
+            ];
+            $this->routeMatches = $this->determineIfRouteMatches(['path' => $route[1]]);
+            if ($this->routeMatches == true) {
+                break;
+            }
         }
-        if (!$routeMatches) {
+        if ($this->routeMatches == false) {
             return;
         }
-
         foreach ($middlewares as $middleware) {
             $value = explode('@', $middleware);
             $middlewareName = $value[0];
@@ -98,8 +109,12 @@ class CRouter
                 continue;
             } else if (!$pass) {
                 // If middleware fails, then return 401 and exit to avoid request bubbling up to the 404 page
-                header("HTTP/1.0 401 Unauthorized");
+                // header("HTTP/1.0 401 Unauthorized");
+                // exit;
+                // instead of 401 just redirect to home
+                header('Location: /');
                 exit;
+
             }
         }
     }
@@ -113,7 +128,7 @@ class CRouter
      */
     private function determineIfRouteMatches($route)
     {
-        $path = $_SERVER['REQUEST_URI'];
+        $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
         if ($path == $route['path']) {
             return true;
         }
