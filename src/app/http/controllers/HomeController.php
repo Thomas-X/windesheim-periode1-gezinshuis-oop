@@ -33,8 +33,9 @@ class HomeController
      * @param Response $res
      * @return mixed
      */
-    public function showHome(Request $req, Response $res)
+    public function showHome(Request $req, Response $res, $data)
     {
+        dd($data);
 //        $id = 1;
 //        Util::dd(Auth::login('Thomas', 'internetcat'));
 //        $users = DB::execute("SELECT * FROM user WHERE id=?", [$id]);

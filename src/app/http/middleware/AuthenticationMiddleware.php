@@ -15,6 +15,9 @@ use Qui\lib\Response;
 
 class AuthenticationMiddleware
 {
+    /**
+     * Test comments
+     * */
     public function shouldNotBeLoggedIn(Request $req, Response $res)
     {
         // TODO implement this
