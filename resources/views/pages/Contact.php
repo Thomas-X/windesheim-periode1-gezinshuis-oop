@@ -30,7 +30,7 @@
                     <div class="form-group ">
                         <div class="input-group mb-5">
                             <div class="input-group-prepend">
-                                <div class="input-group-text icon-form"><i class="fas fa-user"></i></div>
+                                 <div class="input-group-text icon-form"><i class="fas fa-user"></i></div>
                             </div>
                             <input type="text" name="lastName" class="form-control ownInput" placeholder="Achternaam">
                         </div>
