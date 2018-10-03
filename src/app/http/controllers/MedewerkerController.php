@@ -13,6 +13,7 @@ use Qui\lib\facades\DB;
 use Qui\lib\facades\Util;
 use Qui\lib\facades\View;
 use Qui\lib\Request;
+use Qui\lib\Response;
 
 
 class MedewerkerController
@@ -21,29 +22,23 @@ class MedewerkerController
     public function index()
     { 
         $users=DB::selectWhere("*", "users", "roles_id", 1);
-        View::render('pages.test',$users);
+        View::render('pages.Test',['users'=>$users]);
+
     }
     // create
     public function create(Request $request)
     { 
-
-        DB::insertEntry('users',  [
-            'roles_id' => 1,
-            'fname'=> "ik heb nog geen form...",
-            'lname'=> "ik heb nog geen form...",
-            'email'=> "formless@form.less",
-            'mobile'=> "70584564546",
-            'password' => "test",
-            'rememberMeToken'=>"asd"
-        ]);
-
-        print_r("updated");die;
-        View::render('pages.test');
+        $success = Authentication::register($request->params);
+        // return some error here if success is false
+        $res->redirect('/', 200);
     }
     //update
-    public function update(Request $request,$id){
+    public function update(Request $request){
 
-        // DB::updateEntry($id,'users',);
+        DB::updateEntry($request->params["id"],'users',array_merge($request->params, [
+            'password' => Authentication::generateHash($request->params['password'])
+        ]));
+        $res->redirect('/', 200);
     }
     //delete
     public function delete(Request $request,$id){

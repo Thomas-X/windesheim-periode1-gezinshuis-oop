@@ -110,7 +110,7 @@ class CAuthentication
         }
     }
 
-    private function generateHash(string $string)
+    public function generateHash(string $string)
     {
         // password_default = bcrypt but can change in newer versions, in case it does hashes are re-generated
         return password_hash($string, PASSWORD_DEFAULT, CAuthentication::HASHING_OPTIONS);

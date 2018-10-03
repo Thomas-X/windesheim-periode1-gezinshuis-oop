@@ -1,4 +1,7 @@
+<div class="col">
+	
 <?php 
 echo "hi";
-echo $data;
+var_dump($users);
  ?>
+</div>

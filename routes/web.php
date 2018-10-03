@@ -36,3 +36,5 @@ Router::get($routes['CreateMedewerker'], 'MedewerkerController@index');
  * */
 Router::post($routes['login'], 'LoginController@onLogin');
 Router::post($routes['onRegister'], 'RegisterController@onRegister');
+Router::post($routes['CreateMedewerker'], 'MedewerkerController@create');
+Router::post($routes['CreateMedewerker'], 'MedewerkerController@update');

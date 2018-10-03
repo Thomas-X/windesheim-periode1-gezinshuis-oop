@@ -184,6 +184,7 @@ class Database
         return $this->execute($query, $rowValues);
     }
 
+    
     public function selectAll(string $table)
     {
         return $this->execute("SELECT * FROM {$table}");
