@@ -11,6 +11,7 @@ $routes = [
     'logout' => '/logout',
     'register' => '/register',
     'onRegister' => '/register',
+    'CreateMedewerker'=>'/medewerker'
 ];
 
 //$middleware = ['ExampleMiddleware@continue'];
@@ -28,6 +29,7 @@ Router::get($routes['contact'], 'ContactController@showContact');
 Router::get($routes['login'], 'LoginController@showLogin');
 Router::get($routes['logout'], 'LogoutController@onLogout');
 Router::get($routes['register'], 'RegisterController@showRegister');
+Router::get($routes['CreateMedewerker'], 'MedewerkerController@create');
 
 /*
  * POST
