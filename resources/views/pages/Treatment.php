@@ -19,7 +19,7 @@
         //Create the file selection
         echo '<div class="form-group">';
         echo '<label for="treatmentDocument">Behandel document: </label>';
-        echo '<input type="file" class="form-control-file" id="treatmentDocument" name="treatmentDocument">';
+        echo '<input type="file" class="form-control-file" id="treatmentDocument" name="treatmentDocument" required>';
         echo '</div>';
 
         echo '<button type="submit" class="btn btn-primary">Opslaan</button>';

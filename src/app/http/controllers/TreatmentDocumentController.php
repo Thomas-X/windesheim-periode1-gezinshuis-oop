@@ -25,6 +25,7 @@ class TreatmentDocumentController
      */
     public function showUpload(Request $req, Response $res)
     {
+        //TODO: Get clients the user is allowed to see.
         $clients= [
             1 => "kid 1",
             2 => "kid 2",
@@ -39,7 +40,6 @@ class TreatmentDocumentController
     /**
      * @param Request $req
      * @param Response $res
-     * @return mixed
      */
     public function upload(Request $req, Response $res)
     {
@@ -57,7 +57,9 @@ class TreatmentDocumentController
         $clientId = $req->params['client'];
         $file = $req->files['treatmentDocument'];
 
-        //TODO: return error if something went wrong
+        //TODO: Return error in the places where it is needed and not yet done.
+        //TODO: Show errors in ui.
+        //TODO: Show completion in ui.
         if (isset($clientId) && isset($file))
         {
             $fileTmpName = $file['tmp_name'];
@@ -76,11 +78,34 @@ class TreatmentDocumentController
                     $didUpload = move_uploaded_file($fileTmpName, $uploadPath);
 
                     if ($didUpload)
-                    {
                         $res->redirect("/upload", 200);
+                }
+                else
+                {
+                    $tmpPath = $uploadDir . "tmp." . $fileExtension;
+                    $didChange = rename($uploadPath, $tmpPath);
+
+                    if ($didChange)
+                    {
+                        $didUpload = move_uploaded_file($fileTmpName, $tmpPath);
+                        if ($didUpload)
+                        {
+                            $didDelete = unlink($tmpPath);
+                            if ($didDelete)
+                                $res->redirect("/upload", 200);
+                        }
+                        else
+                        {
+                            $didChange = rename($tmpPath, $uploadPath);
+                            if ($didChange)
+                                $res->redirect("/upload", 500);
+                        }
                     }
                 }
             }
+            else
+                $res->redirect("/upload", 415);
+
         }
     }
 }

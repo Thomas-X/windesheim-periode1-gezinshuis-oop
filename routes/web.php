@@ -12,7 +12,7 @@ $routes = [
     'register' => '/register',
     'onRegister' => '/register',
     'resetPassword' => '/resetpassword',
-    'forgotPassword' => '/forgotpassword'
+    'forgotPassword' => '/forgotpassword',
     'showUpload' => '/upload',
     'upload' => '/upload'
 ];
