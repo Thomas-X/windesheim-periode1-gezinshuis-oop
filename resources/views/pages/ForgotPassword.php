@@ -6,11 +6,15 @@
         ?>
         <form method="post" action="/forgotpassword">
             <div class="form-group">
-                <label for="email">Voer je email in</label>
-                <input type="text" class="form-control" id="email" placeholder="Enter your email"
-                       name="email">
+                <h3 class="title" for="fname">Voer je e-mail in</h3>
+                <div class="input-group mb-5">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text icon-form"><i class="fas fa-envelope"></i></div>
+                    </div>
+                    <input type="email" name="email" class="form-control ownInput" id="email" placeholder="Enter your email">
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="house-btn">Submit</button>
         </form>
     </div>
 </div>
