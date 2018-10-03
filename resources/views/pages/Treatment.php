@@ -7,7 +7,9 @@
 
         //Create the client selection
         echo '<div class="form-group">';
-        echo '<label for="client">Cliënt: </label>';
+        echo '<div class="input-group">';
+        echo '<h4 class="title" for="client">Cliënt</h4>';
+        echo '</div>';
         echo '<select class="form-control" id="client" name="client">';
         foreach ($clients as $id => $name)
         {
@@ -18,11 +20,13 @@
 
         //Create the file selection
         echo '<div class="form-group">';
-        echo '<label for="treatmentDocument">Behandel document: </label>';
+        echo '<div class="input-group">';
+        echo '<h4 class="title" for="treatmentDocument">Behandel document</h4>';
+        echo '</div>';
         echo '<input type="file" class="form-control-file" id="treatmentDocument" name="treatmentDocument" required>';
         echo '</div>';
 
-        echo '<button type="submit" class="btn btn-primary">Opslaan</button>';
+        echo '<button type="submit" class="btn btn-primary house-btn">Opslaan</button>';
         echo '</form>';
     }
     ?>

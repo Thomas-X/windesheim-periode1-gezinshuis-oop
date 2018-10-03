@@ -41,6 +41,9 @@ class TreatmentDocumentController
      * @param Request $req
      * @param Response $res
      */
+    //TODO: Return error in the places where it is needed and not yet done.
+    //TODO: Show errors in ui.
+    //TODO: Look into refactoring this function.
     public function upload(Request $req, Response $res)
     {
         $allowedFileExtensions = [
@@ -57,9 +60,6 @@ class TreatmentDocumentController
         $clientId = $req->params['client'];
         $file = $req->files['treatmentDocument'];
 
-        //TODO: Return error in the places where it is needed and not yet done.
-        //TODO: Show errors in ui.
-        //TODO: Show completion in ui.
         if (isset($clientId) && isset($file))
         {
             $fileTmpName = $file['tmp_name'];
@@ -75,6 +75,7 @@ class TreatmentDocumentController
 
                 if (!file_exists($uploadPath))
                 {
+                    //If file does not exist on the server upload it.
                     $didUpload = move_uploaded_file($fileTmpName, $uploadPath);
 
                     if ($didUpload)
@@ -82,6 +83,7 @@ class TreatmentDocumentController
                 }
                 else
                 {
+                    //If file does exist temporally rename it, upload the new file and remove the old file if th new file is uploaded.
                     $tmpPath = $uploadDir . "tmp." . $fileExtension;
                     $didChange = rename($uploadPath, $tmpPath);
 
@@ -94,18 +96,9 @@ class TreatmentDocumentController
                             if ($didDelete)
                                 $res->redirect("/upload", 200);
                         }
-                        else
-                        {
-                            $didChange = rename($tmpPath, $uploadPath);
-                            if ($didChange)
-                                $res->redirect("/upload", 500);
-                        }
                     }
                 }
             }
-            else
-                $res->redirect("/upload", 415);
-
         }
     }
 }
