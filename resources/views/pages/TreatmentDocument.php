@@ -23,7 +23,11 @@
         echo '<div class="input-group">';
         echo '<h4 class="title" for="treatmentDocument">Behandel document</h4>';
         echo '</div>';
-        echo '<input type="file" class="form-control-file" id="treatmentDocument" name="treatmentDocument" required>';
+        echo '<div class="btn btn-primary house-btn uploadFile">';
+        echo '<span>Upload</span>';
+        echo '<input type="file" id="treatmentDocument" name="treatmentDocument" class="upload" required>';
+        echo '</div>';
+        echo '<a id="uploadFile">Geen bestand gekozen</a>';
         echo '</div>';
 
         echo '<button type="submit" class="btn btn-primary house-btn">Opslaan</button>';
@@ -31,3 +35,5 @@
     }
     ?>
 </div>
+<link href="css/treatmentDocument.css" rel="stylesheet"/>
+<script src="js/treatmentDocument.js"></script>

@@ -1,0 +1,39 @@
+.house-btn{
+    border-radius: 0;
+    background-image: linear-gradient(to right, #5a7dce , #ccc468);
+    border: none;
+    padding: .75em;
+    box-shadow: 0px 1px 3px 0px #80029e;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.btn {
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+#treatmentDocument {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+.uploadFile {
+    position: relative;
+    overflow: hidden;
+}
+#uploadFile {
+    padding-left: 5px;
+}
