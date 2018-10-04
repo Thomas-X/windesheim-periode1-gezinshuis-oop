@@ -31,7 +31,8 @@ class TreatmentDocumentController
             2 => "kid 2",
             3 => "kid 3",
             4 => "kid 4",
-            5 => "kid 5"
+            5 => "kid 5",
+            6 => "kid 6"
         ];
 
         return View::render('pages.TreatmentDocument', compact('clients'));
@@ -54,7 +55,7 @@ class TreatmentDocumentController
             'txt'
         ];
 
-        $uploadDir = getcwd() . '/uploads/';
+        $uploadDir = getcwd() . '\\uploads\\';
 
         //Get client id and uploaded file.
         $clientId = $req->params['client'];
@@ -70,10 +71,14 @@ class TreatmentDocumentController
 
             if (in_array($fileExtension, $allowedFileExtensions))
             {
-                //Create the path for the uploaded file basted on the client id so it is easy to identify.
-                $uploadPath = $uploadDir . $clientId . "." . $fileExtension;
+                //Check if file name exists.
+                $uploadPath = $uploadDir . $clientId . ".*";
+                $files = glob($uploadPath);
 
-                if (!file_exists($uploadPath))
+                //Replace the star at the end of the upload path with the proper extension
+                $uploadPath = rtrim($uploadPath, "*") . $fileExtension;
+
+                if (is_array($files) && count($files) == 0)
                 {
                     //If file does not exist on the server upload it.
                     $didUpload = move_uploaded_file($fileTmpName, $uploadPath);
@@ -84,12 +89,14 @@ class TreatmentDocumentController
                 else
                 {
                     //If file does exist temporally rename it, upload the new file and remove the old file if th new file is uploaded.
+                    $tmpFileExtension = pathinfo($files[0], PATHINFO_EXTENSION);
+                    $tmpUploadPath = $uploadDir . $clientId . "." . $tmpFileExtension;
                     $tmpPath = $uploadDir . "tmp." . $fileExtension;
-                    $didChange = rename($uploadPath, $tmpPath);
+                    $didChange = rename($tmpUploadPath, $tmpPath);
 
                     if ($didChange)
                     {
-                        $didUpload = move_uploaded_file($fileTmpName, $tmpPath);
+                        $didUpload = move_uploaded_file($fileTmpName, $uploadPath);
                         if ($didUpload)
                         {
                             $didDelete = unlink($tmpPath);
@@ -99,6 +106,7 @@ class TreatmentDocumentController
                     }
                 }
             }
+            $res->redirect("/upload", 500);
         }
     }
 }
