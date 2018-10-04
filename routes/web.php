@@ -14,6 +14,12 @@ $routes = [
     'resetPassword' => '/resetpassword',
     'forgotPassword' => '/forgotpassword',
     'CreateMedewerker'=>'/medewerker',
+    'onReadAll'=>'/tables',
+    'onRead'=>'/tables/test',
+    'onCreate'=>'/tables/test/create',
+    'onUpdate'=>'/tables/test/update',
+    'onDelete'=>'/tables/test/delete',
+
 ];
 
 //$middleware = ['ExampleMiddleware@continue'];
@@ -32,7 +38,8 @@ Router::get($routes['login'], 'AuthenticationController@showLogin');
 Router::get($routes['logout'], 'AuthenticationController@onLogout');
 Router::get($routes['register'], 'AuthenticationController@showRegister');
 Router::get($routes['forgotPassword'], 'AuthenticationController@showForgotPassword');
-Router::get($routes['onRead'], 'TableController@index',['table'=>'users','key'=>'roles_id','identifier'=>1,"page"=>"pages.Test"]);
+Router::get($routes['onRead'], 'TableController@index',['table'=>'users','key'=>'roles_id','identifier'=>1,"page"=>"pages.Test","excludes"=>['id',"fname"]]);
+Router::get($routes['onReadAll'], 'TableController@getall',['tables'=>['users','roles']]);
 /*
  * MIDDLEWARE
  * */

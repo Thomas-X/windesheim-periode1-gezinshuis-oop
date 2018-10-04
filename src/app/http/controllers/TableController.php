@@ -21,7 +21,28 @@ class TableController
     // read
     public function index(Request $req, Response $res, $data)
     { 
-        $items=DB::selectWhere("*", $data["table"], $data['key'], $data['identifier']);
+        
+        // dd(array_keys($items[0]));
+        if(array_key_exists("excludes", $data)){
+            $cols=DB::execute('show COLUMNS from '.$data['table']);
+            $fields=[];
+            foreach ($cols as $key => $value) {
+                $fields[]=$cols[$key]["Field"];
+            }
+     
+            foreach ($data["excludes"] as $exclude) {
+                if (($key = array_search($exclude, $fields)) !== false) {
+                    unset($fields[$key]);
+                }
+            }
+
+                $fields=implode(",",$fields);
+        }else{
+            $fields="*";
+        }
+
+        $items=DB::selectWhere($fields, $data["table"], $data['key'], $data['identifier']);
+        dd($items);
         View::render($data["page"],['items'=>$items]);
 
     }
@@ -43,5 +64,24 @@ class TableController
         $res->redirect('/',200);
     }
 
+    public function getall(Request $req, Response $res, $data){
+
+          $allTables=DB::execute('show tables');
+
+         $temp=[];
+         foreach ($allTables as $key => $value) {
+                $temp[]=$allTables[$key]["Tables_in_mydb"];
+            }
+            foreach ($data["tables"] as $table) {
+                if (($key = array_search($table, $temp)) !== false) {
+                    $tables[]=$table;
+                    // unset($tables[$key]);
+                }
+            }
+
+               dd($tables);
+       
+
+    }
   
 }

@@ -99,7 +99,7 @@ class Database
         // Hence why were just returning the boolean here
 
         // if it was a select statement, we can fetch the rows
-        if (strpos($stmt->queryString, 'SELECT') !== false) {
+        if (strpos($stmt->queryString, 'SELECT') !== false||strpos($stmt->queryString, 'show') !== false) {
             $results = [];
             while ($row = $stmt->fetch()) {
                 $results[] = $row;
