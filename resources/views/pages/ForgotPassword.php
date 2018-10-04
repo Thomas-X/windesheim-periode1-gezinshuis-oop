@@ -1,9 +1,5 @@
 <div class="mainContainer" style="min-height: 100vh">
     <div>
-        <?php
-        if ($_GET['success'] == true)
-            echo "<h3>Check je inbox!</h3>";
-        ?>
         <form method="post" action="/forgotpassword">
             <div class="form-group">
                 <h3 class="title" for="fname">Voer je e-mail in</h3>

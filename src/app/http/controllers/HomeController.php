@@ -36,26 +36,12 @@ class HomeController
      */
     public function showHome(Request $req, Response $res)
     {
-        $notify = [
-            'notify' => NotifierParser::newNotify()
-                ->condition(true)
-                ->message('All good!')
-                ->newNotify()
-                ->condition(false)
-                ->message('Not all good!')
-        ];
+//        $val = json_encode($notify['notify']);
+//        header("Notifications: {$val}");
 //        dd($notify);
 
-        $users = [
-            [
-                'name' => 'thomas',
-                'fname' => 'zwarts'
-            ]
-        ];
 
-        $users = DB::selectWhere('*', 'users', 'roles_id', 1);
-
-        return View::render('pages.Test', compact('users'));
+        return View::render('pages.Home');
 //        $id = 1;
 //        Util::dd(Auth::login('Thomas', 'internetcat'));
 //        $users = DB::execute("SELECT * FROM user WHERE id=?", [$id]);

@@ -76,10 +76,14 @@ class AuthenticationController
         Mailer::setupMail()
             ->to($user['email'])
             ->subject('Reset password')
-            ->body("<html lang='en'><body><h3>Klik op deze link om je wachtwoord te resetten: http://localhost:8000/resetpassword?forgotPasswordToken={$forgotPasswordToken}</h3><br/><h5>Met vriendelijke groet, <br/><br/> Team 11</h5></body></html>")
+            ->body("<html lang='en'><body><h3>Klik op deze <a href='http://localhost:8000/resetpassword?forgotPasswordToken={$forgotPasswordToken}'>link</a> om je wachtwoord te resetten</h3><br/><h5>Met vriendelijke groet, <br/><br/> Team 11</h5></body></html>")
             ->send();
-        // TODO NOTIFICATION
-//        return View::render('pages.ForgotPassword', );
+
+        NotifierParser::init()
+            ->newNotification()
+            ->success()
+            ->message('<div style="display:flex;align-items: center"><i class="fas fa-envelope"></i><div class="margin-1"></div>Check je inbox voor een mail!</div>');
+        return $this->showForgotPassword($req, $res);
     }
 
     public function onRegister(Request $req, Response $res)
