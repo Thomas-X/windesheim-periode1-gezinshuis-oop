@@ -27,7 +27,22 @@ class AuthenticationController
     {
         return View::render('pages.Login');
     }
-
+    public function showBeheer(Request $req, Response $res)
+    {
+        return View::render('pages.Beheer');
+    }
+    public function showAdd(Request $req, Response $res)
+    {
+        return View::render('pages.Add');
+    }
+    public function showEdit(Request $req, Response $res)
+    {
+        return View::render('pages.Edit');
+    }
+    public function showDelete(Request $req, Response $res)
+    {
+        return View::render('pages.Delete');
+    }
     public function showForgotPassword(Request $req, Response $res)
     {
         return View::render('pages.ForgotPassword', [], 'Wachtwoord vergeten');

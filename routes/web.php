@@ -13,7 +13,11 @@ $routes = [
     'register' => '/register',
     'onRegister' => '/register',
     'resetPassword' => '/resetpassword',
-    'forgotPassword' => '/forgotpassword'
+    'forgotPassword' => '/forgotpassword',
+    'add' => '/add',
+    'edit' => '/edit',
+    'delete' => '/delete'
+
 ];
 
 /*
@@ -27,6 +31,9 @@ Router::get($routes['login'], 'AuthenticationController@showLogin');
 Router::get($routes['logout'], 'AuthenticationController@onLogout');
 Router::get($routes['register'], 'AuthenticationController@showRegister');
 Router::get($routes['forgotPassword'], 'AuthenticationController@showForgotPassword');
+Router::get($routes['add'], 'AuthenticationController@showAdd');
+Router::get($routes['edit'], 'AuthenticationController@showEdit');
+Router::get($routes['delete'], 'AuthenticationController@showDelete');
 
 /*
  * MIDDLEWARE
