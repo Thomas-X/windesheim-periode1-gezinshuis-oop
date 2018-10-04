@@ -6,6 +6,7 @@ use Qui\lib\facades\Router;
 $routes = [
     'home' => '/',
     'about' => '/about',
+    'beheer' => '/beheer',
     'contact' => '/contact',
     'login' => '/login',
     'logout' => '/logout',
@@ -20,6 +21,7 @@ $routes = [
  * */
 Router::get($routes['home'], 'HomeController@showHome');
 Router::get($routes['about'], 'AboutController@showAbout');
+Router::get($routes['beheer'], 'BeheerController@showBeheer');
 Router::get($routes['contact'], 'ContactController@showContact');
 Router::get($routes['login'], 'AuthenticationController@showLogin');
 Router::get($routes['logout'], 'AuthenticationController@onLogout');
