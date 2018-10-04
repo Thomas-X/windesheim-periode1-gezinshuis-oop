@@ -57,3 +57,4 @@ Router::post($routes['login'], 'AuthenticationController@onLogin');
 Router::post($routes['onRegister'], 'AuthenticationController@onRegister');
 Router::post($routes['forgotPassword'], 'AuthenticationController@onForgotPassword');
 Router::post($routes['upload'], 'TreatmentDocumentController@upload');
+//Router::get($routes['home'], 'HomeController@showHome', [ 'table' => 'users', 'excludes' => ['roles_id', 'fname'] ]);
