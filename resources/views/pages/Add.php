@@ -26,6 +26,21 @@ echo'<div class="mainContainer">
                 <input type="text" class="form-control ownInput" id="lname" placeholder="Enter your lastname" name="lname">
                 </div>
             </div>
+             <div class="form-group">
+                <div class="input-group mb-5">
+                <h4 class="title" for="rol">rol</h4>
+                </div>
+                <div class="input-group-prepend">
+                    <div class="input-group-text icon-form"><i class="fas fa-user"></i></div>
+                       <select class="form-control ownInput" id="rol" placeholder="Rol" name="Rol">
+                                <option selected disabled>Rol</option>
+                                <option>medewerker</option>
+                                <option>Medewerker Triade</option>
+                                <option>Kind</option>
+                                <option>Ouder/verzorger</option>
+                        </select>
+            </div>
+            </div>
             <div class="form-group">
                 <div class="input-group mb-5">
                 <h4 class="title" for="email">E-mail</h4>
