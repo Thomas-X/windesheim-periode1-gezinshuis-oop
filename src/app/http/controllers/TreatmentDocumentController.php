@@ -34,7 +34,7 @@ class TreatmentDocumentController
             5 => "kid 5"
         ];
 
-        return View::render('pages.Treatment', compact('clients'));
+        return View::render('pages.TreatmentDocument', compact('clients'));
     }
 
     /**
