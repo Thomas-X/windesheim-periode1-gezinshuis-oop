@@ -10,7 +10,7 @@ echo '<div class="mainContainer">
     <div class=" col-sm-12 " >
         <button class="accordion house-btn-mirror">Verzorgers</button>
         <div class="panel">
-            <a href="">Toevoegen</a>
+            <a href="/add">Toevoegen</a>
             <table class="tableUsers">
             <tr><th>ID</th><th>Voornaam</th><th>Achternaam</th><th>Geboortedatum</th><th>E-mail</th><th>Telefoonnummer</th><th>Verwijderen</th><th>Aanpassen</th></tr>
             </table>
@@ -30,7 +30,7 @@ echo '<div class="mainContainer">
 ?>
 <button class="accordion house-btn">Triade</button>
 <div class="panel">
-    <a href="">Toevoegen</a>
+    <a href="/add">Toevoegen</a>
     <table class="tableUsers">
         <tr><th>ID</th><th>Voornaam</th><th>Achternaam</th><th>Geboortedatum</th><th>E-mail</th><th>Telefoonnummer</th><th>Verwijderen</th><th>Aanpassen</th></tr>
     </table>
@@ -38,7 +38,7 @@ echo '<div class="mainContainer">
 
 <button class="accordion house-btn-mirror ">Kinderen</button>
 <div class="panel">
-    <a href="/beheer/add">Toevoegen</a>
+    <a href="/add">Toevoegen</a>
     <table class="tableUsers">
         <tr><th>ID</th><th>Voornaam</th><th>Achternaam</th><th>Geboortedatum</th><th>E-mail</th><th>Telefoonnummer</th><th>Verwijderen</th><th>Aanpassen</th></tr>
     </table>
@@ -46,7 +46,7 @@ echo '<div class="mainContainer">
 
 <button class="accordion house-btn">Ouders/verzorgers</button>
 <div class="panel">
-    <a href="">Toevoegen</a>
+    <a href="/add">Toevoegen</a>
     <table class="tableUsers">
         <tr><th>ID</th><th>Voornaam</th><th>Achternaam</th><th>Geboortedatum</th><th>E-mail</th><th>Telefoonnummer</th><th>Verwijderen</th><th>Aanpassen</th></tr>
     </table>
