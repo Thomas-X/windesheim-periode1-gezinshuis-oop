@@ -22,11 +22,11 @@ class CView
      * @param array $data
      * @return mixed
      */
-    public function render($viewNameWithoutExtension, $data = [])
+    public function render($viewNameWithoutExtension, $data = [], $title=null)
     {
         $fileName = explode('.', $viewNameWithoutExtension);
         // get last item since that's the file name
-        $title = $fileName[count($fileName) - 1];
+        $title = $title ?? $fileName[count($fileName) - 1];
         $pagePath = str_replace('.', '/', $viewNameWithoutExtension);
         // expose vars to be used in view
         extract($data);

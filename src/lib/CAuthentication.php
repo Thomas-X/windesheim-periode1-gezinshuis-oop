@@ -72,6 +72,7 @@ class CAuthentication
         return $this->generateHash((string) $str);
     }
 
+    // TODO remove / refactor this (superadmin should only be able to do this)
     public function register($params)
     {
         // TODO check / validate parameters with Validator
@@ -81,7 +82,8 @@ class CAuthentication
             DB::insertEntry('users', array_merge($params, [
                 'roles_id' => 1,
                 'password' => $this->generateHash($params['password']),
-                'rememberMeToken' => $rememberMeToken
+                'rememberMeToken' => $rememberMeToken,
+                'forgotPasswordToken' => '',
             ]));
             return true;
         } catch (\Exception $exception) {

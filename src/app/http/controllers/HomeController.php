@@ -33,13 +33,9 @@ class HomeController
      * @param Response $res
      * @return mixed
      */
-    public function showHome(Request $req, Response $res)
+    public function showHome(Request $req, Response $res, $data)
     {
-//        Mailer::setupMail()
-//            ->to('team11.windesheim@gmail.com')
-//            ->subject('VERKOOP OPLADERS HIER KOOOOOOPEN')
-//            ->body("<html lang='en'><body><img src='https://media.giphy.com/media/sIIhZliB2McAo/giphy.gif'/><h1>HELLOOO WOOOORLD</h1></body></html>")
-//            ->send();
+        dd($data);
 //        $id = 1;
 //        Util::dd(Auth::login('Thomas', 'internetcat'));
 //        $users = DB::execute("SELECT * FROM user WHERE id=?", [$id]);

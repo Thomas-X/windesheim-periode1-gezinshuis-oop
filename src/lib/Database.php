@@ -183,7 +183,10 @@ class Database
         $query = $query . " WHERE (`id` = {$id})";
         return $this->execute($query, $rowValues);
     }
-
+    public function deleteEntry(string $table, string $key, string $identifier)
+    {
+    return $this->execute("DELETE FROM {$table} WHERE {$key}=?", [$identifier]);
+    }
     
     public function selectAll(string $table)
     {

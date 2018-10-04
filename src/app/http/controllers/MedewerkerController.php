@@ -26,14 +26,14 @@ class MedewerkerController
 
     }
     // create
-    public function create(Request $request)
+    public function create(Request $request,$res)
     { 
         $success = Authentication::register($request->params);
         // return some error here if success is false
         $res->redirect('/', 200);
     }
     //update
-    public function update(Request $request){
+    public function update(Request $request,$res){
 
         DB::updateEntry($request->params["id"],'users',array_merge($request->params, [
             'password' => Authentication::generateHash($request->params['password'])

@@ -2,6 +2,6 @@
 	
 <?php 
 echo "hi";
-var_dump($users);
+var_dump($items);
  ?>
 </div>
