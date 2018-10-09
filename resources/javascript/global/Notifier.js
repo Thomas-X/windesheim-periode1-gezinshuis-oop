@@ -11,9 +11,9 @@ export default class Notifier {
 
         this.currentNotifications = 0;
         this.heights = [];
-        this.notificationTime = 3000 * 8;
-        this.notificationPopUpTime = 200 * 8;
-        this.notificationDissepearTime = 2500 * 8;
+        this.notificationTime = 3000;
+        this.notificationPopUpTime = 200;
+        this.notificationDissepearTime = 2500;
         this.margin = 16;
     }
 

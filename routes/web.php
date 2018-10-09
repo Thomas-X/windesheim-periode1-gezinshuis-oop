@@ -2,18 +2,7 @@
 
 use Qui\lib\App;
 use Qui\lib\facades\Router;
-
-$routes = [
-    'home' => '/',
-    'about' => '/about',
-    'contact' => '/contact',
-    'login' => '/login',
-    'logout' => '/logout',
-    'register' => '/register',
-    'onRegister' => '/register',
-    'resetPassword' => '/resetpassword',
-    'forgotPassword' => '/forgotpassword'
-];
+use Qui\lib\Routes;
 
 /*
  *
@@ -24,9 +13,9 @@ $routes = [
 /*
  * GET
  * */
-Router::get($routes['home'], 'HomeController@showHome');
-Router::get($routes['about'], 'AboutController@showAbout');
-Router::get($routes['contact'], 'ContactController@showContact');
+Router::get(Routes::routes['home'], 'HomeController@showHome');
+Router::get(Routes::routes['about'], 'AboutController@showAbout');
+Router::get(Routes::routes['contact'], 'ContactController@showContact');
 
 /*
  *
@@ -39,10 +28,10 @@ Router::get($routes['contact'], 'ContactController@showContact');
  * */
 Router::middleware(['AuthenticationMiddleware@resetPassword'], [
     [
-        App::GET, $routes['resetPassword'], 'AuthenticationController@showResetPassword'
+        App::GET, Routes::routes['resetPassword'], 'AuthenticationController@showResetPassword'
     ],
     [
-        App::POST, $routes['resetPassword'], 'AuthenticationController@onResetPassword'
+        App::POST, Routes::routes['resetPassword'], 'AuthenticationController@onResetPassword'
     ]
 ]);
 
@@ -51,7 +40,7 @@ Router::middleware(['AuthenticationMiddleware@resetPassword'], [
  * */
 Router::middleware(['AuthenticationMiddleware@shouldBeLoggedIn'], [
     [
-        App::GET, $routes['logout'], 'AuthenticationController@onLogout'
+        App::GET, Routes::routes['logout'], 'AuthenticationController@onLogout'
     ]
 ]);
 
@@ -60,21 +49,21 @@ Router::middleware(['AuthenticationMiddleware@shouldBeLoggedIn'], [
  * */
 Router::middleware(['AuthenticationMiddleware@shouldNotBeLoggedIn'], [
     [
-        App::GET, $routes['login'], 'AuthenticationController@showLogin'
+        App::GET, Routes::routes['login'], 'AuthenticationController@showLogin'
     ],
     [
-        App::GET, $routes['register'], 'AuthenticationController@showRegister'
+        App::GET, Routes::routes['register'], 'AuthenticationController@showRegister'
     ],
     [
-        App::GET, $routes['forgotPassword'], 'AuthenticationController@showForgotPassword'
+        App::GET, Routes::routes['forgotPassword'], 'AuthenticationController@showForgotPassword'
     ],
     [
-        App::POST, $routes['login'], 'AuthenticationController@onLogin'
+        App::POST, Routes::routes['login'], 'AuthenticationController@onLogin'
     ],
     [
-        App::POST, $routes['onRegister'], 'AuthenticationController@onRegister'
+        App::POST, Routes::routes['onRegister'], 'AuthenticationController@onRegister'
     ],
     [
-        App::POST, $routes['forgotPassword'], 'AuthenticationController@onForgotPassword'
+        App::POST, Routes::routes['forgotPassword'], 'AuthenticationController@onForgotPassword'
     ]
 ]);

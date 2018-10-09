@@ -17,6 +17,11 @@
     <title>Gezinshuis - <?= $title ?></title>
 </head>
 <body>
+<script>
+
+    var NOTIFICATIONS = <?php echo json_encode($notifications) ?>
+</script>
+<script src="js/global.js"></script>
 
 <?php require(__DIR__ . '/../partials/nav.php') ?>
 
@@ -24,10 +29,5 @@
 
 <?php require(__DIR__ . '/../partials/footer.php') ?>
 
-<script>
-
-    var NOTIFICATIONS = <?php echo json_encode($notifications) ?>
-</script>
-<script src="js/global.js"></script>
 </body>
 </html>

@@ -77,6 +77,22 @@ footer a:hover {
     padding: 0 0.5em 0 0.5em;
 }
 
+.error {
+    color: red;
+}
+
+.flex-form {
+    display: flex;
+}
+
+.flex-form-label {
+    font-size: 1.5rem;
+}
+
+.ownInput {
+    height: 100%;
+}
+
 nav {
     padding: 0.5em 0 0.5em 0;
     background-color: #f3f3f3;

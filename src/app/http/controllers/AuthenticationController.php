@@ -16,6 +16,7 @@ use Qui\lib\facades\NotifierParser;
 use Qui\lib\facades\View;
 use Qui\lib\Request;
 use Qui\lib\Response;
+use Qui\lib\Routes;
 
 class AuthenticationController
 {
@@ -42,33 +43,38 @@ class AuthenticationController
     public function onResetPassword(Request $req, Response $res)
     {
         $forgotPasswordToken = $req->params['forgotPasswordToken'];
+        $home = Routes::routes['home'];
         $password = $req->params['password'];
         if (!isset($password) || !isset($forgotPasswordToken)) {
-            return $res->redirect('/', 401);
+            return $res->redirect($home, 401);
         }
         // TODO DRY i know
         $users = DB::selectWhere('email, id', 'users', 'forgotPasswordToken', $req->params['forgotPasswordToken']);
         if (!isset($users)) {
-            return $res->redirect('/', 401);
+            return $res->redirect($home, 401);
         } else if (count($users) > 1) {
-            return $res->redirect('/', 401);
+            return $res->redirect($home, 401);
         }
         $user = $users[0];
         $password = Authentication::generateHash($password);
         DB::updateEntry($user['id'], 'users', compact('password'));
-        // TODO maybe show a popup here..
-        $res->redirect('/', 200);
+        NotifierParser::init()
+            ->newNotification()
+            ->success()
+            ->message('<div style="display:flex;align-items: center">Je wachtwoord is geupdate!</div>');
+        return $this->showResetPassword($req, $res);
     }
 
     public function onForgotPassword(Request $req, Response $res)
     {
-        if (!isset($req->params['email'])) $res->redirect('/');
+        $home = Routes::routes['home'];
+        if (!isset($req->params['email'])) $res->redirect($home);
 
         $users = DB::selectWhere('email, id', 'users', 'email', $req->params['email']);
         if (!isset($users)) {
-            return $res->redirect('/', 401);
+            return $res->redirect($home, 401);
         } else if (count($users) > 1) {
-            return $res->redirect('/', 401);
+            return $res->redirect($home, 401);
         }
         $user = $users[0];
         $forgotPasswordToken = Authentication::generateRandomString();
@@ -90,7 +96,7 @@ class AuthenticationController
     {
         $success = Authentication::register($req->params);
         // return some error here if success is false
-        $res->redirect('/', 200);
+        $res->redirect(Routes::routes['home'], 200);
     }
 
     public function onLogin(Request $req, Response $res)

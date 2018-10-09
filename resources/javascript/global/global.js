@@ -3,6 +3,18 @@
 import 'babel-polyfill';
 import Store from './Store';
 import Notifier from './Notifier';
+import $ from 'jquery';
+import 'jquery-validation';
+
+global.validateForm = (id, opts) => {
+    $(`#${id}`).validate({
+            errorPlacement: function (error, element) {
+                error.appendTo(element.parent().parent());
+            },
+            ...opts
+        }
+    );
+}
 
 class Main {
     constructor() {

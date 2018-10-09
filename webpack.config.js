@@ -61,7 +61,8 @@ module.exports = (env, argv) => {
         'contact',
         'home',
         'login',
-        'register'
+        'register',
+        'resetpassword'
     ]));
     return obj;
 }
