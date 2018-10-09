@@ -2,56 +2,70 @@
 
 use Qui\lib\App;
 use Qui\lib\facades\Router;
+use Qui\lib\Routes;
 
-$routes = [
-    'home' => '/',
-    'about' => '/about',
-    'contact' => '/contact',
-    'login' => '/login',
-    'logout' => '/logout',
-    'register' => '/register',
-    'onRegister' => '/register',
-    'resetPassword' => '/resetpassword',
-    'forgotPassword' => '/forgotpassword'
-];
+/*
+ *
+ * No middleware routes should be placed before middleware routes (is nice)
+ *
+ * */
 
 /*
  * GET
  * */
-Router::get($routes['home'], 'HomeController@showHome');
-Router::get($routes['about'], 'AboutController@showAbout');
-Router::get($routes['contact'], 'ContactController@showContact');
-Router::get($routes['login'], 'AuthenticationController@showLogin');
-Router::get($routes['logout'], 'AuthenticationController@onLogout');
-Router::get($routes['register'], 'AuthenticationController@showRegister');
-Router::get($routes['forgotPassword'], 'AuthenticationController@showForgotPassword');
+Router::get(Routes::routes['home'], 'HomeController@showHome');
+Router::get(Routes::routes['about'], 'AboutController@showAbout');
+Router::get(Routes::routes['contact'], 'ContactController@showContact');
 
 /*
+ *
  * MIDDLEWARE
+ *
+ * */
+
+/*
+ * Forgot password token verification middleware
  * */
 Router::middleware(['AuthenticationMiddleware@resetPassword'], [
     [
-        App::GET, $routes['resetPassword'], 'AuthenticationController@showResetPassword'
+        App::GET, Routes::routes['resetPassword'], 'AuthenticationController@showResetPassword'
     ],
     [
-        App::POST, $routes['resetPassword'], 'AuthenticationController@onResetPassword'
+        App::POST, Routes::routes['resetPassword'], 'AuthenticationController@onResetPassword'
     ]
 ]);
 
-// If the user should NOT be logged in (i.e login/register page should be hidden)
-// TODO remove /register page but for tmp testing its useful
-// TODO implement this (I have no time left to do this)
-//Router::middleware(['AuthenticationMiddleware@shouldNotBeLoggedIn'], [
-//    [
-//
-//    ]
-//]);
+/*
+ * Should be logged in middleware
+ * */
+Router::middleware(['AuthenticationMiddleware@shouldBeLoggedIn'], [
+    [
+        App::GET, Routes::routes['logout'], 'AuthenticationController@onLogout'
+    ]
+]);
 
 /*
- * POST
+ * Should not be logged in middleware
  * */
-Router::post($routes['login'], 'AuthenticationController@onLogin');
-Router::post($routes['onRegister'], 'AuthenticationController@onRegister');
-Router::post($routes['forgotPassword'], 'AuthenticationController@onForgotPassword');
+Router::middleware(['AuthenticationMiddleware@shouldNotBeLoggedIn'], [
+    [
+        App::GET, Routes::routes['login'], 'AuthenticationController@showLogin'
+    ],
+    [
+        App::GET, Routes::routes['register'], 'AuthenticationController@showRegister'
+    ],
+    [
+        App::GET, Routes::routes['forgotPassword'], 'AuthenticationController@showForgotPassword'
+    ],
+    [
+        App::POST, Routes::routes['login'], 'AuthenticationController@onLogin'
+    ],
+    [
+        App::POST, Routes::routes['onRegister'], 'AuthenticationController@onRegister'
+    ],
+    [
+        App::POST, Routes::routes['forgotPassword'], 'AuthenticationController@onForgotPassword'
+    ]
+]);
 
 //Router::get($routes['home'], 'HomeController@showHome', [ 'table' => 'users', 'excludes' => ['roles_id', 'fname'] ]);

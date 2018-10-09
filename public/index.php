@@ -11,6 +11,7 @@ use Qui\lib\CUtil;
 use Qui\lib\CAuthentication;
 use Qui\lib\CValidator;
 use Qui\lib\CMailer;
+use Qui\lib\CNotifierParser;
 
 $_ENV = [];
 // setup ENV variables before setting up database classes etc
@@ -23,6 +24,7 @@ $view = new CView();
 $router = new CRouter();
 $auth = new CAuthentication();
 $mailer = new CMailer();
+$notifierParser = new CNotifierParser();
 
 App::setupDependencies([
     'database'                  => $db, // eloquent was used here but now it's not anymore, because packages can't be used
@@ -33,6 +35,7 @@ App::setupDependencies([
     'util'                      => $util,
     'authentication'            => $auth,
     'mailer'                    => $mailer,
+    'notifierparser'            => $notifierParser,
 ]);
 App::setupRoutes(__DIR__ . '/../routes/web.php');
 

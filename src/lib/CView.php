@@ -8,12 +8,20 @@
 
 namespace Qui\lib;
 
+use Qui\lib\facades\NotifierParser;
+
 /**
  * Class View
  * @package Qui\core
  */
 class CView
 {
+
+    public function getNotifications()
+    {
+        return NotifierParser::make();
+    }
+
     /*
      * Renders a view using PHP 🤢🤢a🤢🤢🤢🤢🤢s the templating engine
      * */
@@ -24,6 +32,7 @@ class CView
      */
     public function render($viewNameWithoutExtension, $data = [], $title=null)
     {
+        $notifications = $this->getNotifications();
         $fileName = explode('.', $viewNameWithoutExtension);
         // get last item since that's the file name
         $title = $title ?? $fileName[count($fileName) - 1];

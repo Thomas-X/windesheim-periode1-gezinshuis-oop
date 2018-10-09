@@ -64,7 +64,7 @@ class CRouter
      * @param array $middlewares
      * @param array $routes
      */
-    public function middleware($middlewares = [], array $routes): void
+    public function middleware($middlewares = [], array $routes, $onlyForThisMethod = null): void
     {
         $this->routeMatches = false;
         $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
@@ -88,6 +88,13 @@ class CRouter
             $req = new Request();
             $res = new Response();
             $pass = $middlewareInstance->$middlewareMethod($req, $res);
+            if (isset($onlyForThisMethod)) {
+                if ($_SERVER['REQUEST_METHOD'] == $onlyForThisMethod) {
+                    $pass = $middlewareInstance->$middlewareMethod($req, $res);
+                }
+            } else {
+                $pass = $middlewareInstance->$middlewareMethod($req, $res);
+            }
             if ($pass) {
                 // for every route given in array add it to the routes array (to serve up, since the middleware passed)
                 foreach ($routes as $route) {
