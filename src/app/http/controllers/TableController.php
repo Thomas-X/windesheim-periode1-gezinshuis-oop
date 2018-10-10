@@ -42,7 +42,6 @@ class TableController
         }
 
         $items = DB::selectWhere($fields, $data["table"], $data['key'], $data['identifier']);
-        dd($items);
         View::render($data["page"], ['items' => $items]);
 
     }
@@ -84,7 +83,7 @@ class TableController
             }
         }
 
-        dd($allTables);
+        View::render($data["page"], ['items' => $allTables]);
 
 
     }

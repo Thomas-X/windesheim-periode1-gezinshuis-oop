@@ -38,8 +38,8 @@ Router::get($routes['login'], 'AuthenticationController@showLogin');
 Router::get($routes['logout'], 'AuthenticationController@onLogout');
 Router::get($routes['register'], 'AuthenticationController@showRegister');
 Router::get($routes['forgotPassword'], 'AuthenticationController@showForgotPassword');
-Router::get($routes['onRead'], 'TableController@index',['table'=>'users','key'=>'roles_id','identifier'=>1,"page"=>"pages.Test","excludes"=>['id',"fname"]]);
-Router::get($routes['onReadAll'], 'TableController@getall',['tables'=>['users','roles']]);
+Router::get($routes['onRead'], 'TableController@index',['table'=>'users','key'=>'id','identifier'=>4,"page"=>"pages.Test","excludes"=>['id',"fname"]]);
+Router::get($routes['onReadAll'], 'TableController@getall',['tables'=>['users','roles'],"page"=>"pages.Test"]);
 /*
  * MIDDLEWARE
  * */
