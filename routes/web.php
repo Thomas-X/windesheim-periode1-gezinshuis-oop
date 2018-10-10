@@ -17,6 +17,22 @@ Router::get(Routes::routes['home'], 'HomeController@showHome');
 Router::get(Routes::routes['about'], 'AboutController@showAbout');
 Router::get(Routes::routes['contact'], 'ContactController@showContact');
 
+// Table controller usage
+//Router::get($routes['onRead'], 'TableController@index',['table'=>'users','selectAll' => null,"page"=>"pages.Test","excludes"=>['id',"fname"]]);
+//Router::get($routes['onReadAll'], 'TableController@getall',['tables'=>['users','roles'],"page"=>"pages.Test"]);
+//Router::post($routes['CreateMedewerker'], 'MedewerkerController@create');
+//Router::post($routes['onCreate'], 'TableController@create',['table'=>'users']);
+//Router::post($routes['onUpdate'], 'TableController@update',['table'=>'users','id'=>1]);
+//Router::post($routes['onDelete'], 'TableController@delete',['table'=>'users','key'=>'id','identifier'=>6]);
+// Router::get($routes['CreateMedewerker'], 'MedewerkerController@index');
+//'onReadAll'=>'/tables',
+//    'onRead'=>'/tables/test',
+//    'onCreate'=>'/tables/test/create',
+//    'onUpdate'=>'/tables/test/update',
+//    'onDelete'=>'/tables/test/delete',
+//    'CreateMedewerker'=>'/medewerker',
+
+
 /*
  *
  * MIDDLEWARE
@@ -43,6 +59,9 @@ Router::middleware(['AuthenticationMiddleware@shouldBeLoggedIn'], [
         App::GET, Routes::routes['logout'], 'AuthenticationController@onLogout'
     ]
 ]);
+Router::get($routes['login'], 'LoginController@showLogin');
+Router::get($routes['logout'], 'LogoutController@onLogout');
+Router::get($routes['register'], 'RegisterController@showRegister');
 
 /*
  * Should not be logged in middleware
@@ -67,5 +86,4 @@ Router::middleware(['AuthenticationMiddleware@shouldNotBeLoggedIn'], [
         App::POST, Routes::routes['forgotPassword'], 'AuthenticationController@onForgotPassword'
     ]
 ]);
-
 //Router::get($routes['home'], 'HomeController@showHome', [ 'table' => 'users', 'excludes' => ['roles_id', 'fname'] ]);
