@@ -40,8 +40,12 @@ class TableController
         } else {
             $fields = "*";
         }
-
-        $items = DB::selectWhere($fields, $data["table"], $data['key'], $data['identifier']);
+        $items = null;
+        if (array_key_exists('selectAll', $data)) {
+            $items = DB::selectAll($data['table']);
+        } else {
+            $items = DB::selectWhere($fields, $data["table"], $data['key'], $data['identifier']);
+        }
         View::render($data["page"], ['items' => $items]);
 
     }
