@@ -56,13 +56,14 @@ module.exports = (env, argv) => {
     }
     // node <v10 doesnt support spread operators..
     obj.entry = Object.assign(obj.entry, javascriptDirectoryHelper([
-        '404',
-        'about',
-        'contact',
-        'home',
-        'login',
-        'register',
-        'resetpassword'
+                '404',
+                'about',
+                'contact',
+                'home',
+                'login',
+                'register',
+                'treatmentDocument',
+                'resetpassword'
     ]));
     return obj;
 }
