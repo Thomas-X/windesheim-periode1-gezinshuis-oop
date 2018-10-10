@@ -9,10 +9,12 @@
 namespace Qui\app\http\controllers;
 
 use Qui\lib\facades\View;
+use Qui\lib\Request;
+use Qui\lib\Response;
 
 class AboutController
 {
-    public function showAbout()
+    public function showAbout(Request $req, Response $res)
     {
         return View::render('pages.About');
     }
