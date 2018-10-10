@@ -22,7 +22,7 @@ class MedewerkerController
     public function index()
     { 
         $users=DB::selectWhere("*", "users", "roles_id", 1);
-        View::render('pages.Test',['users'=>$users]);
+        View::render('pages.employee.index',['users'=>$users]);
 
     }
     // create

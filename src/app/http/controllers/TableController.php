@@ -21,21 +21,19 @@ class TableController
     // read
     public function index(Request $req, Response $res, $data)
     {
-
         // dd(array_keys($items[0]));
         if (array_key_exists("excludes", $data)) {
             $cols = DB::execute('show COLUMNS from ' . $data['table']);
             $fields = [];
+            // take fields of array data
             foreach ($cols as $key => $value) {
                 $fields[] = $cols[$key]["Field"];
             }
-
             foreach ($data["excludes"] as $exclude) {
                 if (($key = array_search($exclude, $fields)) !== false) {
                     unset($fields[$key]);
                 }
             }
-
             $fields = implode(",", $fields);
         } else {
             $fields = "*";

@@ -1,6 +1,6 @@
 <div class="col">
-	
-<?php 
-var_dump($items);
- ?>
+	<pre>
+
+    </pre>
+
 </div>
