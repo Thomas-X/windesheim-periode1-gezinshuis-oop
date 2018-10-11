@@ -3,6 +3,8 @@
 use Qui\lib\App;
 use Qui\lib\facades\Router;
 use Qui\lib\Routes;
+use Qui\lib\Request;
+$req=new Request;
 
 /*
  *
@@ -20,6 +22,20 @@ use Qui\lib\Routes;
 Router::get(Routes::routes['home'], 'HomeController@showHome');
 Router::get(Routes::routes['about'], 'AboutController@showAbout');
 Router::get(Routes::routes['contact'], 'ContactController@showContact');
+
+if($req->params['id']){   
+Router::get(Routes::routes['cms_day2dayInformation'],'TableController@index',['table'=> 'day2dayinformation','key'=>'id','identifier'=>$req->params['id'],"page"=>"pages.day2day.index"]);
+
+if($req->params['update'])
+Router::post(Routes::routes['cms_day2dayInformation'],'TableController@update',['table'=> 'day2dayinformation','id'=>$req->params['id']]);
+if($req->params['delete'])
+Router::post(Routes::routes['cms_day2dayInformation'],'TableController@delete',['table'=> 'day2dayinformation','identifier'=>$req->params['id'],'key'=>'id']);
+}
+else{
+if($req->params['create'])
+Router::post(Routes::routes['cms_day2dayInformation'],'TableController@create',['table'=> 'day2dayinformation']);    
+Router::get(Routes::routes['cms_day2dayInformation'],'TableController@index',['table'=> 'day2dayinformation','selectAll'=>null,"page"=>"pages.day2day.index"]);
+}
 
 // Table controller usage
 //Router::get($routes['onRead'], 'TableController@index',['table'=>'users','selectAll' => null,"page"=>"pages.Test","excludes"=>['id',"fname"]]);
