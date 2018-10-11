@@ -1,4 +1,4 @@
 import $ from 'jquery';
 
+validateForm("loginForm");
 
-console.log('hello222123')

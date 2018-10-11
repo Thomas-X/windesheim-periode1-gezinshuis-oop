@@ -2,27 +2,21 @@
 /**
  * Created by PhpStorm.
  * User: thomas
- * Date: 15/09/18
- * Time: 23:22
+ * Date: 04/10/18
+ * Time: 00:11
  */
 
 namespace Qui\lib\facades;
 
+use Qui\lib\facades\Facade;
 
-/**
- * Class Validator
- * @package Qui\core\facades\
- *
- *
- *
- */
-class Validator extends Facade
+class NotifierParser extends Facade
 {
     /**
      * @return string
      */
     protected static function getFacadeAccessor()
     {
-        return 'validator';
+        return 'notifierparser';
     }
 }

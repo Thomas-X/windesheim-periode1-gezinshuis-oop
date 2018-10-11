@@ -1,51 +1,25 @@
 <div class="mainContainer" style="min-height: 100vh">
     <div>
-        <form method="post" action="/register">
-            <div class="form-group">
-                <div class="input-group mb-5">
-                  <h4 class="title" for="fname">First name</h4>
-                </div>
-                <div class="input-group-prepend">
-                    <div class="input-group-text icon-form"><i class="fas fa-user"></i></div>
-                 <input type="text" class="form-control ownInput" id="fname" placeholder="Enter your firstname" name="fname">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="input-group mb-5">
-                    <h4 class="title" for="lname">Last name</h4>
-                </div>
-                <div class="input-group-prepend">
-                    <div class="input-group-text icon-form"><i class="fas fa-user"></i></div>
-                <input type="text" class="form-control ownInput" id="lname" placeholder="Enter your lastname" name="lname">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="input-group mb-5">
-                <h4 class="title" for="email">E-mail</h4>
-                </div>
-                <div class="input-group-prepend">
-                    <div class="input-group-text icon-form"><i class="fas fa-envelope"></i></div>
-                <input type="email" class="form-control ownInput" id="email" placeholder="Enter your e-mail" name="email">
-            </div>
-            </div>
-            <div class="form-group">
-                <div class="input-group mb-5">
-                <h4 class="title" for="lname">Mobile number</h4>
-                </div>
-                <div class="input-group-prepend">
-                    <div class="input-group-text icon-form"><i class="fas fa-phone"></i></div>
-                <input type="number" class="form-control ownInput" id="mobilenumber" placeholder="Enter your mobile number" name="mobile">
-            </div>
-            </div>
-            <div class="form-group">
-                <div class="input-group mb-5">
-                <h4 class="title" for="password">Password</h4>
-                </div>
-                <div class="input-group-prepend">
-                    <div class="input-group-text icon-form"><i class="fas fa-lock"></i></div>
-                <input type="password" class="form-control ownInput" id="password" placeholder="Enter your password" name="password">
-            </div>
-            </div>
+        <form method="post" action="<?php echo \Qui\lib\Routes::routes['onRegister'] ?>" id="registerForm">
+            <?php
+            \Qui\lib\Form::input('Voornaam', 'fa-user',
+                "<input type=\"text\" class=\"form-control ownInput\" id=\"fname\" placeholder=\"Enter your firstname\" name=\"fname\" required>");
+
+            \Qui\lib\Form::input('Achternaam', 'fa-user',
+                "<input type=\"text\" class=\"form-control ownInput\" id=\"lname\" placeholder=\"Enter your lastname\" name=\"lname\" required>");
+
+            \Qui\lib\Form::input('E-mail', 'fa-envelope',
+                "<input type=\"email\" class=\"form-control ownInput\" id=\"email\" placeholder=\"Enter your e-mail\"
+                           name=\"email\" required>");
+
+            \Qui\lib\Form::input('Mobiel nummer', 'fa-phone',
+                "<input type=\"number\" class=\"form-control ownInput\" id=\"mobilenumber\"
+                           placeholder=\"Enter your mobile number\" name=\"mobile\" required>");
+
+            \Qui\lib\Form::input('Wachtwoord', 'fa-lock',
+                "<input type=\"password\" class=\"form-control ownInput\" id=\"password\" placeholder=\"Enter your password\"
+                           name=\"password\" minlength='5' required>");
+            ?>
             <button type="submit" class="btn btn-primary house-btn">Submit</button>
         </form>
     </div>
