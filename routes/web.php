@@ -5,6 +5,7 @@ use Qui\lib\facades\Router;
 use Qui\lib\Routes;
 use Qui\lib\Request;
 use Qui\lib\Response;
+use Qui\lib\CMS_BUILDER;
 
 /*
  *
@@ -23,90 +24,8 @@ Router::get(Routes::routes['home'], 'HomeController@showHome');
 Router::get(Routes::routes['about'], 'AboutController@showAbout');
 Router::get(Routes::routes['contact'], 'ContactController@showContact');
 
-function CMS_BUILDER($opts)
-{
-    $req = new Request();
-    $res = new Response();
-
-    if (array_key_exists('type', $req->params)) {
-        switch ($req->params['type']) {
-            // TODO /h/day2dayinformation data
-//            case 'select':
-//                Router::get(
-//                    Routes::routes['cms_day2dayInformation'],
-//                    'TableController@index',
-//                    [
-//                        'table' => 'day2dayinformation',
-//                        'key' => 'id',
-//                        'identifier' => $req->params['id'],
-//                        "page" => "pages.day2day.index"
-//                    ]);
-//                break;
-            case 'create_get':
-                Router::get(Routes::routes['cms_day2dayInformation'],
-                    'TableController@create_get',
-                    [
-                        'page' => 'pages.day2day.create',
-                    ]
-                );
-                break;
-            case 'update_get':
-                Router::get(Routes::routes['cms_day2dayInformation'],
-                'TableController@update_get',
-                [
-                    'page' => 'pages.day2day.update',
-                    'key' => 'id',
-                    'identifier' => $req->params['id'],
-                    'table' => 'day2dayinformation',
-                ]);
-                break;
-            case 'create_post':
-                Router::post(
-                    Routes::routes['cms_day2dayInformation'],
-                    'TableController@create_post',
-                    [
-                        'table' => 'day2dayinformation',
-                        'redirect' => Routes::routes['cms_day2dayInformation'],
-                        'includes' => ['date',
-                            'description',
-                            'title',
-                            'profiles_employees_id'],
-                        'includes_data' => [
-                            // Since the only user coming here should be logged as an employee
-                            // TODO remove mock
-//                            'profiles_employees_id' => \Qui\lib\facades\Authentication::verify(true)['id'],
-                            'profiles_employees_id' => 1,
-                        ]
-                    ]);
-                break;
-            case 'update_post':
-                Router::post(Routes::routes['cms_day2dayInformation'], 'TableController@update_post', [
-                    'table' => 'day2dayinformation',
-                    'id' => $req->params['id'],
-                    'redirect' => Routes::routes['cms_day2dayInformation']
-                ]);
-                break;
-            case 'delete_post':
-                Router::post(Routes::routes['cms_day2dayInformation'], 'TableController@delete_post', [
-                    'table' => 'day2dayinformation',
-                    'identifier' => $req->params['id'],
-                    'key' => 'id',
-                    'redirect' => Routes::routes['cms_day2dayInformation']
-                ]);
-                break;
-        }
-    } else {
-        Router::get(Routes::routes['cms_day2dayInformation'], 'TableController@index', ['table' => 'day2dayinformation',
-            'selectAll' => null,
-            "page" => "pages.day2day.index"]);
-    }
-}
-
-// /cms/day2dayinformation
-CMS_BUILDER([
-
-]);
-
+// Init CMS routes
+CMS_BUILDER::init();
 
 // Table controller usage
 //Router::get($routes['onRead'], 'TableController@index',['table'=>'users','selectAll' => null,"page"=>"pages.Test","excludes"=>['id',"fname"]]);
