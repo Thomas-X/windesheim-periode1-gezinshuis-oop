@@ -81,7 +81,7 @@ class CareForSchemaController
     public function uploadCareForSchemas(Request $req, Response $res)
     {
 
-        $uploadDir = 'uploads\\';
+        $uploadDir = 'uploads/';
 
         //Get client id and uploaded file.
         $clientId = trim($req->params['clientId']);
