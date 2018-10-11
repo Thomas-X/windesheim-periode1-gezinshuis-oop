@@ -22,7 +22,6 @@ class TableController
     public function index(Request $req, Response $res, $data)
     {
 
-        // dd(array_keys($items[0]));
         if (array_key_exists("excludes", $data)) {
             $cols = DB::execute('show COLUMNS from ' . $data['table']);
             $fields = [];
