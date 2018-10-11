@@ -12,6 +12,7 @@ use Qui\lib\Request;
 use Qui\lib\Response;
 use Qui\lib\facades\View;
 use Qui\lib\facades\NotifierParser;
+use Qui\lib\Routes;
 
 /**
  * Class CareForSchemaController
@@ -54,6 +55,12 @@ class CareForSchemaController
             6 => 'kid 6'
         ];
 
+        if (isset($req->params['download_status']) && $req->params['download_status'] == 'success'){
+            NotifierParser::init()
+                ->newNotification()
+                ->success()
+                ->message('Behandel document is gedownload.');
+        }
         return View::render('pages.CareForSchema', compact('clients'));
     }
 
@@ -198,12 +205,9 @@ class CareForSchemaController
                 header('Cache-Control: must-revalidate');
                 header('Pragma: public');
                 header('Content-Length: ' . filesize($file));
+                readfile($file);
 
-                NotifierParser::init()
-                    ->newNotification()
-                    ->success()
-                    ->message('Behandel document is gedownload.');
-                return $this->showCareForSchemas($req, $res);
+                return $res->redirect(Routes::routes['careForSchemas'] . '?download_status=success');
             }
             NotifierParser::init()
                 ->newNotification()
