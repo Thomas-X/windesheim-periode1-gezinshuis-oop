@@ -62,7 +62,7 @@ module.exports = (env, argv) => {
                 'home',
                 'login',
                 'register',
-                'treatmentDocument',
+                'careForSchema',
                 'resetpassword'
     ]));
     return obj;
