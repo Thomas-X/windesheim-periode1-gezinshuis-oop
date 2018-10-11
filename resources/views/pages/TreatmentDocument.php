@@ -48,4 +48,4 @@
     ?>
 </div>
 <link href="css/treatmentDocument.css" rel="stylesheet"/>
-<script src="js/treatmentDocument.js"></script>
+<script src="/js/treatmentDocument.js"></script>

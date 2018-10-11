@@ -23,12 +23,12 @@ Router::get(Routes::routes['home'], 'HomeController@showHome');
 Router::get(Routes::routes['about'], 'AboutController@showAbout');
 Router::get(Routes::routes['contact'], 'ContactController@showContact');
 
-function CMS_BUILDER($opts)
+function CMS_BUILDER()
 {
     $req = new Request();
     $res = new Response();
 
-    if (array_key_exists($req->params['type'])) {
+    if (array_key_exists('type', $req->params)) {
         switch ($req->params['type']) {
             case 'select':
                 Router::get(
@@ -56,12 +56,11 @@ function CMS_BUILDER($opts)
                     'identifier' => $req->params['id'],
                     'key' => 'id']);
                 break;
-            case 'selectAll':
-                Router::get(Routes::routes['cms_day2dayInformation'], 'TableController@index', ['table' => 'day2dayinformation',
-                    'selectAll' => null,
-                    "page" => "pages.day2day.index"]);
-                break;
         }
+    } else {
+        Router::get(Routes::routes['cms_day2dayInformation'], 'TableController@index', ['table' => 'day2dayinformation',
+            'selectAll' => null,
+            "page" => "pages.day2day.index"]);
     }
 }
 
@@ -116,9 +115,6 @@ Router::middleware(['AuthenticationMiddleware@shouldBeLoggedIn'], [
         'AuthenticationController@onLogout'
     ]
 ]);
-Router::get($routes['login'], 'LoginController@showLogin');
-Router::get($routes['logout'], 'LogoutController@onLogout');
-Router::get($routes['register'], 'RegisterController@showRegister');
 
 /*
  * Should not be logged in middleware
