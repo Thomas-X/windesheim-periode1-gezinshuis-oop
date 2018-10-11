@@ -61,7 +61,7 @@ class Routes
 
 
         // overview of 'behandelplannen' that the doctor is assigned to (profile_owner can see all careforschemas)
-        'careforschemas' => '/h/careforschemas',
+        'careForSchemas' => '/h/careforschemas',
         'uploadCareForSchema' => '/h/careforschemas', // <== ?id=2. upload=update
         'downloadCareForSchema' => '/h/careforschemas' // <== ?id=2
     ];

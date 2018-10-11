@@ -23,7 +23,7 @@ class CareForSchemaController
      * @param Response $res
      * @return mixed
      */
-    public function showUpload(Request $req, Response $res)
+    public function showCareForSchemas(Request $req, Response $res)
     {
         //TODO: Get clients the user is allowed to see.
         $clients= [
@@ -45,7 +45,7 @@ class CareForSchemaController
     //TODO: Return error in the places where it is needed and not yet done.
     //TODO: Show errors in ui.
     //TODO: Look into refactoring this function.
-    public function upload(Request $req, Response $res)
+    public function uploadCareForSchemas(Request $req, Response $res)
     {
         $allowedFileExtensions = [
             'pdf',

@@ -61,6 +61,12 @@ Router::middleware(['AuthenticationMiddleware@resetPassword'], [
 Router::middleware(['AuthenticationMiddleware@shouldBeLoggedIn'], [
     [
         App::GET, Routes::routes['logout'], 'AuthenticationController@onLogout'
+    ],
+    [
+        App::GET, Routes::routes['careForSchemas'], 'CareForSchemaController@showCareForSchemas'
+    ],
+    [
+        App::POST, Routes::routes['uploadCareForSchema'], 'CareForSchemaController@uploadCareForSchemas'
     ]
 ]);
 Router::get($routes['login'], 'LoginController@showLogin');
