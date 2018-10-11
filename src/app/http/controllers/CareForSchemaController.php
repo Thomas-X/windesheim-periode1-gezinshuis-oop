@@ -18,6 +18,22 @@ use Qui\lib\facades\View;
  */
 class CareForSchemaController
 {
+    private static $allowedFileExtensions = [
+                                                'pdf',
+                                                'doc',
+                                                'docx',
+                                                'odt',
+                                                'txt'
+                                            ];
+
+    private static $mimeTypes = [
+                                    'pdf' => 'application/pdf',
+                                    'doc' => 'application/msword',
+                                    'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                    'odt' => 'application/vnd.oasis.opendocument.text',
+                                    'txt' => 'text/plain'
+                                ];
+
     /**
      * @param Request $req
      * @param Response $res
@@ -27,12 +43,12 @@ class CareForSchemaController
     {
         //TODO: Get clients the user is allowed to see.
         $clients= [
-            1 => "kid 1",
-            2 => "kid 2",
-            3 => "kid 3",
-            4 => "kid 4",
-            5 => "kid 5",
-            6 => "kid 6"
+            1 => 'kid 1',
+            2 => 'kid 2',
+            3 => 'kid 3',
+            4 => 'kid 4',
+            5 => 'kid 5',
+            6 => 'kid 6'
         ];
 
         return View::render('pages.CareForSchema', compact('clients'));
@@ -40,7 +56,7 @@ class CareForSchemaController
 
     public function careForSchemasFile(Request $req, Response $res)
     {
-        if (array_key_exists('upload', $req))
+        if (array_key_exists('upload', $req->params))
             $this->uploadCareForSchemas($req, $res);
         else
             $this->downloadCareForSchemas($req, $res);
@@ -55,13 +71,6 @@ class CareForSchemaController
     //TODO: Look into refactoring this function.
     public function uploadCareForSchemas(Request $req, Response $res)
     {
-        $allowedFileExtensions = [
-            'pdf',
-            'doc',
-            'docx',
-            'odt',
-            'txt'
-        ];
 
         $uploadDir = getcwd() . '\\uploads\\';
 
@@ -77,14 +86,14 @@ class CareForSchemaController
             $fileName = $file['name'];
             $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
 
-            if (in_array($fileExtension, $allowedFileExtensions))
+            if (in_array($fileExtension, self::$allowedFileExtensions))
             {
                 //Check if file name exists.
-                $uploadPath = $uploadDir . $clientId . ".*";
+                $uploadPath = $uploadDir . $clientId . '.*';
                 $files = glob($uploadPath);
 
                 //Replace the star at the end of the upload path with the proper extension
-                $uploadPath = rtrim($uploadPath, "*") . $fileExtension;
+                $uploadPath = rtrim($uploadPath, '*') . $fileExtension;
 
                 if (is_array($files) && count($files) == 0)
                 {
@@ -92,14 +101,14 @@ class CareForSchemaController
                     $didUpload = move_uploaded_file($fileTmpName, $uploadPath);
 
                     if ($didUpload)
-                        $res->redirect("/h/careforschemas", 200);
+                        $res->redirect('/h/careforschemas', 200);
                 }
                 else
                 {
                     //If file does exist temporally rename it, upload the new file and remove the old file if th new file is uploaded.
                     $tmpFileExtension = pathinfo($files[0], PATHINFO_EXTENSION);
-                    $tmpUploadPath = $uploadDir . $clientId . "." . $tmpFileExtension;
-                    $tmpPath = $uploadDir . "tmp." . $fileExtension;
+                    $tmpUploadPath = $uploadDir . $clientId . '.' . $tmpFileExtension;
+                    $tmpPath = $uploadDir . 'tmp.' . $fileExtension;
                     $didChange = rename($tmpUploadPath, $tmpPath);
 
                     if ($didChange)
@@ -109,16 +118,35 @@ class CareForSchemaController
                         {
                             $didDelete = unlink($tmpPath);
                             if ($didDelete)
-                                $res->redirect("/h/careforschemas", 200);
+                                $res->redirect('/h/careforschemas', 200);
                         }
                     }
                 }
             }
         }
+        $res->redirect('/h/careforschemas', 500);
     }
 
     public function downloadCareForSchemas(Request $req, Response $res)
     {
-        
+        if (isset($req->params['clientId']) && is_numeric($req->params['clientId'])){
+            $files = glob( 'uploads\\' . $req->params['clientId'] . '.*');
+            if (count($files) > 0) {
+                $file = $files[0];
+                $extension = pathinfo($file, PATHINFO_EXTENSION);
+                $mimeType = self::$mimeTypes[$extension];
+
+                header('Content-Description: File Transfer');
+                header('Content-Type: ' . $mimeType);
+                header('Content-Disposition: attachment; filename="' . $req->params['clientId'] . '.' . $extension . '"');
+                header('Expires: 0');
+                header('Cache-Control: must-revalidate');
+                header('Pragma: public');
+                header('Content-Length: ' . filesize($file));
+                readfile($file);
+                $res->redirect('/h/careforschemas', 200);
+            }
+        }
+        $res->redirect('/h/careforschemas', 500);
     }
 }

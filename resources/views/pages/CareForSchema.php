@@ -17,12 +17,13 @@
                                 <div class="col-12 col-lg-6">
                                     <form id="upload<?= $id ?>" action="/h/careforschemas" method="post" enctype="multipart/form-data">
                                         <?php
-                                            \Qui\lib\Form::input("Upload", "fa-save",
+                                            \Qui\lib\Form::input('Upload', 'fa-save',
                                                 "<input type=\"hidden\" name=\"clientId\" value=\"$id\">
                                                             <input type=\"hidden\" name=\"upload\" value=\"update\">
                                                             <div class=\"fileUpload btn btn-primary house-btn\">
                                                                 <span>File</span>
-                                                                <input type=\"file\" name=\"treatmentDocument\" class=\"upload treatmentDocument\" required>
+                                                                <input type=\"file\" name=\"treatmentDocument\" class=\"upload treatmentDocument\"
+                                                                accept=\".pdf, .doc, .docx, .odt, .txt\" required>
                                                             </div>
                                                             <div class=\"uploadFileParent\">
                                                                 <a class=\"uploadFile\">Geen bestand gekozen</a>
@@ -35,7 +36,7 @@
                                 <div class="col-12 col-lg-6">
                                     <form action="/h/careforschemas" method="post">
                                         <h3 class="title">Download</h3>
-                                        <input type="hidden" name="clientId" value="$id">
+                                        <input type="hidden" name="clientId" value="<?= $id ?>">
                                         <button type="submit" class="btn btn-primary house-btn">Download</button>
                                     </form>
                                 </div>

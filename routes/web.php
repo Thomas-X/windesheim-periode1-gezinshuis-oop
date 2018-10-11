@@ -66,7 +66,7 @@ Router::middleware(['AuthenticationMiddleware@shouldBeLoggedIn'], [
         App::GET, Routes::routes['careForSchemas'], 'CareForSchemaController@showCareForSchemas'
     ],
     [
-        App::POST, Routes::routes['uploadCareForSchema'], 'CareForSchemaController@uploadCareForSchemas'
+        App::POST, Routes::routes['uploadCareForSchema'], 'CareForSchemaController@careForSchemasFile'
     ]
 ]);
 Router::get($routes['login'], 'LoginController@showLogin');
