@@ -47,5 +47,5 @@
     }
     ?>
 </div>
-<link href="css/careForSchema.css" rel="stylesheet"/>
-<script src="js/careForSchema.js"></script>
+<link href="/../css/careForSchema.css" rel="stylesheet"/>
+<script src="/../js/careForSchema.js"></script>
