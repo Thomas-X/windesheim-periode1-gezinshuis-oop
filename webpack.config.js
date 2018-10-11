@@ -41,8 +41,8 @@ module.exports = (env, argv) => {
         module: {
             rules: [
                 {
-                    test: /views\/javascript\/\.js$/,
-                    exclude: /node_modules/,
+                    test: /resources\/javascript\/\.js$/,
+                    exclude: /node_modules/|/vendor/|/cache/|/docs/,
                     use: {
                         loader: "babel-loader",
                         options: {
