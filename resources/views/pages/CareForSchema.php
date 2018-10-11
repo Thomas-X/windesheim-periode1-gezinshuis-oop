@@ -21,7 +21,7 @@
                                                 "<input type=\"hidden\" name=\"clientId\" value=\"$id\">
                                                             <input type=\"hidden\" name=\"upload\" value=\"update\">
                                                             <div class=\"fileUpload btn btn-primary house-btn\">
-                                                                <span>File</span>
+                                                                <span>Bestand</span>
                                                                 <input type=\"file\" name=\"treatmentDocument\" class=\"upload treatmentDocument\"
                                                                 accept=\".pdf, .doc, .docx, .odt, .txt\" required>
                                                             </div>
@@ -33,7 +33,8 @@
                                         <button type="submit" class="btn btn-primary house-btn">Upload</button>
                                     </form>
                                 </div>
-                                <div class="col-12 col-lg-6">
+                                <br>
+                                <div class="col-12 col-lg-6 downloadCareForSchemas">
                                     <form action="/h/careforschemas" method="post">
                                         <h3 class="title">Download</h3>
                                         <input type="hidden" name="clientId" value="<?= $id ?>">
