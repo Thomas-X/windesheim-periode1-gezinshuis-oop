@@ -35,7 +35,7 @@ class CareForSchemaController
             6 => "kid 6"
         ];
 
-        return View::render('pages.TreatmentDocument', compact('clients'));
+        return View::render('pages.CareForSchema', compact('clients'));
     }
 
     /**
