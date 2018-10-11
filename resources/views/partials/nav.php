@@ -2,7 +2,7 @@
     <div class="mainContainer">
         <div class="row">
             <div class="col col-sm-4">
-                <a href="/"> <img style="width: 100%; height:100%;" src="imgs/GezinshuisRegterink_logo_breed.png"
+                <a href="/"> <img style="width: 100%; height:100%;" src="/../imgs/GezinshuisRegterink_logo_breed.png"
                                   alt="logo"/></a>
             </div>
             <div class="col-sm-8">
