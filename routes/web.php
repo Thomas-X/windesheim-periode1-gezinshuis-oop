@@ -115,10 +115,19 @@ Router::middleware(['AuthenticationMiddleware@shouldBeLoggedIn'], [
         'AuthenticationController@onLogout'
     ],
     [
-        App::GET, Routes::routes['careForSchemas'], 'CareForSchemaController@showCareForSchemas'
+        App::GET,
+        Routes::routes['careForSchemas'],
+        'CareForSchemaController@showCareForSchemas'
     ],
     [
-        App::POST, Routes::routes['uploadCareForSchema'], 'CareForSchemaController@careForSchemasFile'
+        App::POST,
+        Routes::routes['uploadCareForSchema'],
+        'CareForSchemaController@careForSchemasFile'
+    ],
+    [
+        App::POST,
+        Routes::routes['downloadCareForSchema'],
+        'CareForSchemaController@careForSchemasFile'
     ]
 ]);
 

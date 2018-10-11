@@ -11,6 +11,7 @@ namespace Qui\app\http\controllers;
 use Qui\lib\Request;
 use Qui\lib\Response;
 use Qui\lib\facades\View;
+use Qui\lib\facades\NotifierParser;
 
 /**
  * Class CareForSchemaController
@@ -34,10 +35,12 @@ class CareForSchemaController
                                     'txt' => 'text/plain'
                                 ];
 
+
     /**
-     * @param Request $req
-     * @param Response $res
-     * @return mixed
+     * Show the clients the user is allowed to see.
+     * @param Request $req An object containing the information for the request
+     * @param Response $res An object for the response.
+     * @return mixed The view of all the clients will be returned.
      */
     public function showCareForSchemas(Request $req, Response $res)
     {
@@ -63,22 +66,22 @@ class CareForSchemaController
     }
 
     /**
-     * @param Request $req
-     * @param Response $res
+     * Upload the care for schema.
+     * @param Request $req An object containing the information for the request
+     * @param Response $res An object for the response.
+     * @return mixed The view of all the clients will be returned.
      */
-    //TODO: Return error in the places where it is needed and not yet done.
-    //TODO: Show errors in ui.
-    //TODO: Look into refactoring this function.
     public function uploadCareForSchemas(Request $req, Response $res)
     {
 
-        $uploadDir = getcwd() . '\\uploads\\';
+        $uploadDir = 'uploads\\';
 
         //Get client id and uploaded file.
-        $clientId = $req->params['clientId'];
+        $clientId = trim($req->params['clientId']);
         $file = $req->files['treatmentDocument'];
 
-        if (isset($clientId) && isset($file))
+        //Check if the parameters are valid.
+        if (isset($clientId) && $clientId !== '' && is_numeric($clientId) && isset($file))
         {
             $fileTmpName = $file['tmp_name'];
 
@@ -100,8 +103,20 @@ class CareForSchemaController
                     //If file does not exist on the server upload it.
                     $didUpload = move_uploaded_file($fileTmpName, $uploadPath);
 
-                    if ($didUpload)
-                        $res->redirect('/h/careforschemas', 200);
+                    if ($didUpload){
+                        //Notify the user the document was uploaded.
+                        NotifierParser::init()
+                            ->newNotification()
+                            ->success()
+                            ->message('Behandel document is geüpload.');
+                        return $this->showCareForSchemas($req, $res);
+                    }
+
+                    NotifierParser::init()
+                        ->newNotification()
+                        ->error()
+                        ->message('Er is iets fout gegaan tijdens het uploaden van het behandeldocument.');
+                    return $this->showCareForSchemas($req, $res);
                 }
                 else
                 {
@@ -117,36 +132,89 @@ class CareForSchemaController
                         if ($didUpload)
                         {
                             $didDelete = unlink($tmpPath);
-                            if ($didDelete)
-                                $res->redirect('/h/careforschemas', 200);
+                            if ($didDelete){
+                                NotifierParser::init()
+                                    ->newNotification()
+                                    ->success()
+                                    ->message('Behandel document is geüpload.');
+                                return $this->showCareForSchemas($req, $res);
+                            }
                         }
                     }
+
+                    NotifierParser::init()
+                        ->newNotification()
+                        ->error()
+                        ->message('Er is iets fout gegaan tijdens het overschrijven van het behandeldocument.');
+                    return $this->showCareForSchemas($req, $res);
                 }
             }
+            //Notify the user not a valid document was given.
+            NotifierParser::init()
+                ->newNotification()
+                ->warning()
+                ->message('Fout type bestand. Het behandel document moet een .pdf, .doc, .docx, .odt of .txt bestand zijn.');
+            return $this->showCareForSchemas($req, $res);
         }
-        $res->redirect('/h/careforschemas', 500);
+        elseif (!isset($clientId) || $clientId === '' || !is_numeric($clientId) ){
+            //Notify the user not a valid client was given.
+            NotifierParser::init()
+                ->newNotification()
+                ->warning()
+                ->message('Ongeldige cliënt geselecteerd.');
+            return $this->showCareForSchemas($req, $res);
+        }
+
+        //Notify the user no document was given.
+        NotifierParser::init()
+            ->newNotification()
+            ->warning()
+            ->message('Geen behandel document geupload.');
+        return $this->showCareForSchemas($req, $res);
     }
 
+    /**
+     * Download the care for schema.
+     * @param Request $req An object containing the information for the request
+     * @param Response $res An object for the response.
+     * @return mixed The view of all the clients will be returned.
+     */
     public function downloadCareForSchemas(Request $req, Response $res)
     {
-        if (isset($req->params['clientId']) && is_numeric($req->params['clientId'])){
+        $clientId = trim($req->params['clientId']);
+
+        //Check if the parameters are valid.
+        if (isset($clientId) && $clientId !== "" && is_numeric($clientId)){
             $files = glob( 'uploads\\' . $req->params['clientId'] . '.*');
             if (count($files) > 0) {
                 $file = $files[0];
                 $extension = pathinfo($file, PATHINFO_EXTENSION);
                 $mimeType = self::$mimeTypes[$extension];
-
+                //TODO Show notification when download is finished.
                 header('Content-Description: File Transfer');
                 header('Content-Type: ' . $mimeType);
-                header('Content-Disposition: attachment; filename="' . $req->params['clientId'] . '.' . $extension . '"');
+                header('Content-Disposition: attachment; filename="' . $clientId . '.' . $extension . '"');
                 header('Expires: 0');
                 header('Cache-Control: must-revalidate');
                 header('Pragma: public');
                 header('Content-Length: ' . filesize($file));
-                readfile($file);
-                $res->redirect('/h/careforschemas', 200);
+
+                NotifierParser::init()
+                    ->newNotification()
+                    ->success()
+                    ->message('Behandel document is gedownload.');
+                return $this->showCareForSchemas($req, $res);
             }
+            NotifierParser::init()
+                ->newNotification()
+                ->warning()
+                ->message('Er is geen behandel document voor de cliënt.');
+            return $this->showCareForSchemas($req, $res);
         }
-        $res->redirect('/h/careforschemas', 500);
+        NotifierParser::init()
+            ->newNotification()
+            ->warning()
+            ->message('Ongeldige cliënt geselecteerd.');
+        return $this->showCareForSchemas($req, $res);
     }
 }

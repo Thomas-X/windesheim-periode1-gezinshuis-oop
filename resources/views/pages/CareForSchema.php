@@ -15,7 +15,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-12 col-lg-6">
-                                    <form id="upload<?= $id ?>" action="/h/careforschemas" method="post" enctype="multipart/form-data">
+                                    <form id="upload<?= $id ?>" action="<?= \Qui\lib\Routes::routes['uploadCareForSchema'] ?>" method="post" enctype="multipart/form-data">
                                         <?php
                                             \Qui\lib\Form::input('Upload', 'fa-save',
                                                 "<input type=\"hidden\" name=\"clientId\" value=\"$id\">
@@ -35,7 +35,7 @@
                                 </div>
                                 <br>
                                 <div class="col-12 col-lg-6 downloadCareForSchemas">
-                                    <form action="/h/careforschemas" method="post">
+                                    <form action="<?= \Qui\lib\Routes::routes['downloadCareForSchema'] ?>" method="post">
                                         <h3 class="title">Download</h3>
                                         <input type="hidden" name="clientId" value="<?= $id ?>">
                                         <button type="submit" class="btn btn-primary house-btn">Download</button>
