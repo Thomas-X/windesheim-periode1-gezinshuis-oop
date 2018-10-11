@@ -38,6 +38,14 @@ class CareForSchemaController
         return View::render('pages.CareForSchema', compact('clients'));
     }
 
+    public function careForSchemasFile(Request $req, Response $res)
+    {
+        if (array_key_exists('upload', $req))
+            $this->uploadCareForSchemas($req, $res);
+        else
+            $this->downloadCareForSchemas($req, $res);
+    }
+
     /**
      * @param Request $req
      * @param Response $res
@@ -58,7 +66,7 @@ class CareForSchemaController
         $uploadDir = getcwd() . '\\uploads\\';
 
         //Get client id and uploaded file.
-        $clientId = $req->params['client'];
+        $clientId = $req->params['clientId'];
         $file = $req->files['treatmentDocument'];
 
         if (isset($clientId) && isset($file))
@@ -84,7 +92,7 @@ class CareForSchemaController
                     $didUpload = move_uploaded_file($fileTmpName, $uploadPath);
 
                     if ($didUpload)
-                        $res->redirect("/upload", 200);
+                        $res->redirect("/h/careforschemas", 200);
                 }
                 else
                 {
@@ -101,12 +109,16 @@ class CareForSchemaController
                         {
                             $didDelete = unlink($tmpPath);
                             if ($didDelete)
-                                $res->redirect("/upload", 200);
+                                $res->redirect("/h/careforschemas", 200);
                         }
                     }
                 }
             }
-            $res->redirect("/upload", 500);
         }
+    }
+
+    public function downloadCareForSchemas(Request $req, Response $res)
+    {
+        
     }
 }

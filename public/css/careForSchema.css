@@ -34,8 +34,9 @@
     cursor: pointer;
     opacity: 0;
     filter: alpha(opacity=0);
+    height: 100%;
 }
-#uploadFile {
+.uploadFile {
     display: inline-block;
     vertical-align: middle;
 }
@@ -47,4 +48,30 @@
     display: inline-block;
     height: 100%;
     vertical-align: middle;
+}
+.header {
+    cursor: pointer;
+}
+.header-button:hover {
+    text-decoration: none;
+}
+.accordion .card:last-of-type .show {
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+}
+.accordion .card:last-of-type .collapsing {
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+}
+#treatmentDocument-error {
+    line-height: normal;
+}
+form, .form-group {
+    display: inline-block;
+}
+@media (max-width: 991px) {
+    form {
+        min-width: 300px;
+        margin-left: 50%;
+        transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+    }
 }
