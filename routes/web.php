@@ -23,24 +23,25 @@ Router::get(Routes::routes['home'], 'HomeController@showHome');
 Router::get(Routes::routes['about'], 'AboutController@showAbout');
 Router::get(Routes::routes['contact'], 'ContactController@showContact');
 
-function CMS_BUILDER()
+function CMS_BUILDER($opts)
 {
     $req = new Request();
     $res = new Response();
 
     if (array_key_exists('type', $req->params)) {
         switch ($req->params['type']) {
-            case 'select':
-                Router::get(
-                    Routes::routes['cms_day2dayInformation'],
-                    'TableController@index',
-                    [
-                        'table' => 'day2dayinformation',
-                        'key' => 'id',
-                        'identifier' => $req->params['id'],
-                        "page" => "pages.day2day.index"
-                    ]);
-                break;
+            // TODO /h/day2dayinformation data
+//            case 'select':
+//                Router::get(
+//                    Routes::routes['cms_day2dayInformation'],
+//                    'TableController@index',
+//                    [
+//                        'table' => 'day2dayinformation',
+//                        'key' => 'id',
+//                        'identifier' => $req->params['id'],
+//                        "page" => "pages.day2day.index"
+//                    ]);
+//                break;
             case 'create_get':
                 Router::get(Routes::routes['cms_day2dayInformation'],
                     'TableController@create_get',
@@ -101,7 +102,10 @@ function CMS_BUILDER()
     }
 }
 
-CMS_BUILDER();
+// /cms/day2dayinformation
+CMS_BUILDER([
+
+]);
 
 
 // Table controller usage
