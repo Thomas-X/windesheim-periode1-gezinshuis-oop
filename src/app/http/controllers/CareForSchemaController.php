@@ -13,10 +13,10 @@ use Qui\lib\Response;
 use Qui\lib\facades\View;
 
 /**
- * Class TreatmentDocumentController
+ * Class CareForSchemaController
  * @package Qui\app\http\controllers
  */
-class TreatmentDocumentController
+class CareForSchemaController
 {
     /**
      * @param Request $req

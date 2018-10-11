@@ -12,8 +12,8 @@ use Qui\lib\Routes;
 
 //    'showUpload' => '/upload',
 //    'upload' => '/upload'
-//Router::get($routes['showUpload'], 'TreatmentDocumentController@showUpload');
-// Router::post($routes['upload'], 'TreatmentDocumentController@upload');
+//Router::get($routes['showUpload'], 'CareForSchemaController@showUpload');
+// Router::post($routes['upload'], 'CareForSchemaController@upload');
 /*
  * GET
  * */
