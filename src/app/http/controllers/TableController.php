@@ -49,25 +49,44 @@ class TableController
 
     }
 
-    public function create(Request $request, Response $res, $data)
+    public function create_get(Request $req, Response $res, array $data)
     {
-        DB::insertEntry($data['table'], array_merge($request->params));
-        $res->redirect('/', 200);
+        View::render($data['page']);
+    }
+    public function update_get(Request $req, Response $res, array $data)
+    {
+        $items = DB::selectWhere('*', $data["table"], $data['key'], $data['identifier']);
+        $items = $items[0];
+        View::render($data['page'], ['fieldData' => $items]);
+    }
+
+
+    public function create_post(Request $req, Response $res, $data)
+    {
+        $dbData = [];
+        foreach ($data['includes'] as $include) {
+            $dbData[$include] = $req->params[$include];
+        }
+        foreach ($data['includes_data'] as $key => $includeData) {
+            $dbData[$key] = $includeData;
+        }
+        DB::insertEntry($data['table'], $dbData);
+        $res->redirect($data['redirect'], 200);
     }
 
     //update
-    public function update(Request $request, Response $res, $data)
+    public function update_post(Request $request, Response $res, $data)
     {
 
         DB::updateEntry($data["id"], $data['table'], array_merge($request->params));
-        $res->redirect('/', 200);
+        $res->redirect($data['redirect'], 200);
     }
 
     //delete
-    public function delete(Request $request, Response $res, $data)
+    public function delete_post(Request $request, Response $res, $data)
     {
         DB::deleteEntry($data["table"], $data["key"], $data["identifier"]);
-        $res->redirect('/', 200);
+        $res->redirect($data['redirect'], 200);
     }
 
     public function getall(Request $req, Response $res, $data)
@@ -87,8 +106,6 @@ class TableController
         }
 
         View::render($data["page"], ['items' => $allTables]);
-
-
     }
 
 }

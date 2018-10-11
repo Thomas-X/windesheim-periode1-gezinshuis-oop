@@ -121,6 +121,25 @@ nav {
 .margin-1 {
     padding: .33em;
 }
+.margin-2 {
+    padding-right: 0.10rem;
+}
+
+.flexCenter {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.buttongrid {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 20px;
+}
+
+.flex1 {
+    flex: 1;
+}
 
 @media screen and (max-width: 768px) {
 
