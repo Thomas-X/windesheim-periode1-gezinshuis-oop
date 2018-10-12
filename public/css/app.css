@@ -95,7 +95,8 @@ footer a:hover {
 
 nav {
     padding: 0.5em 0 0.5em 0;
-    background-color: #f3f3f3;
+    background-color: transparent;
+
 }
 @media screen and (max-width: 560px){
     .mainContainer {

@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack --watch --enviroment development",
-    "build": "webpack --enviroment production"
+    "build": "webpack --enviroment production",
+    "scss": "node-sass --watch resources/assets/app.scss -o public/css/app.css"
   },
   "author": "Thomas-X",
   "license": "MIT",
@@ -17,6 +18,10 @@
     "babel-loader": "^8.0.4",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-polyfill": "^6.26.0",
+    "css-loader": "^1.0.0",
+    "node-sass": "^4.9.3",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2"
   },
