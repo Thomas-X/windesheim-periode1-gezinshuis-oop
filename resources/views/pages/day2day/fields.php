@@ -26,6 +26,7 @@ $fields = [
         'type' => 'date',
         'name' => 'date',
         'title' => 'Date',
-        'placeholder' => 'Insert date'
+        'placeholder' => 'Insert date',
+        'create_value' => date('Y-d-m')
     ],
 ];

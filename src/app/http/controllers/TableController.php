@@ -14,6 +14,8 @@ use Qui\lib\facades\Util;
 use Qui\lib\facades\View;
 use Qui\lib\Request;
 use Qui\lib\Response;
+use Qui\lib\Routes;
+
 
 
 class TableController
@@ -53,6 +55,7 @@ class TableController
     {
         View::render($data['page']);
     }
+
     public function update_get(Request $req, Response $res, array $data)
     {
         $items = DB::selectWhere('*', $data["table"], $data['key'], $data['identifier']);
@@ -89,27 +92,54 @@ class TableController
         $res->redirect($data['redirect'], 200);
     }
 
-    public function getall(Request $req, Response $res, $data)
+    private function getallTablesCount($aliasTables)
     {
 
         $allTables = DB::execute('show tables');
-
         $temp = [];
         foreach ($allTables as $key => $value) {
-            $temp[] = $allTables[$key]["Tables_in_mydb"];
+            $val = $allTables[$key]["Tables_in_mydb"];
+            $temp[$val] = $val;
         }
-        foreach ($data["tables"] as $table) {
-            if (($key = array_search($table, $temp)) !== false) {
-                $tables[] = $table;
-                // unset($tables[$key]);
-            }
+        $counts = [];
+        foreach ($temp as $table) {
+            $entries = DB::execute("SELECT COUNT(*) FROM {$table}");
+            $counts[] = [
+                'name' => $aliasTables[$table] ?? $table,
+                'count' => $entries[0][0],
+            ];
         }
-
-        View::render($data["page"], ['items' => $allTables]);
+        return $counts;
     }
 
     public function showDashboard(Request $req, Response $res)
     {
-        return View::render('pages.CmsDashboard');
+        $counts = $this->getallTablesCount([
+            'users' => 'gebruikers',
+            'careforschemas' => 'behandelplannen',
+            'comments' => 'opmerkingen',
+            'day2dayinformation' => 'dagelijkse informatie',
+            'events' => 'gebeurtenissen',
+            'profiles' => 'profiellen',
+            'profiles_doctors' => 'behandelaars',
+            'profiles_employees' => 'gasthuis medewerkers',
+            'profiles_kids' => 'kinderen',
+            'profiles_parents_caretakers' => 'ouders/verzorgers',
+            'roles' => 'rollen',
+        ]);
+        usort($counts, function ($a, $b) {
+            return $a['count'] < $b['count'];
+        });
+        $links = [
+            [
+                'link' => Routes::routes['cms_day2dayInformation'],
+                'name' => 'dagelijkse informatie'
+            ],
+            [
+                'link' => Routes::routes['cms_events'],
+                'name' => 'events'
+            ],
+        ];
+        return View::render('pages.CmsDashboard', compact('counts', 'links'));
     }
 }
