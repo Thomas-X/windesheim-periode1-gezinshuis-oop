@@ -108,4 +108,8 @@ class TableController
         View::render($data["page"], ['items' => $allTables]);
     }
 
+    public function showDashboard(Request $req, Response $res)
+    {
+        return View::render('pages.CmsDashboard');
+    }
 }

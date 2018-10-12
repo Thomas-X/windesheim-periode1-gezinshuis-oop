@@ -24,8 +24,13 @@ Router::get(Routes::routes['home'], 'HomeController@showHome');
 Router::get(Routes::routes['about'], 'AboutController@showAbout');
 Router::get(Routes::routes['contact'], 'ContactController@showContact');
 
+// TODO Authentication middleware profiles_employees only
 // Init CMS routes
 CMS_BUILDER::init();
+
+Router::get(Routes::routes['cms'], 'TableController@showDashboard');
+
+
 
 // Table controller usage
 //Router::get($routes['onRead'], 'TableController@index',['table'=>'users','selectAll' => null,"page"=>"pages.Test","excludes"=>['id',"fname"]]);

@@ -25,9 +25,10 @@ class CMS_BUILDER
 
     private static function day2dayinformation(Request $req, Response $res)
     {
+        $route = Routes::routes['cms_day2dayInformation'];
         static::make($req, $res, [
             'selectAll' => [
-                'route' => Routes::routes['cms_day2dayInformation'],
+                'route' => $route,
                 'data' => [
                     'table' => 'day2dayinformation',
                     'selectAll' => null,
@@ -35,13 +36,13 @@ class CMS_BUILDER
                 ]
             ],
             'create_get' => [
-                'route' => Routes::routes['cms_day2dayInformation'],
+                'route' => $route,
                 'data' => [
                     'page' => 'pages.day2day.create',
                 ]
             ],
             'update_get' => [
-                'route' => Routes::routes['cms_day2dayInformation'],
+                'route' => $route,
                 'data' => [
                     'page' => 'pages.day2day.update',
                     'key' => 'id',
@@ -50,10 +51,10 @@ class CMS_BUILDER
                 ]
             ],
             'create_post' => [
-                'route' => Routes::routes['cms_day2dayInformation'],
+                'route' => $route,
                 'data' => [
                     'table' => 'day2dayinformation',
-                    'redirect' => Routes::routes['cms_day2dayInformation'],
+                    'redirect' => $route,
                     'includes' => ['date',
                         'description',
                         'title',
@@ -67,20 +68,20 @@ class CMS_BUILDER
                 ]
             ],
             'update_post' => [
-                'route' => Routes::routes['cms_day2dayInformation'],
+                'route' => $route,
                 'data' => [
                     'table' => 'day2dayinformation',
                     'id' => $req->params['id'],
-                    'redirect' => Routes::routes['cms_day2dayInformation']
+                    'redirect' => $route
                 ]
             ],
             'delete_post' => [
-                'route' => Routes::routes['cms_day2dayInformation'],
+                'route' => $route,
                 'data' => [
                     'table' => 'day2dayinformation',
                     'identifier' => $req->params['id'],
                     'key' => 'id',
-                    'redirect' => Routes::routes['cms_day2dayInformation']
+                    'redirect' => $route
                 ]
             ]
         ]);
