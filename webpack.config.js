@@ -51,19 +51,6 @@ module.exports = (env, argv) => {
                         }
                     }
                 },
-                {
-                    test: /resources\/assets\/\.scss$/,
-                    use: [{
-                        loader: "style-loader"
-                    }, {
-                        loader: "css-loader"
-                    }, {
-                        loader: "sass-loader",
-                        options: {
-                            includePaths: ["resources/assets/app.scss", "public/css/app.css"]
-                        }
-                    }]
-                }
             ]
         }
     }
