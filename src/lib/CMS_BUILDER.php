@@ -8,10 +8,12 @@
 
 namespace Qui\lib;
 
+use Qui\lib\facades\Authentication;
 use Qui\lib\Request;
 use Qui\lib\Response;
 use Qui\lib\Routes;
 use Qui\lib\facades\Router;
+use Qui\lib\facades\DB;
 
 // TODO protect routes
 class CMS_BUILDER
@@ -22,10 +24,12 @@ class CMS_BUILDER
         $res = new Response();
         static::day2dayinformation($req, $res);
         static::events($req, $res);
+        static::users($req, $res);
     }
 
-    private static function makeGenerator($opts)
+    private static function makeGenerator($req, $res, $opts)
     {
+        $id = $req->params['id'] ?? null;
         $route = $opts['route'];
         $table = $opts['table'];
         $pageFolderName = $opts['pageFolderName'];
@@ -44,6 +48,7 @@ class CMS_BUILDER
                 'route' => $route,
                 'data' => [
                     'page' => 'pages.' . $pageFolderName . '.create',
+                    'create_get_includes_data' => $opts['create_get_includes_data'],
                 ]
             ],
             'update_get' => [
@@ -53,6 +58,7 @@ class CMS_BUILDER
                     'key' => 'id',
                     'identifier' => $id,
                     'table' => $table,
+                    'update_get_includes_data' => $opts['update_get_includes_data']
                 ]
             ],
             'create_post' => [
@@ -88,7 +94,7 @@ class CMS_BUILDER
     {
         $id = $req->params['id'] ?? null;
         $route = Routes::routes['cms_events'];
-        static::make($req, $res, static::makeGenerator([
+        static::make($req, $res, static::makeGenerator($req, $res, [
             'route' => $route,
             'table' => 'events',
             'pageFolderName' => 'events',
@@ -98,11 +104,40 @@ class CMS_BUILDER
                 'pictures',
             ],
             'create_post_includes_data' => [
-                // Since the only user coming here should be logged as an employee
-                // TODO remove mock
-                // 'profiles_employees_id' => \Qui\lib\facades\Authentication::verify(true)['id'],
-//                'profiles_employees_id' => 1,
+
             ],
+        ]));
+    }
+
+    private static function users(Request $req, Response $res)
+    {
+        $id = $req->params['id'] ?? null;
+        $route = Routes::routes['cms_users'];
+        static::make($req, $res, static::makeGenerator($req, $res, [
+            'route' => $route,
+            'table' => 'users',
+            'pageFolderName' => 'users',
+            'create_post_includes' => [
+                'fname',
+                'lname',
+                'email',
+                'mobile',
+                'roles_id',
+                'password',
+            ],
+            'create_post_includes_data' => [
+                'password' => isset($req->params['password'])
+                    ? Authentication::generateHash($req->params['password'])
+                    : null,
+                'rememberMeToken' => Authentication::generateRandomHash(),
+                'forgotPasswordToken' => '',
+            ],
+            'create_get_includes_data' => [
+                'roles' => DB::selectAll('roles')
+            ],
+            'update_get_includes_data' => [
+                'roles' => DB::selectAll('roles')
+            ]
         ]));
     }
 
@@ -110,7 +145,7 @@ class CMS_BUILDER
     {
         $id = $req->params['id'] ?? null;
         $route = Routes::routes['cms_day2dayInformation'];
-        static::make($req, $res, static::makeGenerator([
+        static::make($req, $res, static::makeGenerator($req, $res, [
             'route' => $route,
             'table' => 'day2dayinformation',
             'pageFolderName' => 'day2day',

@@ -23,7 +23,7 @@
         <?php foreach ($items as $item) : ?>
             <li class="list-group-item">
                 <div class="row">
-                    <div class="col-sm-8 flexCenter"><?= $item[$titleKey] ?></div>
+                    <div class="col-sm-8 flexCenter"><?= $item[$titleKey] ?><?= '&nbsp;' . $item[$secondTitleKey] ?? '' ?></div>
                     <div class="col-sm-4 buttongrid">
                         <a href="<?= $baseUri . '?id=' . $item['id'] . '&type=' . 'update_get' ?>"
                            class="btn btn-success flex1" role="button">

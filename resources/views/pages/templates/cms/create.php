@@ -16,6 +16,14 @@
                 case 'textarea':
                     $fieldElem = "<textarea class='form-control' rows='3' name='{$field['name']}' required></textarea>";
                     break;
+                case 'select':
+                    $options = "";
+                    foreach ($field['values'] as $value) {
+                        $options = $options . "<option value=\"{$value['value']}\">{$value['title']}</option>";
+                    }
+                    $fieldElem = "<select name=\"{$field['name']}\" class='form-control'>
+            {$options}
+</select>";
             }
 
             echo "<div class=\"form-group\">

@@ -17,7 +17,6 @@ use Qui\lib\Response;
 use Qui\lib\Routes;
 
 
-
 class TableController
 {
     // read
@@ -53,14 +52,21 @@ class TableController
 
     public function create_get(Request $req, Response $res, array $data)
     {
-        View::render($data['page']);
+        $extraData = $data['create_get_includes_data'] ?? null;
+        View::render($data['page'], $extraData
+            ? ['create_get_includes_data' => $extraData]
+            : []
+        );
     }
 
     public function update_get(Request $req, Response $res, array $data)
     {
         $items = DB::selectWhere('*', $data["table"], $data['key'], $data['identifier']);
         $items = $items[0];
-        View::render($data['page'], ['fieldData' => $items]);
+        View::render($data['page'], [
+            'fieldData' => $items,
+            'update_get_includes_data' => $data['update_get_includes_data']
+        ]);
     }
 
 
@@ -112,6 +118,11 @@ class TableController
         return $counts;
     }
 
+    /*
+     * Shows the dashboard page.
+     * uses usort's merge sort for a complexity of O(n*log(n)).
+     * which is a lot better than bubble sort's complexity of O(n^2). See https://nl.wikipedia.org/wiki/Complexiteitsgraad for more info.
+     * */
     public function showDashboard(Request $req, Response $res)
     {
         $counts = $this->getallTablesCount([
@@ -130,15 +141,14 @@ class TableController
         usort($counts, function ($a, $b) {
             return $a['count'] < $b['count'];
         });
+        function linkMaker($link, $name)
+        {
+            return compact($link, name);
+        }
+
         $links = [
-            [
-                'link' => Routes::routes['cms_day2dayInformation'],
-                'name' => 'dagelijkse informatie'
-            ],
-            [
-                'link' => Routes::routes['cms_events'],
-                'name' => 'events'
-            ],
+            linkMaker(Routes::routes['cms_day2dayInformation'], 'dagelijkse informatie'),
+            linkMaker(Routes::routes['cms_events'], 'events'),
         ];
         return View::render('pages.CmsDashboard', compact('counts', 'links'));
     }

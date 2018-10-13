@@ -125,7 +125,8 @@ class CRouter
     private function determineIfRouteMatches($route)
     {
         $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-        if ($path == $route['path']) {
+        // the || is for if the path has a trailing / on it
+        if ($path == $route['path'] || $path == $route['path'] . '/') {
             return true;
         }
         return false;

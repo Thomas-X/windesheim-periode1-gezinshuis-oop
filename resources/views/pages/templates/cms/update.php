@@ -2,12 +2,17 @@
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <h1 class="display-4"><?= $title ?></h1>
+            <?= $subtitle ? "<p>{$subtitle}</p>" : '' ?>
         </div>
     </div>
     <form action="<?= $baseUri . '?type=create_post' ?>" method="post">
         <?php
         foreach ($fields as $field) {
-            $fieldElem = "";
+            if ($field['not_in_update']) {
+                continue;
+            }
+
+                $fieldElem = "";
             switch ($field['html_type']) {
                 case 'input':
                     $fieldElem = "<input type=\"{$field['type']}\" class=\"form-control\" placeholder=\"{$field['placeholder']}\" name=\"{$field['name']}\" required value='{$fieldData[$field['name']]}'>";
