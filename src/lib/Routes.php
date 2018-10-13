@@ -27,6 +27,7 @@ class Routes
         // i.e ?kidId=3&id=1
         'cms' => '/cms',
         'cms_day2dayInformation' => '/cms/day2dayinformation',
+        'cms_roles' => '/cms/roles',
         'cms_comments' => '/cms/comments',
         'cms_events' => '/cms/events',
         'cms_doctors' => '/cms/doctors',

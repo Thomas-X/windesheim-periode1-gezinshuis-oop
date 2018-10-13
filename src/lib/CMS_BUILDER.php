@@ -15,7 +15,27 @@ use Qui\lib\Routes;
 use Qui\lib\facades\Router;
 use Qui\lib\facades\DB;
 
-// TODO protect routes
+/*
+ * TODO: Protect routes and only show certain data with restrictions.
+ * TODO: Validate Requests received in TableController.php
+ * CMS checklist
+ * [X]     'cms' => '/cms',
+   [X]     'cms_day2dayInformation' => '/cms/day2dayinformation',
+   [WIP]     'cms_roles' => '/cms/roles',
+   []     'cms_comments' => '/cms/comments',
+   [X]     'cms_events' => '/cms/events',
+   []     'cms_doctors' => '/cms/doctors',
+   []     'cms_parents' => '/cms/parent',
+   []     'cms_kids' => '/cms/kids',
+   []     'cms_manage_kid' => '/cms/manage/kid', // manage child 'behandeldocument' view rights
+   []     'cms_manage_parent' => '/cms/manage/parent', // manage parent 'behandeldocument' view rights
+   []     'cms_manage_doctor' => '/cms/manage/doctor', // manage with children are linked to doctor
+   [X]     'cms_users' => '/cms/users',
+ *
+ *
+ *
+ * */
+
 class CMS_BUILDER
 {
     public static function init()
@@ -25,6 +45,7 @@ class CMS_BUILDER
         static::day2dayinformation($req, $res);
         static::events($req, $res);
         static::users($req, $res);
+        static::roles($req,$res);
     }
 
     private static function makeGenerator($req, $res, $opts)
@@ -113,6 +134,22 @@ class CMS_BUILDER
     {
         $id = $req->params['id'] ?? null;
         $route = Routes::routes['cms_users'];
+        $roles = DB::selectAll('roles');
+        if (isset($id)) {
+            $usrRoleId = DB::selectWhere('roles_id', 'users', 'id', $id)[0]['roles_id'];
+            $index = 0;
+            foreach ($roles as $idx => $role) {
+                if ($role['id'] == $usrRoleId) {
+                    $index = $idx;
+                    break;
+                }
+            }
+            $tmp = $roles[$index];
+            unset($roles[$index]);
+            array_push($roles, $tmp);
+            $roles = array_reverse($roles);
+        }
+
         static::make($req, $res, static::makeGenerator($req, $res, [
             'route' => $route,
             'table' => 'users',
@@ -136,7 +173,7 @@ class CMS_BUILDER
                 'roles' => DB::selectAll('roles')
             ],
             'update_get_includes_data' => [
-                'roles' => DB::selectAll('roles')
+                'roles' => $roles,
             ]
         ]));
     }
@@ -157,9 +194,24 @@ class CMS_BUILDER
             ],
             'create_post_includes_data' => [
                 // Since the only user coming here should be logged as an employee
-                // TODO remove mock
-                // 'profiles_employees_id' => \Qui\lib\facades\Authentication::verify(true)['id'],
-                'profiles_employees_id' => 1,
+                // TODO remove mock (when profiles are implemented) see $employees_id
+                // $employees_id = \Qui\lib\facades\Authentication::verify(true)['id'];
+                 'profiles_employees_id' => 1,
+            ],
+        ]));
+    }
+
+    private static function roles(Request $req, Response $res)
+    {
+        $id = $req->params['id'] ?? null;
+        $route = Routes::routes['cms_roles'];
+        static::make($req, $res, static::makeGenerator($req, $res, [
+            'route' => $route,
+            'table' => 'roles',
+            'pageFolderName' => 'roles',
+            'create_post_includes' => [
+                'name',
+                'description',
             ],
         ]));
     }

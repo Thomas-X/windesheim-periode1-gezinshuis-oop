@@ -143,12 +143,14 @@ class TableController
         });
         function linkMaker($link, $name)
         {
-            return compact($link, name);
+            return compact('link', 'name');
         }
 
         $links = [
             linkMaker(Routes::routes['cms_day2dayInformation'], 'dagelijkse informatie'),
-            linkMaker(Routes::routes['cms_events'], 'events'),
+            linkMaker(Routes::routes['cms_events'], 'gebeurtenissen'),
+            linkMaker(Routes::routes['cms_users'], 'gebruikers'),
+            linkMaker(Routes::routes['cms_roles'], 'rollen'),
         ];
         return View::render('pages.CmsDashboard', compact('counts', 'links'));
     }

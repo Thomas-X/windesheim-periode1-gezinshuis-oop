@@ -12,6 +12,5 @@ extract([
     'baseUri' => \Qui\lib\Routes::routes['cms_users'],
     'fields' => $fields
 ]);
-dd($update_get_includes_data);
 require(__DIR__ . '/../templates/cms/update.php');
 ?>
