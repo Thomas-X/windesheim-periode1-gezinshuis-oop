@@ -90,6 +90,9 @@ class TableController
         foreach ($data['includes'] as $include) {
             $dbData[$include] = $req->params[$include];
         }
+        foreach ($data['includes_data'] as $key => $includeData) {
+            $dbData[$key] = $includeData;
+        }
         DB::updateEntry($data["id"], $data['table'], $dbData);
         $res->redirect($data['redirect'], 200);
     }
@@ -159,7 +162,12 @@ class TableController
             linkMaker(Routes::routes['cms_parents_caretaker'], 'ouders / verzorgers'),
             linkMaker(Routes::routes['cms_kids'], 'kinderen'),
             linkMaker(Routes::routes['cms_employees'], 'medewerkers'),
+            linkMaker(Routes::routes['cms_careforschema'], 'behandelplannen'),
         ];
-        return View::render('pages.CmsDashboard', compact('counts', 'links'));
+        $lastLoginData = DB::select('lastLogin', 'users');
+        $options = [
+            'javascript_data' => compact('counts', 'links', 'lastLoginData')
+        ];
+        return View::render('pages.CmsDashboard', compact('options'));
     }
 }

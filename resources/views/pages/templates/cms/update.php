@@ -21,6 +21,20 @@
                 case 'textarea':
                     $fieldElem = "<textarea class='form-control' rows='3' name=\"{$field['name']}\" required>" . $fieldData[$field['name']] . "</textarea>";
                     break;
+                case 'checkbox':
+                    if ((int) $fieldData[$field['name']] === 1) {
+                        $checked = 'checked';
+                    } else {
+                        $checked = null;
+                    }
+                    $fieldElem = "<div class=\"form-check\">
+  <input class=\"form-check-input\" type=\"checkbox\" value=\"{$field['value']}\" name=\"{$field['name']}\" {$checked}>
+  <label class=\"form-check-label\" for=\"defaultCheck1\">
+    {$field['title']}
+  </label>
+</div>";
+                    break;
+
                 case 'select':
                     $options = "";
                     foreach ($field['values'] as $value) {
@@ -30,9 +44,10 @@
             {$options}
 </select>";
             }
+            $label = $field['html_type'] != 'checkbox' ? "<label>{$field['title']}</label>" : null;
 
             echo "<div class=\"form-group\">
-            <label>{$field['title']}</label>
+            {$label}
             {$fieldElem}
         </div>";
         }

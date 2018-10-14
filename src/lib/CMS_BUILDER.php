@@ -38,7 +38,7 @@ use Qui\lib\facades\DB;
    // TODO link kid to account / careforschema
    [X]     'cms_employees' => '/cms/employees'
    // TODO link employees to account / day2dayinformation
-   []     'cms_careforschema' => '/cms/careforschema', // add/remove careforschema's
+   [X]     'cms_careforschema' => '/cms/careforschema', // add/remove careforschema's
    // TODO manage rights of parent/doctor/kid if it has access
    []     'cms_manage_kid' => '/cms/manage/kid', // manage child 'behandeldocument' view rights
    // TODO manage rights if a kid can see his/her 'behandelplan'
@@ -63,6 +63,7 @@ class CMS_BUILDER
         static::parent_caretakers($req, $res);
         static::kids($req, $res);
         static::employees($req, $res);
+        static::careforschema($req, $res);
     }
 
     private static function makeGenerator($req, $res, $opts)
@@ -71,8 +72,12 @@ class CMS_BUILDER
         $route = $opts['route'];
         $table = $opts['table'];
         $pageFolderName = $opts['pageFolderName'];
-        $create_post_includes = $opts['create_post_includes'];
-        $create_post_includes_data = $opts['create_post_includes_data'];
+        $create_post_includes = $opts['create_post_includes'] ?? [];
+        $create_post_includes_data = $opts['create_post_includes_data'] ?? [];
+        $create_get_includes_data = $opts['create_get_includes_data'] ?? [];
+        $update_get_includes_data = $opts['update_get_includes_data'] ?? [];
+        $update_post_includes = $opts['update_post_includes'] ?? [];
+        $update_post_includes_data = $opts['update_post_includes_data'] ?? [];
         return [
             'selectAll' => [
                 'route' => $route,
@@ -86,7 +91,7 @@ class CMS_BUILDER
                 'route' => $route,
                 'data' => [
                     'page' => 'pages.' . $pageFolderName . '.create',
-                    'create_get_includes_data' => $opts['create_get_includes_data'],
+                    'create_get_includes_data' => $create_get_includes_data,
                 ]
             ],
             'update_get' => [
@@ -96,7 +101,7 @@ class CMS_BUILDER
                     'key' => 'id',
                     'identifier' => $id,
                     'table' => $table,
-                    'update_get_includes_data' => $opts['update_get_includes_data']
+                    'update_get_includes_data' => $update_get_includes_data,
                 ]
             ],
             'create_post' => [
@@ -114,8 +119,8 @@ class CMS_BUILDER
                     'table' => $table,
                     'id' => $id,
                     'redirect' => $route,
-                    'includes' => $opts['update_post_includes'],
-                    'includes_data' => $opts['updates_post_includes_data'],
+                    'includes' => $update_post_includes,
+                    'includes_data' => $update_post_includes_data,
                 ]
             ],
             'delete_post' => [
@@ -361,13 +366,18 @@ class CMS_BUILDER
     private static function careforschema(Request $req, Response $res)
     {
         $id = $req->params['id'] ?? null;
-        $route = Routes::routes['cms_employees'];
+        $route = Routes::routes['cms_careforschema'];
         $keys = [
             'date_start',
             'date_review',
             'extra',
             'parent_has_permission',
             'kid_has_permission',
+            'name',
+        ];
+        $includes_data = [
+            'parent_has_permission' => isset($req->params['parent_has_permission']) ? '1' : '0',
+            'kid_has_permission' => isset($req->params['kid_has_permission']) ? '1' : '0',
         ];
         static::make($req, $res, static::makeGenerator($req, $res, [
             'route' => $route,
@@ -375,6 +385,8 @@ class CMS_BUILDER
             'pageFolderName' => 'careforschemas',
             'create_post_includes' => $keys,
             'update_post_includes' => $keys,
+            'create_post_includes_data' => $includes_data,
+            'update_post_includes_data' => $includes_data,
         ]));
     }
 

@@ -32,7 +32,11 @@ class CView
      */
     public function render($viewNameWithoutExtension, $data = [], $title=null)
     {
-        $notifications = $this->getNotifications();
+        $options = array_merge($data['options'], [
+            'javascript_data' => [
+                'notifications' => $this->getNotifications()
+            ]
+        ]);
         $fileName = explode('.', $viewNameWithoutExtension);
         // get last item since that's the file name
         $title = $title ?? $fileName[count($fileName) - 1];

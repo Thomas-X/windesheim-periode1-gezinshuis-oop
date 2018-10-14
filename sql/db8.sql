@@ -60,6 +60,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`users` (
   `lname` VARCHAR(256) NOT NULL DEFAULT '',
   `email` VARCHAR(256) NOT NULL DEFAULT '',
   `mobile` VARCHAR(20) NULL DEFAULT '+31 (0) 6 ',
+  `lastLogin` DATE NULL DEFAULT '2000-01-31' COMMENT 'YYYY-MM-DD',
   `roles_id` INT(11) UNSIGNED NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   `rememberMeToken` VARCHAR(255) NOT NULL,
@@ -73,7 +74,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`users` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-
 
 -- -----------------------------------------------------
 -- Table `mydb`.`profiles_kids`
