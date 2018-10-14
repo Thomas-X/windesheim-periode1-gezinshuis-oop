@@ -10,8 +10,8 @@
             $fieldElem = "";
             switch ($field['html_type']) {
                 case 'input':
-                    $val = isset($field['create_value']) ? "value='{$field['create_value']}'" : '';
-                    $fieldElem = "<input type=\"{$field['type']}\" class=\"form-control\" placeholder=\"{$field['placeholder']}\" name=\"{$field['name']}\" required {$val}>";
+                    $val = isset($field['create_value']) ? "value='{$field['create_value']}'" : null;
+                    $fieldElem = "<input type=\"{$field['type']}\" class=\"form-control\" placeholder=\"{$field['placeholder']}\" name=\"{$field['name']}\" {$val} required >";
                     break;
                 case 'textarea':
                     $fieldElem = "<textarea class='form-control' rows='3' name='{$field['name']}' required></textarea>";

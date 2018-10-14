@@ -21,21 +21,33 @@ use Qui\lib\facades\DB;
  * CMS checklist
  * [X]     'cms' => '/cms',
    [X]     'cms_day2dayInformation' => '/cms/day2dayinformation',
-   [WIP]     'cms_roles' => '/cms/roles',
-   []     'cms_comments' => '/cms/comments',
+   // TODO cms_day2dayinformation see which comments are related to this daily information (optional)
+   [X]     'cms_roles' => '/cms/roles',
+   // TODO hide this, because really it shouldn't be needed.
+   [X]     'cms_comments' => '/cms/comments',
+   // TODO when creating / updating a comment you should be able to add it to an event
    [X]     'cms_events' => '/cms/events',
-   []     'cms_doctors' => '/cms/doctors',
-   []     'cms_parents' => '/cms/parent',
-   []     'cms_kids' => '/cms/kids',
-   []     'cms_manage_kid' => '/cms/manage/kid', // manage child 'behandeldocument' view rights
-   []     'cms_manage_parent' => '/cms/manage/parent', // manage parent 'behandeldocument' view rights
-   []     'cms_manage_doctor' => '/cms/manage/doctor', // manage with children are linked to doctor
+   // TODO pictures implementation is missing
    [X]     'cms_users' => '/cms/users',
- *
- *
+   // TODO X
+   [X]     'cms_doctors' => '/cms/doctors',
+   // TODO link doctor to account / careforschema
+   [X]     'cms_parent_caretaker' => '/cms/parent_caretaker',
+   // TODO link parent to account / careforschema
+   [X]     'cms_kids' => '/cms/kids',
+   // TODO link kid to account / careforschema
+   [X]     'cms_employees' => '/cms/employees'
+   // TODO link employees to account / day2dayinformation
+   []     'cms_careforschema' => '/cms/careforschema', // add/remove careforschema's
+   // TODO manage rights of parent/doctor/kid if it has access
+   []     'cms_manage_kid' => '/cms/manage/kid', // manage child 'behandeldocument' view rights
+   // TODO manage rights if a kid can see his/her 'behandelplan'
+   []     'cms_manage_parent' => '/cms/manage/parent_caretaker', // manage parent 'behandeldocument' view rights
+   // TODO manage rights if a parent/caretaker can see his/her 'behandelplan'
+   []     'cms_manage_doctor' => '/cms/manage/doctor', // manage which children are linked to doctor
+   // TODO manage rights (is unneeded because in cms_careforschema you can add / remove a doctor
  *
  * */
-
 class CMS_BUILDER
 {
     public static function init()
@@ -45,7 +57,12 @@ class CMS_BUILDER
         static::day2dayinformation($req, $res);
         static::events($req, $res);
         static::users($req, $res);
-        static::roles($req,$res);
+        static::roles($req, $res);
+        static::comments($req, $res);
+        static::doctors($req, $res);
+        static::parent_caretakers($req, $res);
+        static::kids($req, $res);
+        static::employees($req, $res);
     }
 
     private static function makeGenerator($req, $res, $opts)
@@ -96,7 +113,9 @@ class CMS_BUILDER
                 'data' => [
                     'table' => $table,
                     'id' => $id,
-                    'redirect' => $route
+                    'redirect' => $route,
+                    'includes' => $opts['update_post_includes'],
+                    'includes_data' => $opts['updates_post_includes_data'],
                 ]
             ],
             'delete_post' => [
@@ -120,6 +139,11 @@ class CMS_BUILDER
             'table' => 'events',
             'pageFolderName' => 'events',
             'create_post_includes' => [
+                'date_event',
+                'eventname',
+                'pictures',
+            ],
+            'update_post_includes' => [
                 'date_event',
                 'eventname',
                 'pictures',
@@ -162,6 +186,13 @@ class CMS_BUILDER
                 'roles_id',
                 'password',
             ],
+            'update_post_includes' => [
+                'fname',
+                'lname',
+                'email',
+                'mobile',
+                'roles_id',
+            ],
             'create_post_includes_data' => [
                 'password' => isset($req->params['password'])
                     ? Authentication::generateHash($req->params['password'])
@@ -192,11 +223,34 @@ class CMS_BUILDER
                 'title',
                 'profiles_employees_id'
             ],
+            'update_post_includes' => [
+                'date',
+                'description',
+                'title',
+                'profiles_employees_id'
+            ],
             'create_post_includes_data' => [
                 // Since the only user coming here should be logged as an employee
                 // TODO remove mock (when profiles are implemented) see $employees_id
                 // $employees_id = \Qui\lib\facades\Authentication::verify(true)['id'];
-                 'profiles_employees_id' => 1,
+                'profiles_employees_id' => 1,
+            ],
+        ]));
+    }
+
+    private static function comments(Request $req, Response $res)
+    {
+        $id = $req->params['id'] ?? null;
+        $route = Routes::routes['cms_comments'];
+        static::make($req, $res, static::makeGenerator($req, $res, [
+            'route' => $route,
+            'table' => 'comments',
+            'pageFolderName' => 'comments',
+            'create_post_includes' => [
+                'comment',
+            ],
+            'update_post_includes' => [
+                'comment',
             ],
         ]));
     }
@@ -213,6 +267,114 @@ class CMS_BUILDER
                 'name',
                 'description',
             ],
+            'update_post_includes' => [
+                'name',
+                'description',
+            ],
+        ]));
+    }
+
+    private static function doctors(Request $req, Response $res)
+    {
+        $id = $req->params['id'] ?? null;
+        $route = Routes::routes['cms_doctors'];
+        static::make($req, $res, static::makeGenerator($req, $res, [
+            'route' => $route,
+            'table' => 'profiles_doctors',
+            'pageFolderName' => 'doctors',
+            'create_post_includes' => [
+                'nickname',
+                'proficiency',
+                'dateofbirth',
+            ],
+            'update_post_includes' => [
+                'nickname',
+                'proficiency',
+                'dateofbirth',
+            ],
+        ]));
+    }
+
+    private static function parent_caretakers(Request $req, Response $res)
+    {
+        $id = $req->params['id'] ?? null;
+        $route = Routes::routes['cms_parents_caretaker'];
+        static::make($req, $res, static::makeGenerator($req, $res, [
+            'route' => $route,
+            'table' => 'profiles_parents_caretakers',
+            'pageFolderName' => 'parents_caretakers',
+            'create_post_includes' => [
+                'nickname',
+                'dateofbirth',
+                'picture',
+            ],
+            'update_post_includes' => [
+                'nickname',
+                'dateofbirth',
+                'picture',
+            ],
+        ]));
+    }
+
+    private static function kids(Request $req, Response $res)
+    {
+        $id = $req->params['id'] ?? null;
+        $route = Routes::routes['cms_kids'];
+        static::make($req, $res, static::makeGenerator($req, $res, [
+            'route' => $route,
+            'table' => 'profiles_kids',
+            'pageFolderName' => 'kids',
+            'create_post_includes' => [
+                'nickname',
+                'dateofbirth',
+                'reason',
+            ],
+            'update_post_includes' => [
+                'nickname',
+                'dateofbirth',
+                'reason',
+            ],
+        ]));
+    }
+
+    private static function employees(Request $req, Response $res)
+    {
+        $id = $req->params['id'] ?? null;
+        $route = Routes::routes['cms_employees'];
+        static::make($req, $res, static::makeGenerator($req, $res, [
+            'route' => $route,
+            'table' => 'profiles_employees',
+            'pageFolderName' => 'employees',
+            'create_post_includes' => [
+                'nickname',
+                'dateofbirth',
+                'picture',
+            ],
+            'update_post_includes' => [
+                'nickname',
+                'dateofbirth',
+                'picture',
+            ],
+        ]));
+    }
+
+    private static function careforschema(Request $req, Response $res)
+    {
+        $id = $req->params['id'] ?? null;
+        $route = Routes::routes['cms_employees'];
+        $keys = [
+            'date_start',
+            'date_review',
+            'extra',
+            'parent_has_permission',
+            'kid_has_permission',
+        ];
+        static::make($req, $res, static::makeGenerator($req, $res, [
+            'route' => $route,
+            'table' => 'careforschemas',
+            'pageFolderName' => 'careforschemas',
+            'create_post_includes' => $keys,
+            'update_post_includes' => $keys,
         ]));
     }
 

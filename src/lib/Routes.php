@@ -31,14 +31,16 @@ class Routes
         'cms_comments' => '/cms/comments',
         'cms_events' => '/cms/events',
         'cms_doctors' => '/cms/doctors',
-        'cms_parents' => '/cms/parent',
+        'cms_parents_caretaker' => '/cms/parent_caretaker',
         'cms_kids' => '/cms/kids',
+        'cms_employees' => '/cms/employees',
         // Use query parameters for selecting specific kid / parent / doctor
         'cms_manage_kid' => '/cms/manage/kid', // manage child 'behandeldocument' view rights
-        'cms_manage_parent' => '/cms/manage/parent', // manage parent 'behandeldocument' view rights
+        'cms_manage_parent' => '/cms/manage/parent_caretaker', // manage parent 'behandeldocument' view rights
         'cms_manage_doctor' => '/cms/manage/doctor', // manage with children are linked to doctor
         // Middleware superadmin role only (the only thing superadmin can do)
         'cms_users' => '/cms/users',
+        'cms_careforschema' => '/cms/careforschema',
         // the 'h' is for home :). just so the uri is splitted up from the static pages
         'l_home' => '/h',
         // Middleware doctor(if child is assigned to doctor)/owner only

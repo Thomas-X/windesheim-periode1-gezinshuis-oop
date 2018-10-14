@@ -84,10 +84,13 @@ class TableController
     }
 
     //update
-    public function update_post(Request $request, Response $res, $data)
+    public function update_post(Request $req, Response $res, $data)
     {
-
-        DB::updateEntry($data["id"], $data['table'], array_merge($request->params));
+        $dbData = [];
+        foreach ($data['includes'] as $include) {
+            $dbData[$include] = $req->params[$include];
+        }
+        DB::updateEntry($data["id"], $data['table'], $dbData);
         $res->redirect($data['redirect'], 200);
     }
 
@@ -151,6 +154,11 @@ class TableController
             linkMaker(Routes::routes['cms_events'], 'gebeurtenissen'),
             linkMaker(Routes::routes['cms_users'], 'gebruikers'),
             linkMaker(Routes::routes['cms_roles'], 'rollen'),
+            linkMaker(Routes::routes['cms_comments'], 'opmerkingen'),
+            linkMaker(Routes::routes['cms_doctors'], 'dokters / behandelaars'),
+            linkMaker(Routes::routes['cms_parents_caretaker'], 'ouders / verzorgers'),
+            linkMaker(Routes::routes['cms_kids'], 'kinderen'),
+            linkMaker(Routes::routes['cms_employees'], 'medewerkers'),
         ];
         return View::render('pages.CmsDashboard', compact('counts', 'links'));
     }
