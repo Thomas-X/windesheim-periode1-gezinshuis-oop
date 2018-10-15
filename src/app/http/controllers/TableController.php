@@ -21,7 +21,6 @@ use Qui\lib\Routes;
 
 class TableController
 {
-    // TODO add option to add own nav/footer
     public function renderer($_submethod)
     {
         $submethod = $_submethod;
