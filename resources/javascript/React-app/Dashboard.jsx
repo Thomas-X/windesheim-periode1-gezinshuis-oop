@@ -24,26 +24,25 @@ const styles = {
 	}
 }
 
-const data = {
-	labels: JSDATA.counts
-			.slice(0)
-			.map((val, idx) => val.name),
-	datasets: [
-		{
-			label: 'Aantal in de database opgeslagen',
-			backgroundColor: 'rgba(255,99,132,0.2)',
-			borderColor: 'rgba(255,99,132,1)',
-			borderWidth: 1,
-			hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-			hoverBorderColor: 'rgba(255,99,132,1)',
-			data: JSDATA.counts
-					.slice(0)
-					.map((val, idx) => val.count)
-		}
-	]
-}
-
 const Dashboard = () => {
+	const data = {
+		labels: JSDATA.counts
+				.slice(0)
+				.map((val, idx) => val.name),
+		datasets: [
+			{
+				label: 'Aantal in de database opgeslagen',
+				backgroundColor: 'rgba(255,99,132,0.2)',
+				borderColor: 'rgba(255,99,132,1)',
+				borderWidth: 1,
+				hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+				hoverBorderColor: 'rgba(255,99,132,1)',
+				data: JSDATA.counts
+						.slice(0)
+						.map((val, idx) => val.count)
+			}
+		]
+	}
 	return (
 			<div className={'container'} style={styles.containerStyled}>
 				<div className={'row'}>

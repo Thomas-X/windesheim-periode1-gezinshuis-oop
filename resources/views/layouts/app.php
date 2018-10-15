@@ -18,31 +18,16 @@
     <title>Gezinshuis - <?= $title ?></title>
 </head>
 <body>
-<script>
-    var JSDATA = {};
-    <?php
-            // Usage:
-            // View::render('page.index', ['options' =>
-    // [ 'javascript_data' => [
-    //      'notifications' => ['sample data']
-    // ]
-    // ]])
-    if (isset($options)) {
-        foreach ($options['javascript_data'] as $key => $jsData) {
-            $val = json_encode($jsData, JSON_UNESCAPED_SLASHES);
-            echo "JSDATA.{$key} = {$val};\n";
-        }
-    }
 
-    ?>
-</script>
+<?php require(__DIR__ . '/../JSDATA.php') ?>
+
 <script src="js/global.js"></script>
 
-<?php require(__DIR__ . '/../partials/nav.php') ?>
+<?php require(__DIR__ . "/../{$nav_path}") ?>
 
 <?php require($pagePath) ?>
 
-<?php require(__DIR__ . '/../partials/footer.php') ?>
+<?php require(__DIR__ . "/../{$footer_path}") ?>
 
 </body>
 </html>

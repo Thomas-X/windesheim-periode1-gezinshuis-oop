@@ -9,6 +9,7 @@
 namespace Qui\app\http\controllers;
 
 use Qui\lib\App;
+use Qui\lib\CView;
 use Qui\lib\facades\Authentication;
 use Qui\lib\facades\DB;
 use Qui\lib\facades\Util;
@@ -20,10 +21,26 @@ use Qui\lib\Routes;
 
 class TableController
 {
+    // TODO add option to add own nav/footer
+    public function renderer($_submethod)
+    {
+        $submethod = $_submethod;
+        $args = func_get_args();
+        array_shift($args);
+        View::changeNavOrFooter(CView::FOOTER, 'partials/cms_footer.php');
+        View::changeNavOrFooter(CView::NAV, 'partials/cms_nav.php');
+        switch ($submethod) {
+            case 'react':
+                return View::react(...$args);
+                break;
+            case 'render':
+                return View::render(...$args);
+                break;
+        }
+    }
     // read
     public function index(Request $req, Response $res, $data)
     {
-
         if (array_key_exists("excludes", $data)) {
             $cols = DB::execute('show COLUMNS from ' . $data['table']);
             $fields = [];
@@ -47,8 +64,9 @@ class TableController
         } else {
             $items = DB::selectWhere($fields, $data["table"], $data['key'], $data['identifier']);
         }
-        View::render($data["page"], ['items' => $items]);
 
+        return $this->renderer('render', $data['page'], compact('items'));
+//        View::render($data["page"], ['items' => $items]);
     }
 
     public function create_get(Request $req, Response $res, array $data)

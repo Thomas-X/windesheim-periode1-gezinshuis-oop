@@ -8,6 +8,7 @@
 
 namespace Qui\lib;
 
+use phpDocumentor\Parser\Exception;
 use Qui\lib\facades\NotifierParser;
 
 /**
@@ -16,16 +17,37 @@ use Qui\lib\facades\NotifierParser;
  */
 class CView
 {
+    public $nav_path = 'partials/nav.php';
+    public $footer_path = 'partials/footer.php';
+    public const NAV = 'nav';
+    public const FOOTER = 'footer';
 
     public function getNotifications()
     {
         return NotifierParser::make();
     }
 
-    public function react($component, $data=[], $title=null)
+    public function changeNavOrFooter($kind, $path) {
+        switch ($kind) {
+            case CView::NAV:
+                $this->nav_path = $path;
+                break;
+            case CView::FOOTER:
+                $this->footer_path = $path;
+                break;
+        }
+    }
+
+    public function react($component, $data = [], $title = null, $directRender = false)
     {
-        $data['options']['javascript_data']['component'] = $component;
-        return $this->render('REACT', $data, $title);
+        $arr = array_merge_recursive($data, [
+            'options' => [
+                'javascript_data' => [
+                    'component' => $component
+                ]
+            ]
+        ]);
+        return $this->render('REACT', $arr, $title, $directRender);
     }
 
     /*
@@ -36,13 +58,13 @@ class CView
      * @param array $data
      * @return mixed
      */
-    public function render($viewNameWithoutExtension, $data = [], $title=null)
+    public function render($viewNameWithoutExtension, $data = [], $title = null, $directRender = false)
     {
-        $options = array_merge($data['options'] ?? [], [
-            'javascript_data' => [
-                'notifications' => $this->getNotifications()
-            ]
-        ]);
+        $options = array_merge_recursive($data['options'] ?? [], [
+                'javascript_data' => [
+                    'notifications' => $this->getNotifications()
+                ]
+            ]);
 
         $pagePath = str_replace('.', '/', $viewNameWithoutExtension);
         // expose vars to be used in view
@@ -58,7 +80,13 @@ class CView
         // get last item since that's the file name
         $title = $title ?? $fileName[count($fileName) - 1];
         // pass dynamic navbar / footer values perhaps?
-        require($viewDir . 'layouts/app.php');
+        $nav_path = $this->nav_path;
+        $footer_path = $this->footer_path;
+        if (!$directRender) {
+            require($viewDir . 'layouts/app.php');
+        } else {
+            require($pagePath);
+        }
         return false;
     }
 }
