@@ -1,9 +1,9 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import styled from 'styled-components';
+import React from 'react';
+import styled from "styled-components";
 import {Bar} from 'react-chartjs-2';
 import Links from './Links';
 import Card from './Card';
+
 
 const DashboardContainer = styled.div`
   width: 90%;
@@ -43,7 +43,7 @@ const data = {
 	]
 }
 
-const App = () => {
+const Dashboard = () => {
 	return (
 			<div className={'container'} style={styles.containerStyled}>
 				<div className={'row'}>
@@ -59,10 +59,9 @@ const App = () => {
 								<ul>
 									{[
 										'Rechten inzien van kinderen, ouders en behandelaars',
-										'Gebruikers toevoegen, aanpassen en verwijderen. Dit kan voor de meeste onderdelen van het systeem. Zie de links voor meer informatie'
+										`Gebruikers toevoegen, aanpassen en verwijderen. Dit kan voor de meeste onderdelen van het systeem. Zie de <a className='list-group-item' href="${location.pathname}#links">links</a> voor meer informatie`
 									].map((val, idx) => (
-											<li key={idx}>
-												{val}
+											<li dangerouslySetInnerHTML={{__html: val}} key={idx}>
 											</li>
 									))}
 								</ul>
@@ -98,4 +97,4 @@ const App = () => {
 	);
 };
 
-ReactDOM.render(<App/>, document.getElementById("dashboard-container"));
+export default Dashboard;

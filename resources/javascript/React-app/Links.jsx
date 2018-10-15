@@ -21,7 +21,7 @@ class Links extends React.Component {
 				<div className="row">
 					<div className="col-sm-12" style={{minHeight: '50vh'}}>
 						<Card>
-							<h5 className="card-title">links.</h5>
+							<h5 id={'links'} className="card-title">links.</h5>
 							<p className="card-text">hieronder zijn verschillende links om makkelijk de data te beheren.</p>
 							<div className="input-group" style={{marginBottom: '1.5rem'}}>
 								<div className="input-group-prepend">

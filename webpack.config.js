@@ -36,7 +36,7 @@ module.exports = (env, argv) => {
                 'register',
                 'treatmentDocument',
                 'resetpassword',
-                { name: 'cmsdashboard', type: 'jsx' }
+                { name: 'react-app', type: 'jsx' }
             ])
             // add extra files here as well (we need different entry points so javascript that shouldn't be on a page doesn't get executed)
             // cross-file imports should be:

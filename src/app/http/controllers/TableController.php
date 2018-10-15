@@ -8,6 +8,7 @@
 
 namespace Qui\app\http\controllers;
 
+use Qui\lib\App;
 use Qui\lib\facades\Authentication;
 use Qui\lib\facades\DB;
 use Qui\lib\facades\Util;
@@ -168,6 +169,6 @@ class TableController
         $options = [
             'javascript_data' => compact('counts', 'links', 'lastLoginData')
         ];
-        return View::render('pages.CmsDashboard', compact('options'));
+        return View::react(App::REACT_APP_COMPONENTS['dashboard'], compact('options'), 'Dashboard');
     }
 }

@@ -22,6 +22,12 @@ class CView
         return NotifierParser::make();
     }
 
+    public function react($component, $data=[], $title=null)
+    {
+        $data['options']['javascript_data']['component'] = $component;
+        return $this->render('REACT', $data, $title);
+    }
+
     /*
      * Renders a view using PHP 🤢🤢a🤢🤢🤢🤢🤢s the templating engine
      * */
@@ -32,19 +38,25 @@ class CView
      */
     public function render($viewNameWithoutExtension, $data = [], $title=null)
     {
-        $options = array_merge($data['options'], [
+        $options = array_merge($data['options'] ?? [], [
             'javascript_data' => [
                 'notifications' => $this->getNotifications()
             ]
         ]);
-        $fileName = explode('.', $viewNameWithoutExtension);
-        // get last item since that's the file name
-        $title = $title ?? $fileName[count($fileName) - 1];
+
         $pagePath = str_replace('.', '/', $viewNameWithoutExtension);
         // expose vars to be used in view
         extract($data);
         $viewDir = __DIR__ . '/../../resources/views/';
-        $pagePath = $viewDir . $pagePath . '.php';
+        if ($viewNameWithoutExtension != 'REACT') {
+            $pagePath = $viewDir . $pagePath . '.php';
+        } else {
+            $pagePath = $viewDir . '/pages/react-app' . '.php';
+            $fileName = ['react-app'];
+        }
+        $fileName = explode('.', $viewNameWithoutExtension);
+        // get last item since that's the file name
+        $title = $title ?? $fileName[count($fileName) - 1];
         // pass dynamic navbar / footer values perhaps?
         require($viewDir . 'layouts/app.php');
         return false;
