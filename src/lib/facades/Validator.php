@@ -11,7 +11,10 @@ namespace Qui\lib\facades;
 
 /**
  * Class Validator
- * @package Qui\core\facades
+ * @package Qui\core\facades\
+ *
+ *
+ *
  */
 class Validator extends Facade
 {

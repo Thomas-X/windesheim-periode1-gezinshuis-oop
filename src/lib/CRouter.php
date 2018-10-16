@@ -45,7 +45,7 @@ class CRouter
             $routeMethod = $route['httpRequestType'];
 
             if ($routeMatches && $routeMethod == $requestedMethod) {
-                $this->runController($route['controller']);
+                $this->runController($route['controller'], $route['data']);
                 break;
             }
         }
@@ -64,17 +64,12 @@ class CRouter
      * @param array $middlewares
      * @param array $routes
      */
-    public function middleware($middlewares = [], array $routes): void
+    public function middleware($middlewares = [], array $routes, $onlyForThisMethod = null): void
     {
         $this->routeMatches = false;
         $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 
-        $arr = [];
         foreach ($routes as $route) {
-            $arr[] = [
-                '1' => $route[1],
-                '2' => $path,
-            ];
             $this->routeMatches = $this->determineIfRouteMatches(['path' => $route[1]]);
             if ($this->routeMatches == true) {
                 break;
@@ -93,15 +88,23 @@ class CRouter
             $req = new Request();
             $res = new Response();
             $pass = $middlewareInstance->$middlewareMethod($req, $res);
+            if (isset($onlyForThisMethod)) {
+                if ($_SERVER['REQUEST_METHOD'] == $onlyForThisMethod) {
+                    $pass = $middlewareInstance->$middlewareMethod($req, $res);
+                }
+            } else {
+                $pass = $middlewareInstance->$middlewareMethod($req, $res);
+            }
             if ($pass) {
                 // for every route given in array add it to the routes array (to serve up, since the middleware passed)
                 foreach ($routes as $route) {
+                    $data = $route[3] ?? [];
                     switch ($route[0]) {
                         case App::GET:
-                            $this->get($route[1], $route[2]);
+                            $this->get($route[1], $route[2], $data);
                             break;
                         case App::POST:
-                            $this->post($route[1], $route[2]);
+                            $this->post($route[1], $route[2], $data);
                             break;
                     }
                 }
@@ -142,7 +145,7 @@ class CRouter
     /**
      * @param $controllerNameSpaced
      */
-    private function runController($controllerNameSpaced)
+    private function runController($controllerNameSpaced, $data)
     {
         $value = explode('@', $controllerNameSpaced);
         $controllerName = $value[0];
@@ -155,7 +158,7 @@ class CRouter
         // dont echo because we're using requires and not a templating engine
         // unless we're returning something else than false (which the View::render method returns)
         // which means we're returning JSON or something else
-        $rval = $controllerInstance->$controllerMethod($req, $res);
+        $rval = $controllerInstance->$controllerMethod($req, $res, $data);
         if ($rval != false) {
             echo $rval;
         }
@@ -168,28 +171,28 @@ class CRouter
      * @param $path
      * @param $controller
      */
-    public function get($path, $controller)
+    public function get($path, $controller, $data=[])
     {
         $this->routes[] = [
             'path' => $path,
             'controller' => $controller,
-            'httpRequestType' => App::GET
+            'httpRequestType' => App::GET,
+            'data' => $data
         ];
     }
 
-    /*
-     * adds a POST route to the routes array, binding the path and controller to an assoc array
-     * */
     /**
      * @param $path
      * @param $controller
+     * @param array $data
      */
-    public function post($path, $controller)
+    public function post($path, $controller, $data=[])
     {
         $this->routes[] = [
             'path' => $path,
             'controller' => $controller,
-            'httpRequestType' => App::POST
+            'httpRequestType' => App::POST,
+            'data' => $data,
         ];
     }
 }

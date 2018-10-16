@@ -32,7 +32,7 @@ class ExampleMiddleware
      */
     public function continue(Request $req, Response $res): bool {
         if (!$req->secure) {
-            $res->redirect('/');
+//            $res->redirect('/');
             return false;
         }
         return true;

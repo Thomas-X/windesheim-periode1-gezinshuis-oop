@@ -99,7 +99,7 @@ class Database
         // Hence why were just returning the boolean here
 
         // if it was a select statement, we can fetch the rows
-        if (strpos($stmt->queryString, 'SELECT') !== false) {
+        if (strpos($stmt->queryString, 'SELECT') !== false||strpos($stmt->queryString, 'show') !== false) {
             $results = [];
             while ($row = $stmt->fetch()) {
                 $results[] = $row;
@@ -183,7 +183,11 @@ class Database
         $query = $query . " WHERE (`id` = {$id})";
         return $this->execute($query, $rowValues);
     }
-
+    public function deleteEntry(string $table, string $key, string $identifier)
+    {
+    return $this->execute("DELETE FROM {$table} WHERE {$key}=?", [$identifier]);
+    }
+    
     public function selectAll(string $table)
     {
         return $this->execute("SELECT * FROM {$table}");

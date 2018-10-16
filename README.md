@@ -8,6 +8,7 @@ For this project you need:
 Composer
 PHP >= 7
 NodeJS >= 10.0.0
+Python >= 3
 
 installed
 

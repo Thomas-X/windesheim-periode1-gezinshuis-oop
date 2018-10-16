@@ -15,7 +15,6 @@
                                 <option selected disabled>Aanhef</option>
                                 <option>Heer</option>
                                 <option>Mevrouw</option>
-                                <option>Chinees</option>
                             </select>
                         </div>
                     </div>
