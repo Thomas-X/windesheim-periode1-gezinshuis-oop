@@ -9,11 +9,19 @@ use Qui\lib\Routes;
  * No middleware routes should be placed before middleware routes (is nice)
  *
  * */
-
+//'add' => '/add',
+//    'edit' => '/edit',
+//    'delete' => '/delete'
 //    'showUpload' => '/upload',
 //    'upload' => '/upload'
 //Router::get($routes['showUpload'], 'TreatmentDocumentController@showUpload');
 // Router::post($routes['upload'], 'TreatmentDocumentController@upload');
+//Router::get($routes['add'], 'AuthenticationController@showAdd');
+//Router::get($routes['edit'], 'AuthenticationController@showEdit');
+//Router::get($routes['delete'], 'AuthenticationController@showDelete');
+
+];
+
 /*
  * GET
  * */
