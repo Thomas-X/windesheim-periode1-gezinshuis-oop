@@ -14,6 +14,10 @@ use Qui\lib\Routes;
 //    'upload' => '/upload'
 //Router::get($routes['showUpload'], 'TreatmentDocumentController@showUpload');
 // Router::post($routes['upload'], 'TreatmentDocumentController@upload');
+//Router::get($routes['add'], 'AuthenticationController@showAdd');
+//Router::get($routes['edit'], 'AuthenticationController@showEdit');
+//Router::get($routes['delete'], 'AuthenticationController@showDelete');
+
 /*
  * GET
  * */
