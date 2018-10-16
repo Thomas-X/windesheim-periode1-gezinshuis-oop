@@ -63,9 +63,9 @@ Router::middleware(['AuthenticationMiddleware@shouldBeLoggedIn'], [
         App::GET, Routes::routes['logout'], 'AuthenticationController@onLogout'
     ]
 ]);
-Router::get($routes['login'], 'LoginController@showLogin');
-Router::get($routes['logout'], 'LogoutController@onLogout');
-Router::get($routes['register'], 'RegisterController@showRegister');
+//Router::get($routes['login'], 'LoginController@showLogin');
+//Router::get($routes['logout'], 'LogoutController@onLogout');
+//Router::get($routes['register'], 'RegisterController@showRegister');
 
 /*
  * Should not be logged in middleware
