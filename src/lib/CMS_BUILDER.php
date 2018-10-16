@@ -21,11 +21,12 @@ use Qui\lib\facades\DB;
  * CMS checklist
  * [X]     'cms' => '/cms',
    [X]     'cms_day2dayInformation' => '/cms/day2dayinformation',
-   // TODO cms_day2dayinformation see which comments are related to this daily information (optional)
+   // NOT TODO cms_day2dayinformation see which comments are related to this daily information (optional)
    [X]     'cms_roles' => '/cms/roles',
-   // TODO hide this, because really it shouldn't be needed.
+   // TODO Hide/Remove this CRUD
    [X]     'cms_comments' => '/cms/comments',
-   // TODO when creating / updating a comment you should be able to add it to an event
+   // NOT TODO when creating / updating a comment you should be able to add it to an event
+   // TODO Hide/Remove this CRUD
    [X]     'cms_events' => '/cms/events',
    // TODO pictures implementation is missing
    [X]     'cms_users' => '/cms/users',
@@ -48,6 +49,11 @@ use Qui\lib\facades\DB;
    // TODO manage rights (is unneeded because in cms_careforschema you can add / remove a doctor
  *
  * */
+
+// Final TODO
+// Behandelplan crud pagina toevoegen dat je een kind / ouder / behandelaar kan toevoegen
+// Pagina waar je een gebruiker kan linken aan behandelaar/medewerker/kind/ouder
+
 class CMS_BUILDER
 {
     public static function init()
