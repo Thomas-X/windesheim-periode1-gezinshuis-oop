@@ -1,4 +1,4 @@
-<div class="mainContainer" style="min-height: 100vh;">
+<div class="container" style="min-height: 100vh;">
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <h1 class="display-4"><?= $title ?></h1>

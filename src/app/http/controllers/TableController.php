@@ -37,6 +37,7 @@ class TableController
                 break;
         }
     }
+
     // read
     public function index(Request $req, Response $res, $data)
     {
@@ -65,23 +66,21 @@ class TableController
         }
 
         return $this->renderer('render', $data['page'], compact('items'));
-//        View::render($data["page"], ['items' => $items]);
     }
 
     public function create_get(Request $req, Response $res, array $data)
     {
         $extraData = $data['create_get_includes_data'] ?? null;
-        View::render($data['page'], $extraData
+        return $this->renderer('render', $data['page'], $extraData
             ? ['create_get_includes_data' => $extraData]
-            : []
-        );
+            : []);
     }
 
     public function update_get(Request $req, Response $res, array $data)
     {
         $items = DB::selectWhere('*', $data["table"], $data['key'], $data['identifier']);
         $items = $items[0];
-        View::render($data['page'], [
+        return $this->renderer('render', $data['page'], [
             'fieldData' => $items,
             'update_get_includes_data' => $data['update_get_includes_data']
         ]);
@@ -169,7 +168,6 @@ class TableController
         {
             return compact('link', 'name');
         }
-
         $links = [
             linkMaker(Routes::routes['cms_day2dayInformation'], 'dagelijkse informatie'),
             linkMaker(Routes::routes['cms_events'], 'gebeurtenissen'),
@@ -186,6 +184,6 @@ class TableController
         $options = [
             'javascript_data' => compact('counts', 'links', 'lastLoginData')
         ];
-        return View::react(App::REACT_APP_COMPONENTS['dashboard'], compact('options'), 'Dashboard');
+        return $this->renderer('react', App::REACT_APP_COMPONENTS['dashboard'], compact('options'), 'Dashboard');
     }
 }

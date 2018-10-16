@@ -1,4 +1,4 @@
-<div class="mainContainer" style="min-height: 100vh;">
+<div class="container" style="min-height: 100vh;">
     <div class="row">
         <!-- first row -->
         <div class="col col-12 col-sm-12 col-md-6">
