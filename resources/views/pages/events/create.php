@@ -11,5 +11,6 @@ extract([
     'baseUri' => \Qui\lib\Routes::routes['cms_events'],
     'fields' => $fields
 ]);
+
 require(__DIR__ . '/../templates/cms/create.php');
 ?>

@@ -389,6 +389,12 @@ class CMS_BUILDER
             'route' => $route,
             'table' => 'careforschemas',
             'pageFolderName' => 'careforschemas',
+            'create_get_includes_data' => [
+                'profiles_doctors' => DB::selectAll('profiles_doctors'),
+                'profiles_employees' => DB::selectAll('profiles_employees'),
+                'profiles_kids' => DB::selectAll('profiles_kids'),
+                'profiles_parents_caretakers' => DB::selectAll('profiles_parents_caretakers'),
+            ],
             'create_post_includes' => $keys,
             'update_post_includes' => $keys,
             'create_post_includes_data' => $includes_data,

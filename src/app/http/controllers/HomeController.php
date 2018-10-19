@@ -41,6 +41,11 @@ class HomeController
 //        dd($notify);
 
 
+//        $tb = new TableController();
+//        $req = new Request();
+//        $res = new Response();
+//        $events = DB::execute('SELECT * FROM events SORT BY ASC LIMIT 3');
+
         return View::render('pages.Home');
 //        $id = 1;
 //        Util::dd(Auth::login('Thomas', 'internetcat'));
