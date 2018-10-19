@@ -3,6 +3,7 @@ const chalk = require('chalk');
 const chalkAnimation = require('chalk-animation');
 const webpack = exec('npm run dev');
 const php = exec('php executePHP.php');
+const sassServer = exec('node sass-server.js');
 
 function bindPipes(childProcess) {
     // standard EventEmitter logic, nothing special here
@@ -21,6 +22,7 @@ function bindPipes(childProcess) {
 
 bindPipes(webpack);
 bindPipes(php);
+bindPipes(sassServer);
 
 // TODO
 // really ghetto but I want the child processes to be non-blocking so this is the solution for now
