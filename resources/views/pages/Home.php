@@ -1,4 +1,4 @@
-<div class="mainContainer" style="min-height: 100vh">
+<div class="container" style="min-height: 100vh">
     <div class="home">
         <div class="col-sm-12">
             <img src="http://placekitten.com/700/300" style="width: 100%;"/>

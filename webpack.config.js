@@ -12,7 +12,11 @@ const javascriptDirectoryHelper = (pages) => {
 
     const obj = {};
     for (const page of pages) {
-        obj[page] = `${dir}/${capitalizeFirstLetter(page)}/${page}.js`;
+        if (typeof page === 'object') {
+            obj[page.name] = `${dir}/${capitalizeFirstLetter(page.name)}/${page.name}.${page.type}`;
+        } else {
+            obj[page] = `${dir}/${capitalizeFirstLetter(page)}/${page}.js`;
+        }
     }
     return obj
 }
@@ -23,6 +27,17 @@ module.exports = (env, argv) => {
         mode: argv.enviroment === 'production' ? 'production' : 'development',
         entry: {
             global: `${dir}/global/global.js`,
+            ...javascriptDirectoryHelper([
+                '404',
+                'about',
+                'contact',
+                'home',
+                'login',
+                'register',
+                'treatmentDocument',
+                'resetpassword',
+                { name: 'react-app', type: 'jsx' }
+            ])
             // add extra files here as well (we need different entry points so javascript that shouldn't be on a page doesn't get executed)
             // cross-file imports should be:
             // Use optimization.splitChunks to create bundles of shared application code between each page.
@@ -30,7 +45,7 @@ module.exports = (env, argv) => {
             // from these techniques, as the amount of entry points increase.
         },
         resolve: {
-            extensions: ['.js']
+            extensions: ['.js', '.jsx']
         },
         output: {
             path: outputPath,
@@ -41,29 +56,25 @@ module.exports = (env, argv) => {
         module: {
             rules: [
                 {
-                    test: /views\/javascript\/\.js$/,
+                    test: /\.js$/,
                     exclude: /node_modules/,
-                    use: {
-                        loader: "babel-loader",
-                        options: {
-                            presets: ['@babel/preset-env', '@babel/preset-react'],
-                            plugins: [require('babel-plugin-transform-class-properties')]
-                        }
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ["@babel/env"],
+                        plugins: ["@babel/plugin-proposal-object-rest-spread", "@babel/plugin-proposal-class-properties"]
                     }
                 },
+                {
+                    test: /\.jsx$/,
+                    exclude: /node_modules/,
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ["@babel/react", "@babel/env"],
+                        plugins: ["@babel/plugin-proposal-object-rest-spread", "@babel/plugin-proposal-class-properties"],
+                    }
+                }
             ]
         }
     }
-    // node <v10 doesnt support spread operators..
-    obj.entry = Object.assign(obj.entry, javascriptDirectoryHelper([
-                '404',
-                'about',
-                'contact',
-                'home',
-                'login',
-                'register',
-                'treatmentDocument',
-                'resetpassword'
-    ]));
     return obj;
 }

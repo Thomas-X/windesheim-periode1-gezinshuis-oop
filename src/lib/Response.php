@@ -31,7 +31,7 @@ class Response
      */
     public function json($object)
     {
-        return json_encode($object);
+        return json_encode($object, JSON_UNESCAPED_SLASHES);
     }
 
     /**

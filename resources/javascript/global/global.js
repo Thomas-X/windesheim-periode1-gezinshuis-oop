@@ -23,7 +23,7 @@ class Main {
 
     notifications() {
         new Notifier()
-            .determineNotifications(NOTIFICATIONS)
+            .determineNotifications(JSDATA.notifications || [])
     }
 }
 

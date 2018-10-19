@@ -7,16 +7,6 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
--- -----------------------------------------------------
--- Schema default_schema
--- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `default_schema` ;
-
--- -----------------------------------------------------
--- Schema default_schema
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `default_schema` ;
--- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
 DROP SCHEMA IF EXISTS `mydb` ;
@@ -25,14 +15,14 @@ DROP SCHEMA IF EXISTS `mydb` ;
 -- Schema mydb
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `default_schema` ;
+USE `mydb` ;
 
 -- -----------------------------------------------------
--- Table `default_schema`.`profiles_employees`
+-- Table `mydb`.`profiles_employees`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `default_schema`.`profiles_employees` ;
+DROP TABLE IF EXISTS `mydb`.`profiles_employees` ;
 
-CREATE TABLE IF NOT EXISTS `default_schema`.`profiles_employees` (
+CREATE TABLE IF NOT EXISTS `mydb`.`profiles_employees` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nickname` VARCHAR(255) NULL,
   `dateofbirth` DATE NULL,
@@ -72,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`users` (
   `rememberMeToken` VARCHAR(255) NOT NULL,
   `forgotPasswordToken` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`, `roles_id`),
-  INDEX `fk_users_roles_idx` (`roles_id` ASC) VISIBLE,
+  INDEX `fk_users_roles_idx` (`roles_id` ASC) ,
   CONSTRAINT `fk_users_roles`
     FOREIGN KEY (`roles_id`)
     REFERENCES `mydb`.`roles` (`id`)
@@ -135,17 +125,17 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `mydb`.`profiles` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`profiles` (
-  `users_id` INT(11) UNSIGNED NULL,
-  `profiles_kids_id` INT(11) NULL,
-  `profiles_doctors_id` INT(11) NULL,
-  `profiles_owners_id` INT(11) NULL,
-  `profiles_employees_id` INT(11) NULL,
+  `users_id` INT(11) UNSIGNED NOT NULL,
+  `profiles_kids_id` INT(11) NOT NULL,
+  `profiles_doctors_id` INT(11) NOT NULL,
+  `profiles_owners_id` INT(11) NOT NULL,
+  `profiles_employees_id` INT(11) NOT NULL,
   PRIMARY KEY (`profiles_kids_id`, `profiles_doctors_id`, `profiles_owners_id`, `users_id`, `profiles_employees_id`),
-  INDEX `fk_profiles_profiles_kids1_idx` (`profiles_kids_id` ASC) VISIBLE,
-  INDEX `fk_profiles_profiles_doctors1_idx` (`profiles_doctors_id` ASC) VISIBLE,
-  INDEX `fk_profiles_profiles_owners1_idx` (`profiles_owners_id` ASC) VISIBLE,
-  INDEX `fk_profiles_users` (`users_id` ASC) VISIBLE,
-  INDEX `fk_profiles_profiles_employees1_idx` (`profiles_employees_id` ASC) VISIBLE,
+  INDEX `fk_profiles_profiles_kids1_idx` (`profiles_kids_id` ASC) ,
+  INDEX `fk_profiles_profiles_doctors1_idx` (`profiles_doctors_id` ASC) ,
+  INDEX `fk_profiles_profiles_owners1_idx` (`profiles_owners_id` ASC) ,
+  INDEX `fk_profiles_users` (`users_id` ASC) ,
+  INDEX `fk_profiles_profiles_employees1_idx` (`profiles_employees_id` ASC) ,
   CONSTRAINT `fk_profiles_users`
     FOREIGN KEY (`users_id`)
     REFERENCES `mydb`.`users` (`id`)
@@ -168,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`profiles` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_profiles_profiles_employees1`
     FOREIGN KEY (`profiles_employees_id`)
-    REFERENCES `default_schema`.`profiles_employees` (`id`)
+    REFERENCES `mydb`.`profiles_employees` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -188,9 +178,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`careforschemas` (
   `profiles_owners_id` INT(11) NOT NULL,
   `profiles_kids_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`, `profiles_doctors_id`, `profiles_owners_id`, `profiles_kids_id`),
-  INDEX `fk_careforschemas_profiles_doctors1_idx` (`profiles_doctors_id` ASC) VISIBLE,
-  INDEX `fk_careforschemas_profiles_owners1_idx` (`profiles_owners_id` ASC) VISIBLE,
-  INDEX `fk_careforschemas_profiles_kids1_idx` (`profiles_kids_id` ASC) VISIBLE,
+  INDEX `fk_careforschemas_profiles_doctors1_idx` (`profiles_doctors_id` ASC) ,
+  INDEX `fk_careforschemas_profiles_owners1_idx` (`profiles_owners_id` ASC) ,
+  INDEX `fk_careforschemas_profiles_kids1_idx` (`profiles_kids_id` ASC) ,
   CONSTRAINT `fk_careforschemas_profiles_doctors1`
     FOREIGN KEY (`profiles_doctors_id`)
     REFERENCES `mydb`.`profiles_doctors` (`id`)
@@ -237,7 +227,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`day2dayinformation` (
   `profiles_owners_id` INT(11) NOT NULL,
   `title` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`, `profiles_owners_id`),
-  INDEX `fk_day2dayinformation_profiles_owners1_idx` (`profiles_owners_id` ASC) VISIBLE,
+  INDEX `fk_day2dayinformation_profiles_owners1_idx` (`profiles_owners_id` ASC) ,
   CONSTRAINT `fk_day2dayinformation_profiles_owners1`
     FOREIGN KEY (`profiles_owners_id`)
     REFERENCES `mydb`.`profiles_parents_caretakers` (`id`)
@@ -256,12 +246,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`comments` (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `comment` VARCHAR(256) NULL DEFAULT NULL,
   `votes` INT(11) NULL DEFAULT '0',
-  `events_id` INT(11) UNSIGNED NULL,
-  `day2dayinformation_id` INT(11) UNSIGNED NULL,
-  `day2dayinformation_profiles_owners_id` INT(11) NULL,
+  `events_id` INT(11) UNSIGNED NOT NULL,
+  `day2dayinformation_id` INT(11) UNSIGNED NOT NULL,
+  `day2dayinformation_profiles_owners_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`, `events_id`, `day2dayinformation_id`, `day2dayinformation_profiles_owners_id`),
-  INDEX `fk_comments_events1_idx` (`events_id` ASC) VISIBLE,
-  INDEX `fk_comments_day2dayinformation1_idx` (`day2dayinformation_id` ASC, `day2dayinformation_profiles_owners_id` ASC) VISIBLE,
+  INDEX `fk_comments_events1_idx` (`events_id` ASC) ,
+  INDEX `fk_comments_day2dayinformation1_idx` (`day2dayinformation_id` ASC, `day2dayinformation_profiles_owners_id` ASC) ,
   CONSTRAINT `fk_comments_events1`
     FOREIGN KEY (`events_id`)
     REFERENCES `mydb`.`events` (`id`)

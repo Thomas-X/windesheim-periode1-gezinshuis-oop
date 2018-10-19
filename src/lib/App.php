@@ -23,6 +23,9 @@ class App
 {
     public const GET = 'GET';
     public const POST = 'POST';
+    public const REACT_APP_COMPONENTS = [
+        'dashboard' => 'dashboard',
+    ];
 
     private static $registry = [];
     // tmp scoping variable for 'monkey' patching a bound method

@@ -1,4 +1,4 @@
-<div class="mainContainer" style="min-height: 100vh;">
+<div class="container" style="min-height: 100vh;">
     <?php
     if (isset($clients) && is_array($clients))
     {

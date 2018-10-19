@@ -1,4 +1,4 @@
-<footer>
+<footer style="margin-top: 2rem;">
     <div class="container">
         <div class="row">
             <div class="mx-auto ml-md-auto col-md-4 fiftyWidth">

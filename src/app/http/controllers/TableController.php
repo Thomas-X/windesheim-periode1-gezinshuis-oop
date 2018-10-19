@@ -8,21 +8,39 @@
 
 namespace Qui\app\http\controllers;
 
+use Qui\lib\App;
+use Qui\lib\CView;
 use Qui\lib\facades\Authentication;
 use Qui\lib\facades\DB;
 use Qui\lib\facades\Util;
 use Qui\lib\facades\View;
 use Qui\lib\Request;
 use Qui\lib\Response;
+use Qui\lib\Routes;
 
 
 class TableController
 {
+    public function renderer($_submethod)
+    {
+        $submethod = $_submethod;
+        $args = func_get_args();
+        array_shift($args);
+        View::changeNavOrFooter(CView::FOOTER, 'partials/cms_footer.php');
+        View::changeNavOrFooter(CView::NAV, 'partials/cms_nav.php');
+        switch ($submethod) {
+            case 'react':
+                return View::react(...$args);
+                break;
+            case 'render':
+                return View::render(...$args);
+                break;
+        }
+    }
+
     // read
     public function index(Request $req, Response $res, $data)
     {
-
-        // dd(array_keys($items[0]));
         if (array_key_exists("excludes", $data)) {
             $cols = DB::execute('show COLUMNS from ' . $data['table']);
             $fields = [];
@@ -46,50 +64,126 @@ class TableController
         } else {
             $items = DB::selectWhere($fields, $data["table"], $data['key'], $data['identifier']);
         }
-        View::render($data["page"], ['items' => $items]);
 
+        return $this->renderer('render', $data['page'], compact('items'));
     }
 
-    public function create(Request $request, Response $res, $data)
+    public function create_get(Request $req, Response $res, array $data)
     {
-        DB::insertEntry($data['table'], array_merge($request->params));
-        $res->redirect('/', 200);
+        $extraData = $data['create_get_includes_data'] ?? null;
+        return $this->renderer('render', $data['page'], $extraData
+            ? ['create_get_includes_data' => $extraData]
+            : []);
+    }
+
+    public function update_get(Request $req, Response $res, array $data)
+    {
+        $items = DB::selectWhere('*', $data["table"], $data['key'], $data['identifier']);
+        $items = $items[0];
+        return $this->renderer('render', $data['page'], [
+            'fieldData' => $items,
+            'update_get_includes_data' => $data['update_get_includes_data']
+        ]);
+    }
+
+
+    public function create_post(Request $req, Response $res, $data)
+    {
+        $dbData = [];
+        foreach ($data['includes'] as $include) {
+            $dbData[$include] = $req->params[$include];
+        }
+        foreach ($data['includes_data'] as $key => $includeData) {
+            $dbData[$key] = $includeData;
+        }
+        DB::insertEntry($data['table'], $dbData);
+        $res->redirect($data['redirect'], 200);
     }
 
     //update
-    public function update(Request $request, Response $res, $data)
+    public function update_post(Request $req, Response $res, $data)
     {
-
-        DB::updateEntry($data["id"], $data['table'], array_merge($request->params));
-        $res->redirect('/', 200);
+        $dbData = [];
+        foreach ($data['includes'] as $include) {
+            $dbData[$include] = $req->params[$include];
+        }
+        foreach ($data['includes_data'] as $key => $includeData) {
+            $dbData[$key] = $includeData;
+        }
+        DB::updateEntry($data["id"], $data['table'], $dbData);
+        $res->redirect($data['redirect'], 200);
     }
 
     //delete
-    public function delete(Request $request, Response $res, $data)
+    public function delete_post(Request $request, Response $res, $data)
     {
         DB::deleteEntry($data["table"], $data["key"], $data["identifier"]);
-        $res->redirect('/', 200);
+        $res->redirect($data['redirect'], 200);
     }
 
-    public function getall(Request $req, Response $res, $data)
+    private function getallTablesCount($aliasTables)
     {
 
         $allTables = DB::execute('show tables');
-
         $temp = [];
         foreach ($allTables as $key => $value) {
-            $temp[] = $allTables[$key]["Tables_in_mydb"];
+            $val = $allTables[$key]["Tables_in_mydb"];
+            $temp[$val] = $val;
         }
-        foreach ($data["tables"] as $table) {
-            if (($key = array_search($table, $temp)) !== false) {
-                $tables[] = $table;
-                // unset($tables[$key]);
-            }
+        $counts = [];
+        foreach ($temp as $table) {
+            $entries = DB::execute("SELECT COUNT(*) FROM {$table}");
+            $counts[] = [
+                'name' => $aliasTables[$table] ?? $table,
+                'count' => $entries[0][0],
+            ];
         }
-
-        View::render($data["page"], ['items' => $allTables]);
-
-
+        return $counts;
     }
 
+    /*
+     * Shows the dashboard page.
+     * uses usort's merge sort for a complexity of O(n*log(n)).
+     * which is a lot better than bubble sort's complexity of O(n^2). See https://nl.wikipedia.org/wiki/Complexiteitsgraad for more info.
+     * */
+    public function showDashboard(Request $req, Response $res)
+    {
+        $counts = $this->getallTablesCount([
+            'users' => 'gebruikers',
+            'careforschemas' => 'behandelplannen',
+            'comments' => 'opmerkingen',
+            'day2dayinformation' => 'dagelijkse informatie',
+            'events' => 'gebeurtenissen',
+            'profiles' => 'profiellen',
+            'profiles_doctors' => 'behandelaars',
+            'profiles_employees' => 'gasthuis medewerkers',
+            'profiles_kids' => 'kinderen',
+            'profiles_parents_caretakers' => 'ouders/verzorgers',
+            'roles' => 'rollen',
+        ]);
+        usort($counts, function ($a, $b) {
+            return $a['count'] < $b['count'];
+        });
+        function linkMaker($link, $name)
+        {
+            return compact('link', 'name');
+        }
+        $links = [
+            linkMaker(Routes::routes['cms_day2dayInformation'], 'dagelijkse informatie'),
+            linkMaker(Routes::routes['cms_events'], 'gebeurtenissen'),
+            linkMaker(Routes::routes['cms_users'], 'gebruikers'),
+            linkMaker(Routes::routes['cms_roles'], 'rollen'),
+            linkMaker(Routes::routes['cms_comments'], 'opmerkingen'),
+            linkMaker(Routes::routes['cms_doctors'], 'dokters / behandelaars'),
+            linkMaker(Routes::routes['cms_parents_caretaker'], 'ouders / verzorgers'),
+            linkMaker(Routes::routes['cms_kids'], 'kinderen'),
+            linkMaker(Routes::routes['cms_employees'], 'medewerkers'),
+            linkMaker(Routes::routes['cms_careforschema'], 'behandelplannen'),
+        ];
+        $lastLoginData = DB::select('lastLogin', 'users');
+        $options = [
+            'javascript_data' => compact('counts', 'links', 'lastLoginData')
+        ];
+        return $this->renderer('react', App::REACT_APP_COMPONENTS['dashboard'], compact('options'), 'Dashboard');
+    }
 }
