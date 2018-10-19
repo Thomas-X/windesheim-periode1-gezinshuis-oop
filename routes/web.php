@@ -16,6 +16,9 @@ use Qui\lib\Response;
 //    'upload' => '/upload'
 //Router::get($routes['showUpload'], 'CareForSchemaController@showUpload');
 // Router::post($routes['upload'], 'CareForSchemaController@upload');
+//Router::get($routes['add'], 'AuthenticationController@showAdd');
+//Router::get($routes['edit'], 'AuthenticationController@showEdit');
+//Router::get($routes['delete'], 'AuthenticationController@showDelete');
 /*
  * GET
  * */
@@ -130,6 +133,9 @@ Router::middleware(['AuthenticationMiddleware@shouldBeLoggedIn'], [
         'CareForSchemaController@careForSchemasFile'
     ]
 ]);
+//Router::get($routes['login'], 'LoginController@showLogin');
+//Router::get($routes['logout'], 'LogoutController@onLogout');
+//Router::get($routes['register'], 'RegisterController@showRegister');
 
 /*
  * Should not be logged in middleware

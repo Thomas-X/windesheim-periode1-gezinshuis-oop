@@ -10,6 +10,7 @@
                 <div class="flexContainer">
                     <a class="navLink nav-link" href="/">Home</a>
                     <a class="navLink nav-link" href="/about">About us</a>
+                    <a class="navLink nav-link" href="/beheer">Beheer</a>
                     <a class="navLink nav-link" href="/contact">Contact</a>
                     <a class="navLink nav-link" href="/h/careforschemas">Upload</a>
                     <?php

@@ -30,6 +30,15 @@
     font-weight: 600;
     font-size: 18px;
 }
+.house-btn-mirror{
+    border-radius: 0;
+    background-image: linear-gradient(to left, #5a7dce , #ccc468);
+    border: none;
+    padding: .75em;
+    box-shadow: 0px 1px 3px 0px #80029e;
+    font-weight: 600;
+    font-size: 18px;
+}
 
 .house-btn:hover{
     cursor: pointer;
