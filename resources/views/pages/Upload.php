@@ -4,4 +4,10 @@
                     "<input type='file' name='files[]' multiple required>") ?>
         <button type="submit" class="btn btn-primary house-btn">Submit</button>
     </form>
+    <hr>
+    <form action="<?= \Qui\lib\Routes::routes['deleteCollection'] ?>" method="post">
+        <?php \Qui\lib\Form::input('Delete collection', 'fa-file-excel',
+            "<input type=\"hidden\" name=\"collectionId\" value=\"1\">") ?>
+        <button type="submit" class="btn btn-primary house-btn">Submit</button>
+    </form>
 </div>

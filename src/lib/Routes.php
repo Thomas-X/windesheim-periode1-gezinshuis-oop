@@ -55,7 +55,10 @@ class Routes
         'careforschemas' => '/h/careforschemas',
         'uploadCareForSchema' => '/h/careforschemas', // <== ?id=2. upload=update
         'downloadCareForSchema' => '/h/careforschemas', // <== ?id=2
+
+        //upload example routes
+        'upload' => '/upload',
         'uploadCollection' => '/uploadcollection',
-        'upload' => '/upload'
+        'deleteCollection' => '/deletecollection'
     ];
 }

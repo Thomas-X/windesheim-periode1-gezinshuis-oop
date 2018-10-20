@@ -23,8 +23,13 @@ class PictureExampleController
     }
     public function uploadCollection(Request $req, Response $res)
     {
-        var_dump(PictureCollection::createPictureCollection($req->files['files']));
-die();
+        PictureCollection::createPictureCollection($req->files['files']);
+        $res->redirect(Routes::routes['upload']);
+    }
+
+    public function deleteCollection(Request $req, Response $res)
+    {
+        PictureCollection::deletePictureCollection($req->params['collectionId']);
         $res->redirect(Routes::routes['upload']);
     }
 }

@@ -204,4 +204,9 @@ class Database
     {
         return $this->execute("SELECT {$fields} FROM {$table} WHERE {$key}=?", [$identifier]);
     }
+
+    public function selectCount(string $table, string $key, string $identifier)
+    {
+        return $this->execute("SELECT COUNT(*) FROM {$table} WHERE {$key}=?", [$identifier]);
+    }
 }
