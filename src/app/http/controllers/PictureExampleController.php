@@ -17,9 +17,12 @@ use Qui\lib\Routes;
 
 class PictureExampleController
 {
-    public function showUpload(Request $req, Response $res)
+    public function showUpload(Request $req, Response $res, array $data = null)
     {
-        View::Render('pages.Upload');
+        if ($data !== null)
+            View::Render('pages.Upload', $data);
+        else
+            View::Render('pages.Upload');
     }
 
     public function uploadCollection(Request $req, Response $res)
@@ -44,5 +47,11 @@ class PictureExampleController
     {
         PictureCollection::updatePictureCollection($req->params['collectionId'], $req->params['pictureId'], $req->files['file']);
         $res->redirect(Routes::routes['upload']);
+    }
+
+    public function getAllPicturesFromCollection(Request $req, Response $res)
+    {
+        $pictureDirectories = PictureCollection::getAllPicturesFromCollection($req->params['collectionId']);
+        self::showUpload($req, $res, ['pictureDirectories' => $pictureDirectories]);
     }
 }

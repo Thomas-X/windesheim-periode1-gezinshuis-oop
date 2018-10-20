@@ -20,9 +20,21 @@
     <hr>
     <form action="<?= \Qui\lib\Routes::routes['updatePicture'] ?>" method="post" enctype="multipart/form-data">
         <?php \Qui\lib\Form::input('Update image 1 collection 1', 'fa-arrow-up',
-            "<input type='file' name='file' required>") ?>
+            "<input type=\"file\" name=\"file\" required>") ?>
         <input type="hidden" name="collectionId" value="1">
         <input type="hidden" name="pictureId" value="1">
         <button type="submit" class="btn btn-primary house-btn">Submit</button>
     </form>
+    <hr>
+    <form action="<?= \Qui\lib\Routes::routes['getAllPicturesFromCollection'] ?>" method="post">
+        <?php \Qui\lib\Form::input('Get images collection 1', 'fa-arrow-down',
+            "<input type=\"hidden\" name=\"collectionId\" value=\"1\">") ?>
+        <button type="submit" class="btn btn-primary house-btn">Submit</button>
+    </form>
+    <?php
+    if(isset($pictureDirectories))
+    {
+        var_dump($pictureDirectories);
+    }
+    ?>
 </div>
