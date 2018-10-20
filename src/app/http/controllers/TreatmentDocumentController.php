@@ -55,7 +55,7 @@ class TreatmentDocumentController
             'txt'
         ];
 
-        $uploadDir = getcwd() . '\\uploads\\';
+        $uploadDir = getcwd() . '/uploads/';
 
         //Get client id and uploaded file.
         $clientId = $req->params['client'];
