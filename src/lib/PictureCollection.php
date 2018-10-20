@@ -122,7 +122,6 @@ class PictureCollection
                     return true;
                 }
                 else {
-                    //TODO test this query.
                     $sql = 'DELETE FROM pictures WHERE ';
 
                     $failedToRemoveCount = count($failedToRemove) - 1;
