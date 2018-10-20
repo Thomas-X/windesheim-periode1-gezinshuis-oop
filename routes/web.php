@@ -27,6 +27,7 @@ use Qui\lib\CMS_BUILDER;
 Router::get(Routes::routes['home'], 'HomeController@showHome');
 Router::get(Routes::routes['about'], 'AboutController@showAbout');
 Router::get(Routes::routes['contact'], 'ContactController@showContact');
+Router::get(Routes::routes['upload'], 'PictureExampleController@showUpload');
 
 // TODO Authentication middleware profiles_employees only
 // Init CMS routes
@@ -34,6 +35,10 @@ CMS_BUILDER::init();
 
 Router::get(Routes::routes['cms'], 'TableController@showDashboard');
 
+/*
+ * POST
+ * */
+Router::post(Routes::routes['uploadCollection'], 'PictureExampleController@uploadCollection');
 
 
 // Table controller usage

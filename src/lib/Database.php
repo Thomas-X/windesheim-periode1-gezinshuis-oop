@@ -130,6 +130,7 @@ class Database
             $flattenedAssocArray[] = $value;
         }
         $this->execute($query, $flattenedAssocArray);
+        return $this->pdo->lastInsertId();
     }
 
     /*

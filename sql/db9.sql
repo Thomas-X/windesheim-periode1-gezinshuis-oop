@@ -40,33 +40,17 @@ DROP TABLE IF EXISTS `mydb`.`pictures` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`pictures` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
--- -----------------------------------------------------
--- Table `mydb`.`collections_pictures`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`collections_pictures` ;
-
-CREATE TABLE IF NOT EXISTS `mydb`.`collections_pictures` (
   `collection_id` INT(11) NOT NULL,
-  `picture_id` INT(11) NOT NULL,
-  PRIMARY KEY (`collection_id`, `picture_id`),
-  INDEX `fk_collections_pictures_collections_idx` (`collection_id` ASC),
-  CONSTRAINT `fk_collections_pictures_collections`
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_pictures_collections_idx` (`collection_id` ASC),
+  CONSTRAINT `fk_pictures_collections`
     FOREIGN KEY (`collection_id`)
     REFERENCES `mydb`.`collections` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  INDEX `fk_collections_pictures_pictures_idx` (`picture_id` ASC),
-  CONSTRAINT `fk_collections_pictures_pictures`
-    FOREIGN KEY (`picture_id`)
-    REFERENCES `mydb`.`pictures` (`id`)
-    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
 -- Table `mydb`.`profiles_employees`
