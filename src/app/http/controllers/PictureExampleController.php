@@ -39,4 +39,10 @@ class PictureExampleController
         PictureCollection::deletePicture($req->params['collectionId'], $req->params['pictureId']);
         $res->redirect(Routes::routes['upload']);
     }
+
+    public function updatePicture(Request $req, Response $res)
+    {
+        PictureCollection::updatePictureCollection($req->params['collectionId'], $req->params['pictureId'], $req->files['file']);
+        $res->redirect(Routes::routes['upload']);
+    }
 }

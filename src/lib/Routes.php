@@ -60,6 +60,7 @@ class Routes
         'upload' => '/upload',
         'uploadCollection' => '/uploadcollection',
         'deleteCollection' => '/deletecollection',
-        'deletePicture' => '/deletepicture'
+        'deletePicture' => '/deletepicture',
+        'updatePicture' => '/updatepicture'
     ];
 }

@@ -41,6 +41,7 @@ Router::get(Routes::routes['cms'], 'TableController@showDashboard');
 Router::post(Routes::routes['uploadCollection'], 'PictureExampleController@uploadCollection');
 Router::post(Routes::routes['deleteCollection'], 'PictureExampleController@deleteCollection');
 Router::post(Routes::routes['deletePicture'], 'PictureExampleController@deletePicture');
+Router::post(Routes::routes['updatePicture'], 'PictureExampleController@updatePicture');
 
 
 // Table controller usage
