@@ -58,6 +58,6 @@ class PictureExampleController
     public function getPictureFromCollection(Request $req, Response $res)
     {
         $pictureDirectory = PictureCollection::getPictureFromCollection($req->params['collectionId'], $req->params['pictureId']);
-        self::showUpload($req, $res, compact($pictureDirectory));
+        self::showUpload($req, $res, ['pictureDirectory' => $pictureDirectory]);
     }
 }
