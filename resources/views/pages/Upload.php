@@ -6,8 +6,15 @@
     </form>
     <hr>
     <form action="<?= \Qui\lib\Routes::routes['deleteCollection'] ?>" method="post">
-        <?php \Qui\lib\Form::input('Delete collection', 'fa-file-excel',
+        <?php \Qui\lib\Form::input('Delete collection 1', 'fa-file-excel',
             "<input type=\"hidden\" name=\"collectionId\" value=\"1\">") ?>
+        <button type="submit" class="btn btn-primary house-btn">Submit</button>
+    </form>
+    <hr>
+    <form action="<?= \Qui\lib\Routes::routes['deletePicture'] ?>" method="post">
+        <?php \Qui\lib\Form::input('Delete image 1 collection 1', 'fa-file-excel',
+            "<input type=\"hidden\" name=\"collectionId\" value=\"1\">") ?>
+            <input type="hidden" name="pictureId" value="1">
         <button type="submit" class="btn btn-primary house-btn">Submit</button>
     </form>
 </div>

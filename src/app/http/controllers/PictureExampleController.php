@@ -21,6 +21,7 @@ class PictureExampleController
     {
         View::Render('pages.Upload');
     }
+
     public function uploadCollection(Request $req, Response $res)
     {
         PictureCollection::createPictureCollection($req->files['files']);
@@ -30,6 +31,12 @@ class PictureExampleController
     public function deleteCollection(Request $req, Response $res)
     {
         PictureCollection::deletePictureCollection($req->params['collectionId']);
+        $res->redirect(Routes::routes['upload']);
+    }
+
+    public function deletePicture(Request $req, Response $res)
+    {
+        PictureCollection::deletePicture($req->params['collectionId'], $req->params['pictureId']);
         $res->redirect(Routes::routes['upload']);
     }
 }

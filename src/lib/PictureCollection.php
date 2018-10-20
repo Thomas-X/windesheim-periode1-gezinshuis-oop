@@ -35,8 +35,6 @@ class PictureCollection
             if (!$didMakeDir)
                 return false;
 
-            $didUploads = [];
-
             $collectionId = (int)DB::insertEntry('collections', ['collection' => $folder]);
             for ($i = 0; $i < $pictureCount; $i++) {
                 //Get file extension to check if it is valid.
@@ -67,11 +65,13 @@ class PictureCollection
                         $counter++;
                     }
 
-                    DB::insertEntry('pictures', [
-                        'collection_id' => $collectionId,
-                        'name' => $pictureName
-                    ]);
-                    $didUploads[] = move_uploaded_file($pictures['tmp_name'][$i], $fullPicturePath);
+                    $didUpload = move_uploaded_file($pictures['tmp_name'][$i], $fullPicturePath);
+
+                    if ($didUpload)
+                        DB::insertEntry('pictures', [
+                            'collection_id' => $collectionId,
+                            'name' => $pictureName
+                        ]);
                 }
             }
             return $folder;
@@ -89,30 +89,80 @@ class PictureCollection
                 $collection = DB::selectWhere('collection', 'collections', 'id', $collectionId)[0]['collection'];
                 $pictureDirectoryName = "pictures/{$collection}";
 
+                $didRemove = [];
+                $failedToRemove = [];
                 //Remove the collection folder and all the pictures in it.
                 $pictureDirectory = opendir($pictureDirectoryName);
                 while (($picture = readdir($pictureDirectory)) !== false) {
                     if (( $picture != '.' ) && ( $picture != '..' )) {
                         $full = $pictureDirectoryName . '/' . $picture;
-                        unlink($full);
+                        $didUnlink = unlink($full);
+                        if (!$didUnlink) {
+                            $didRemove[] = $didUnlink;
+                            $failedToRemove[] = $picture;
+                        }
                     }
                 }
                 closedir($pictureDirectory);
-                rmdir($pictureDirectoryName);
 
-                DB::deleteEntry('pictures', 'collection_id', $collectionId);
-                DB::deleteEntry('collections', 'id', $collectionId);
+                //Check if all the pictures where removed.
+                //If so the directory will be removed and all the pictures associated with the collection and the collection
+                //itself will be removed from the database.
+                if (!in_array(false, $didRemove)) {
+                    rmdir($pictureDirectoryName);
+                    DB::deleteEntry('pictures', 'collection_id', $collectionId);
+                    DB::deleteEntry('collections', 'id', $collectionId);
+                    return true;
+                }
+                else {
+                    $sql = 'DELETE FROM pictures WHERE ';
+
+                    $failedToRemoveCount = count($failedToRemove) - 1;
+
+                    for ($i = 0; $i <= $failedToRemoveCount; $i++) {
+                        if ($i < $failedToRemoveCount)
+                            $sql .= "name = ? or ";
+                        else
+                            $sql .= "name = ? ";
+                    }
+
+                    $sql .= "and collection_id = ?";
+
+                    $values = $failedToRemove;
+                    $values[] = $collectionId;
+                    DB::execute($sql, $values);
+                }
             }
-            return true;
         }
         return false;
     }
 
     public static function deletePicture(int $collectionId, int $pictureId)
     {
+        if (isset($collectionId) && $collectionId > 0 &&
+            isset($pictureId) && $pictureId > 0) {
+            //Get the amount of times a collection id is in the collections table.
+            $collectionCount = (int)DB::selectCount('collections', 'id', $collectionId)[0][0];
+            //Get the amount of times a picture id is in the pictures table.
+            $pictureCount = (int)DB::selectCount('pictures', 'id', $pictureId)[0][0];
+
+            if ($collectionCount > 0 && $pictureCount > 0) {
+                $collection = DB::selectWhere('collection', 'collections', 'id', $collectionId)[0]['collection'];
+
+                $image = DB::selectWhere('name', 'pictures', 'id', $pictureId)[0]['name'];
+
+                $fullPictureDirectoryName = "pictures/{$collection}/$image";
+                $didUnlink = unlink($fullPictureDirectoryName);
+                if ($didUnlink) {
+                    DB::deleteEntry('pictures', 'id', $pictureId);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
-    public static function updatePictureCollection(int $collectionId, int $pictureId, $picture)
+    public static function updatePictureCollection(int $collectionId, int $pictureId, array $picture)
     {
     }
 

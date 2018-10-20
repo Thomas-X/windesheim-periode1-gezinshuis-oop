@@ -59,6 +59,7 @@ class Routes
         //upload example routes
         'upload' => '/upload',
         'uploadCollection' => '/uploadcollection',
-        'deleteCollection' => '/deletecollection'
+        'deleteCollection' => '/deletecollection',
+        'deletePicture' => '/deletepicture'
     ];
 }
