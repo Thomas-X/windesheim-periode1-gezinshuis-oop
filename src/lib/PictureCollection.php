@@ -14,7 +14,6 @@ use Qui\lib\facades\DB;
 
 class PictureCollection
 {
-    public static $test;
     public static function createPictureCollection(array $pictures)
     {
         $allowedExtensions = [
@@ -244,5 +243,22 @@ class PictureCollection
 
     public static function getPictureFromCollection(int $collectionId, int $pictureId)
     {
+        if (isset($collectionId) && $collectionId > 0) {
+            //Get the amount of times a collection id is in the collections table.
+            $collectionCount = (int)DB::selectCount('collections', 'id', $collectionId)[0][0];
+
+            if ($collectionCount > 0) {
+                //Get the folder where the picture is located.
+                $collection = DB::selectWhere('collection', 'collections', 'id', $collectionId)[0]['collection'];
+                $pictureNames = DB::selectMultipleWhere('pictures', ['name'], [
+                    'id' => $pictureId,
+                    'collection_id' => $collectionId
+                ]);
+
+                $pictureName = $pictureNames[0]['name'];
+                return "/pictures/{$collection}/$pictureName";
+            }
+        }
+        return false;
     }
 }

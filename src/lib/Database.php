@@ -185,6 +185,37 @@ class Database
         return $this->execute($query, $rowValues);
     }
 
+    public function selectMultipleWhere(string $table, array $select, array $where)
+    {
+        $query = ($this->concatValue($select, 'SELECT ', '', true))['query'];
+
+        $query .= " FROM $table WHERE";
+
+        $return = $this->concatColumnValue($query, 'and', $where);
+
+        return $this->execute($return['query'], $return['rowValues']);
+    }
+
+    public function concatColumnValue(string $query, string $prepend, array $values)
+    {
+        $idx = 0;
+        $rowValues = [];
+        foreach ($values as $rowKey => $value) {
+            // first loop, meaning we shouldn't prepend the value
+            if ($idx == 0) {
+                $query = $query . " {$rowKey} = ?";
+            } else {
+                $query = $query . " {$prepend} {$rowKey} = ?";
+            }
+            $rowValues[] = $value;
+            $idx++;
+        }
+        return [
+                'query' => $query,
+                'rowValues' => $rowValues
+            ];
+    }
+
     public function deleteEntry(string $table, string $key, string $identifier)
     {
         return $this->execute("DELETE FROM {$table} WHERE {$key}=?", [$identifier]);

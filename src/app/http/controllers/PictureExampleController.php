@@ -54,4 +54,10 @@ class PictureExampleController
         $pictureDirectories = PictureCollection::getAllPicturesFromCollection($req->params['collectionId']);
         self::showUpload($req, $res, ['pictureDirectories' => $pictureDirectories]);
     }
+
+    public function getPictureFromCollection(Request $req, Response $res)
+    {
+        $pictureDirectory = PictureCollection::getPictureFromCollection($req->params['collectionId'], $req->params['pictureId']);
+        self::showUpload($req, $res, compact($pictureDirectory));
+    }
 }

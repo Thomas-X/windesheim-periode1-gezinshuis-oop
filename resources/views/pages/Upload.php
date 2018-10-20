@@ -37,4 +37,17 @@
         var_dump($pictureDirectories);
     }
     ?>
+    <hr>
+    <form action="<?= \Qui\lib\Routes::routes['getPictureFromCollection'] ?>" method="post">
+        <?php \Qui\lib\Form::input('Get image 1 collection 1', 'fa-arrow-down',
+            "<input type=\"hidden\" name=\"collectionId\" value=\"1\">") ?>
+        <input type="hidden" name="pictureId" value="1">
+        <button type="submit" class="btn btn-primary house-btn">Submit</button>
+    </form>
+    <?php
+    if(isset($pictureDirectory))
+    {
+        var_dump($pictureDirectory);
+    }
+    ?>
 </div>

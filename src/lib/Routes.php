@@ -62,6 +62,7 @@ class Routes
         'deleteCollection' => '/deletecollection',
         'deletePicture' => '/deletepicture',
         'updatePicture' => '/updatepicture',
-        'getAllPicturesFromCollection' => '/getallpicturesfromcollection'
+        'getAllPicturesFromCollection' => '/getallpicturesfromcollection',
+        'getPictureFromCollection' => '/getpicturefromcollection'
     ];
 }

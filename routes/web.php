@@ -43,6 +43,7 @@ Router::post(Routes::routes['deleteCollection'], 'PictureExampleController@delet
 Router::post(Routes::routes['deletePicture'], 'PictureExampleController@deletePicture');
 Router::post(Routes::routes['updatePicture'], 'PictureExampleController@updatePicture');
 Router::post(Routes::routes['getAllPicturesFromCollection'], 'PictureExampleController@getAllPicturesFromCollection');
+Router::post(Routes::routes['getPictureFromCollection'], 'PictureExampleController@getPictureFromCollection');
 
 
 // Table controller usage
