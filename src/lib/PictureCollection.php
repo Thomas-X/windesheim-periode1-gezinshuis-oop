@@ -32,6 +32,16 @@ class PictureCollection
 
         $pictureCount = count($pictures['name']);
         if ($pictureCount > 0) {
+            //Check if the extension of each file is in the ALLOWED_EXTENSIONS and places the result in an array.
+            //If the array contains not true, return false.
+            //This is because the extension of each file isn't allowed and we would create an empty collection.
+            $allowed = [];
+            foreach ($pictures['name'] as $pictureName) {
+                $pictureExtension = strtolower(pathinfo($pictureName, PATHINFO_EXTENSION));
+                $allowed[] = in_array($pictureExtension, PictureCollection::ALLOWED_EXTENSIONS);
+            }
+            if (!in_array(true, $allowed))
+                return false;
 
             $folder = Authentication::generateRandomString() . '_pictures';
             $uploadDir = PictureCollection::DIRECTORY . "/" . $folder;
@@ -44,7 +54,7 @@ class PictureCollection
             for ($i = 0; $i < $pictureCount; $i++) {
                 //Get file extension to check if it is valid.
                 $pictureName = strtolower($pictures['name'][$i]);
-                $pictureExtension = pathinfo($pictureName, PATHINFO_EXTENSION);
+                $pictureExtension = strtolower(pathinfo($pictureName, PATHINFO_EXTENSION));
 
                 if (in_array($pictureExtension, PictureCollection::ALLOWED_EXTENSIONS)) {
                     $pictureName = PictureCollection::createFileName($uploadDir, $pictureName);
@@ -65,32 +75,6 @@ class PictureCollection
         return false;
     }
 
-    private static function createFileName(string $uploadDir, string $pictureName)
-    {
-        $fullPicturePath = $uploadDir . '/' . $pictureName;
-        $files = glob($fullPicturePath);
-
-        $counter = 2;
-        //Rename the picture if it exists.
-        while (isset($files) && is_array($files) && count($files) > 0) {
-            //Separate the picture name and extension.
-            $splitPictureName = explode('.', $pictureName);
-
-            //If the file already exist with a additional number replace that number with a higher number.
-            if ($counter > 2) {
-                //Replace the number with a new number.
-                $pictureName = substr_replace($splitPictureName[0], "_{$counter}", -2) . '.' . $splitPictureName[1];
-            } else {
-                $pictureName = "{$splitPictureName[0]}_{$counter}.{$splitPictureName[1]}";
-            }
-
-            $fullPicturePath = $uploadDir . '/' . $pictureName;
-            $files = glob($fullPicturePath);
-            $counter++;
-        }
-        return $pictureName;
-    }
-
     public static function deletePictureCollection(int $collectionId)
     {
         if (isset($collectionId) && $collectionId > 0) {
@@ -99,28 +83,30 @@ class PictureCollection
 
             if ($collectionCount > 0) {
                 $collection = DB::selectWhere('collection', 'collections', 'id', $collectionId)[0]['collection'];
-                $pictureDirectoryName = "pictures/{$collection}";
+                $pictureDirectoryName = PictureCollection::DIRECTORY . $collection;
 
                 $didRemove = [];
                 $failedToRemove = [];
-                //Remove the collection folder and all the pictures in it.
-                $pictureDirectory = opendir($pictureDirectoryName);
-                while (($picture = readdir($pictureDirectory)) !== false) {
-                    if (($picture != '.') && ($picture != '..')) {
-                        $full = $pictureDirectoryName . '/' . $picture;
-                        $didUnlink = unlink($full);
-                        if (!$didUnlink) {
-                            $didRemove[] = $didUnlink;
-                            $failedToRemove[] = $picture;
+                if (file_exists($pictureDirectoryName)){
+                    //Remove the collection folder and all the pictures in it.
+                    $pictureDirectory = opendir($pictureDirectoryName);
+                    while (($picture = readdir($pictureDirectory)) !== false) {
+                        if (($picture != '.') && ($picture != '..')) {
+                            $full = $pictureDirectoryName . '/' . $picture;
+                            $didUnlink = unlink($full);
+                            if (!$didUnlink) {
+                                $didRemove[] = $didUnlink;
+                                $failedToRemove[] = $picture;
+                            }
                         }
                     }
+                    closedir($pictureDirectory);
                 }
-                closedir($pictureDirectory);
 
                 //Check if all the pictures where removed.
                 //If so the directory will be removed and all the pictures associated with the collection and the collection
                 //itself will be removed from the database.
-                if (!in_array(false, $didRemove)) {
+                if ($didRemove === [] || !in_array(false, $didRemove)) {
                     rmdir($pictureDirectoryName);
                     DB::deleteEntry('pictures', 'collection_id', $collectionId);
                     DB::deleteEntry('collections', 'id', $collectionId);
@@ -162,9 +148,17 @@ class PictureCollection
 
                 $image = DB::selectWhere('name', 'pictures', 'id', $pictureId)[0]['name'];
 
-                $fullPictureName = "pictures/{$collection}/{$image}";
-                $didUnlink = unlink($fullPictureName);
-                if ($didUnlink) {
+                $fullPictureName = PictureCollection::DIRECTORY . "{$collection}/{$image}";
+
+                if (file_exists($fullPictureName)) {
+                    $didUnlink = unlink($fullPictureName);
+
+                    if ($didUnlink) {
+                        DB::deleteEntry('pictures', 'id', $pictureId);
+                        return true;
+                    }
+                }
+                else {
                     DB::deleteEntry('pictures', 'id', $pictureId);
                     return true;
                 }
@@ -183,7 +177,7 @@ class PictureCollection
             //Get the amount of times a picture id is in the pictures table.
             $pictureCount = (int)DB::selectCount('pictures', 'id', $pictureId)[0][0];
 
-            $pictureExtension = pathinfo($picture['name'], PATHINFO_EXTENSION);
+            $pictureExtension = strtolower(pathinfo($picture['name'], PATHINFO_EXTENSION));
             if ($collectionCount > 0 && $pictureCount > 0 && in_array($pictureExtension, PictureCollection::ALLOWED_EXTENSIONS)) {
                 //Get the folder where the picture is located.
                 $collection = DB::selectWhere('collection', 'collections', 'id', $collectionId)[0]['collection'];
@@ -193,31 +187,78 @@ class PictureCollection
                 //Rename the current picture temporary.
                 $directory = PictureCollection::DIRECTORY . "/" . $collection;
                 $fullOldPictureName = "{$directory}/{$oldPictureName}";
-                $tmpOldPictureExtension = pathinfo($oldPictureName, PATHINFO_EXTENSION);
-                $tmpOldPictureFileName = pathinfo($oldPictureName, PATHINFO_FILENAME);
-                $tmpFullOldPictureName = "{$directory}/{$tmpOldPictureFileName}.tmp.{$tmpOldPictureExtension}";
-                $didRename = rename($fullOldPictureName, $tmpFullOldPictureName);
 
-                //Upload the new picture. After the new picture is uploaded the old picture is removed
-                //and the database is updated.
-                //If the upload failed rename the old picture back to it's original name.
-                if ($didRename) {
-                    $pictureName = PictureCollection::createFileName($directory, $picture['name']);
-                    $pictureName = strtolower($pictureName);
-                    $fullPicturePath = $directory . '/' . $pictureName;
-                    $didUpload = move_uploaded_file($picture['tmp_name'], $fullPicturePath);
+
+                if (file_exists($fullOldPictureName)) {
+                    //If the file really exist rename it temporary and later remove if when the new file is uploaded.
+                    $tmpOldPictureExtension = pathinfo($oldPictureName, PATHINFO_EXTENSION);
+                    $tmpOldPictureFileName = pathinfo($oldPictureName, PATHINFO_FILENAME);
+                    $tmpFullOldPictureName = "{$directory}/{$tmpOldPictureFileName}.tmp.{$tmpOldPictureExtension}";
+                    $didRename = rename($fullOldPictureName, $tmpFullOldPictureName);
+
+                    //Upload the new picture. After the new picture is uploaded the old picture is removed
+                    //and the database is updated.
+                    //If the upload failed rename the old picture back to it's original name.
+                    if ($didRename) {
+                        $fullPicturePath = PictureCollection::createFullPicturePath($directory, $picture['name']);
+                        $didUpload = move_uploaded_file($picture['tmp_name'], $fullPicturePath['directory']);
+                        if ($didUpload) {
+                            $didDelete = unlink($tmpFullOldPictureName);
+                            if ($didDelete) {
+                                DB::updateEntry($pictureId, 'pictures', ['name' => $fullPicturePath['pictureName']]);
+                                return true;
+                            }
+                        } else
+                            //If the upload failed rename the old file back.
+                            rename($tmpFullOldPictureName, $fullOldPictureName);
+                    }
+                } else {
+                    //If the file does not exist upload the new file and update the database.
+                    $fullPicturePath = PictureCollection::createFullPicturePath($directory, $picture['name']);
+                    $didUpload = move_uploaded_file($picture['tmp_name'], $fullPicturePath['directory']);
                     if ($didUpload) {
-                        $didDelete = unlink($tmpFullOldPictureName);
-                        if ($didDelete) {
-                            DB::updateEntry($pictureId, 'pictures', ['name' => $pictureName]);
-                            return true;
-                        }
-                    } else
-                        rename($fullOldPictureName, $tmpFullOldPictureName);
+                        DB::updateEntry($pictureId, 'pictures', ['name' => $fullPicturePath['pictureName']]);
+                        return true;
+                    }
                 }
             }
         }
         return false;
+    }
+
+    private static function createFullPicturePath(string $directory, string $pictureName){
+        $pictureName = PictureCollection::createFileName($directory, $pictureName);
+        $pictureName = strtolower($pictureName);
+        return [
+            'directory' => $directory . '/' . $pictureName,
+            'pictureName' => $pictureName
+        ];
+    }
+
+    private static function createFileName(string $uploadDir, string $pictureName)
+    {
+        $fullPicturePath = $uploadDir . '/' . $pictureName;
+        $files = glob($fullPicturePath);
+
+        $counter = 2;
+        //Rename the picture if it exists.
+        while (isset($files) && is_array($files) && count($files) > 0) {
+            //Separate the picture name and extension.
+            $splitPictureName = explode('.', $pictureName);
+
+            //If the file already exist with a additional number replace that number with a higher number.
+            if ($counter > 2) {
+                //Replace the number with a new number.
+                $pictureName = substr_replace($splitPictureName[0], "_{$counter}", -2) . '.' . $splitPictureName[1];
+            } else {
+                $pictureName = "{$splitPictureName[0]}_{$counter}.{$splitPictureName[1]}";
+            }
+
+            $fullPicturePath = $uploadDir . '/' . $pictureName;
+            $files = glob($fullPicturePath);
+            $counter++;
+        }
+        return $pictureName;
     }
 
     public static function getAllPicturesFromCollection(int $collectionId)
