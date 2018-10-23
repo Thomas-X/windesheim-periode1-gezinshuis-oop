@@ -19,7 +19,10 @@ class PictureCollection
         $allowedExtensions = [
             'jpeg',
             'jpg',
-            'png'
+            'png',
+            'gif',
+            'bmp',
+            'tiff',
         ];
 
         if (!isset($pictures['name']) || !isset($pictures['tmp_name']))
@@ -66,7 +69,7 @@ class PictureCollection
 
         $counter = 2;
         //Rename the picture if it exists.
-        while(isset($files) && is_array($files) && count($files) > 0) {
+        while (isset($files) && is_array($files) && count($files) > 0) {
             //Separate the picture name and extension.
             $splitPictureName = explode('.', $pictureName);
 
@@ -74,8 +77,7 @@ class PictureCollection
             if ($counter > 2) {
                 //Replace the number with a new number.
                 $pictureName = substr_replace($splitPictureName[0], "_{$counter}", -2) . '.' . $splitPictureName[1];
-            }
-            else {
+            } else {
                 $pictureName = "{$splitPictureName[0]}_{$counter}.{$splitPictureName[1]}";
             }
 
@@ -101,7 +103,7 @@ class PictureCollection
                 //Remove the collection folder and all the pictures in it.
                 $pictureDirectory = opendir($pictureDirectoryName);
                 while (($picture = readdir($pictureDirectory)) !== false) {
-                    if (( $picture != '.' ) && ( $picture != '..' )) {
+                    if (($picture != '.') && ($picture != '..')) {
                         $full = $pictureDirectoryName . '/' . $picture;
                         $didUnlink = unlink($full);
                         if (!$didUnlink) {
@@ -120,8 +122,7 @@ class PictureCollection
                     DB::deleteEntry('pictures', 'collection_id', $collectionId);
                     DB::deleteEntry('collections', 'id', $collectionId);
                     return true;
-                }
-                else {
+                } else {
                     $sql = 'DELETE FROM pictures WHERE ';
 
                     $failedToRemoveCount = count($failedToRemove) - 1;
@@ -201,15 +202,13 @@ class PictureCollection
                     $pictureName = strtolower($pictureName);
                     $fullPicturePath = $directory . '/' . $pictureName;
                     $didUpload = move_uploaded_file($picture['tmp_name'], $fullPicturePath);
-                    if ($didUpload)
-                    {
+                    if ($didUpload) {
                         $didDelete = unlink($tmpFullOldPictureName);
-                        if ($didDelete){
+                        if ($didDelete) {
                             DB::updateEntry($pictureId, 'pictures', ['name' => $pictureName]);
                             return true;
                         }
-                    }
-                    else
+                    } else
                         rename($fullOldPictureName, $tmpFullOldPictureName);
                 }
             }
