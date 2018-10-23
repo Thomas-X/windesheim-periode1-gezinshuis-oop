@@ -7,6 +7,8 @@ composer.phar
 # add all files to ignore list
 /public/js/*
 /public/uploads/*
-# except our buddy .gitkeep since otherwise the js folder is not committed
+/public/pictures/*
+# except our buddy .gitkeep since otherwise the folder is not committed
 !/public/js/.gitkeep
 !/public/uploads/.gitkeep
+!/public/pictures/.gitkeep
