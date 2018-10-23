@@ -14,21 +14,24 @@ use Qui\lib\facades\DB;
 
 class PictureCollection
 {
+    private const DIRECTORY = 'pictures/';
+
+    private const ALLOWED_EXTENSIONS = [
+        'jpeg',
+        'jpg',
+        'png'
+    ];
+
     public static function createPictureCollection(array $pictures)
     {
-        $allowedExtensions = [
-            'jpeg',
-            'jpg',
-            'png'
-        ];
-
         if (!isset($pictures['name']) || !isset($pictures['tmp_name']))
             return false;
 
         $pictureCount = count($pictures['name']);
         if ($pictureCount > 0) {
+
             $folder = Authentication::generateRandomString() . '_pictures';
-            $uploadDir = "pictures/{$folder}";
+            $uploadDir = PictureCollection::DIRECTORY . "/" . $folder;
 
             $didMakeDir = mkdir($uploadDir);
             if (!$didMakeDir)
@@ -40,8 +43,8 @@ class PictureCollection
                 $pictureName = strtolower($pictures['name'][$i]);
                 $pictureExtension = pathinfo($pictureName, PATHINFO_EXTENSION);
 
-                if (in_array($pictureExtension, $allowedExtensions)) {
-                    $pictureName = self::createFileName($uploadDir, $pictureName);
+                if (in_array($pictureExtension, PictureCollection::ALLOWED_EXTENSIONS)) {
+                    $pictureName = PictureCollection::createFileName($uploadDir, $pictureName);
                     $pictureName = strtolower($pictureName);
                     $fullPicturePath = $uploadDir . '/' . $pictureName;
 
@@ -179,14 +182,15 @@ class PictureCollection
             //Get the amount of times a picture id is in the pictures table.
             $pictureCount = (int)DB::selectCount('pictures', 'id', $pictureId)[0][0];
 
-            if ($collectionCount > 0 && $pictureCount > 0) {
+            $pictureExtension = pathinfo($picture['name'], PATHINFO_EXTENSION);
+            if ($collectionCount > 0 && $pictureCount > 0 && in_array($pictureExtension, PictureCollection::ALLOWED_EXTENSIONS)) {
                 //Get the folder where the picture is located.
                 $collection = DB::selectWhere('collection', 'collections', 'id', $collectionId)[0]['collection'];
                 //Get the name of the current picture.
                 $oldPictureName = DB::selectWhere('name', 'pictures', 'id', $pictureId)[0]['name'];
 
                 //Rename the current picture temporary.
-                $directory = "pictures/{$collection}";
+                $directory = PictureCollection::DIRECTORY . "/" . $collection;
                 $fullOldPictureName = "{$directory}/{$oldPictureName}";
                 $tmpOldPictureExtension = pathinfo($oldPictureName, PATHINFO_EXTENSION);
                 $tmpOldPictureFileName = pathinfo($oldPictureName, PATHINFO_FILENAME);
@@ -197,7 +201,7 @@ class PictureCollection
                 //and the database is updated.
                 //If the upload failed rename the old picture back to it's original name.
                 if ($didRename) {
-                    $pictureName = self::createFileName($directory, $picture['name']);
+                    $pictureName = PictureCollection::createFileName($directory, $picture['name']);
                     $pictureName = strtolower($pictureName);
                     $fullPicturePath = $directory . '/' . $pictureName;
                     $didUpload = move_uploaded_file($picture['tmp_name'], $fullPicturePath);

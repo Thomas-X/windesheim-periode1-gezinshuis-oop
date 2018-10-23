@@ -20,9 +20,9 @@ class PictureExampleController
     public function showUpload(Request $req, Response $res, array $data = null)
     {
         if ($data !== null)
-            View::Render('pages.Upload', $data);
+            View::render('pages.Upload', $data);
         else
-            View::Render('pages.Upload');
+            View::render('pages.Upload');
     }
 
     public function uploadCollection(Request $req, Response $res)
@@ -52,12 +52,12 @@ class PictureExampleController
     public function getAllPicturesFromCollection(Request $req, Response $res)
     {
         $pictureDirectories = PictureCollection::getAllPicturesFromCollection($req->params['collectionId']);
-        self::showUpload($req, $res, ['pictureDirectories' => $pictureDirectories]);
+        $this->showUpload($req, $res, ['pictureDirectories' => $pictureDirectories]);
     }
 
     public function getPictureFromCollection(Request $req, Response $res)
     {
         $pictureDirectory = PictureCollection::getPictureFromCollection($req->params['collectionId'], $req->params['pictureId']);
-        self::showUpload($req, $res, ['pictureDirectory' => $pictureDirectory]);
+        $this->showUpload($req, $res, ['pictureDirectory' => $pictureDirectory]);
     }
 }
