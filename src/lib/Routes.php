@@ -60,6 +60,15 @@ class Routes
         // overview of 'behandelplannen' that the doctor is assigned to (profile_owner can see all careforschemas)
         'careforschemas' => '/h/careforschemas',
         'uploadCareForSchema' => '/h/careforschemas', // <== ?id=2. upload=update
-        'downloadCareForSchema' => '/h/careforschemas' // <== ?id=2
+        'downloadCareForSchema' => '/h/careforschemas', // <== ?id=2
+
+        //upload example routes
+        'upload' => '/upload',
+        'uploadCollection' => '/uploadcollection',
+        'deleteCollection' => '/deletecollection',
+        'deletePicture' => '/deletepicture',
+        'updatePicture' => '/updatepicture',
+        'getAllPicturesFromCollection' => '/getallpicturesfromcollection',
+        'getPictureFromCollection' => '/getpicturefromcollection'
     ];
 }

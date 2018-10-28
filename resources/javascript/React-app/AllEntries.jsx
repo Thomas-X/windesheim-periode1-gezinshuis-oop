@@ -47,9 +47,9 @@ const AllEntries = () => {
 						determineField={(...args) => determineField(...args)}
 						filter={(search, val) => {
 							if (!!titleKey && !!secondTitleKey) {
-								return (val[titleKey] + (val[secondTitleKey]).toLowerCase()).indexOf(search.toLowerCase()) !== -1;
+								return (val[titleKey] + val[secondTitleKey]).indexOf(search) !== -1;
 							} else {
-								return val[titleKey].toLowerCase().indexOf(search.toLowerCase()) !== -1
+								return val[titleKey].indexOf(search) !== -1
 							}
 						}}
 				/>

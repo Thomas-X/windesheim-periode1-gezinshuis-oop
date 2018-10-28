@@ -19,6 +19,10 @@ class Database
     public $pdo;
     public $eloquent;
 
+    private const CONCAT_WITH_VALUES = 1;
+    private const CONCAT_WITH_QUESTIONMARK = 2;
+    private const CONCAT_COLUMN_QUESTIONMARK = 3;
+
     public function __construct()
     {
         // Util::dd((\PDO::getAvailableDrivers()));
@@ -121,40 +125,16 @@ class Database
      * */
     public function insertEntry(string $table, array $values)
     {
-        $columns = ($this->concatValue(array_keys($values), "", "", true))['query'];
+        $columns = ($this->concatValue(array_keys($values), Database::CONCAT_WITH_VALUES, '', ','))['query'];
         $query = "INSERT INTO {$table} " . "({$columns}) ";
-        $valuesEscaped = ($this->concatValue($values, ""))['query'];
+        $valuesEscaped = ($this->concatValue($values, Database::CONCAT_WITH_QUESTIONMARK, '', ','))['query'];
         $query = $query . "VALUES ({$valuesEscaped})";
         $flattenedAssocArray = [];
         foreach ($values as $key => $value) {
             $flattenedAssocArray[] = $value;
         }
         $this->execute($query, $flattenedAssocArray);
-    }
-
-    /*
-     * a function for concatanating strings with or without ','. Optional inserting values instead of ? where values should be
-     * */
-    private function concatValue(array $values, string $query, bool $appendString = null, bool $insertValues = false): array
-    {
-        $idx = 0;
-        $rowValues = [];
-
-        foreach ($values as $rowKey => $value) {
-            $insertValue = $insertValues ? "`{$value}`" : "?";
-            if ($idx == 0) {
-                $query = $query . "" . "{$insertValue}" . $appendString ?? "";
-            } else {
-                $query = $query . "," . "{$insertValue}" . $appendString ?? "";
-            }
-            $rowValues[] = $value;
-            $idx++;
-        }
-
-        return [
-            'rowValues' => $rowValues,
-            'query' => $query
-        ];
+        return $this->pdo->lastInsertId();
     }
 
     /*
@@ -168,28 +148,65 @@ class Database
     public function updateEntry(int $id, string $table, array $values, $identifier = 'id')
     {
         $query = "UPDATE {$table} SET ";
+
+        $return = $this->concatValue($values, Database::CONCAT_COLUMN_QUESTIONMARK, $query, ',');
+
+        $query = $return['query'];
+        $rowValues = $return['rowValues'];
+
+        $query = $query . " WHERE (`id` = {$id})";
+        return $this->execute($query, $rowValues);
+    }
+
+    public function selectMultipleWhere(string $table, array $select, array $where)
+    {
+        $query = ($this->concatValue($select, Database::CONCAT_WITH_VALUES, 'SELECT '))['query'];
+
+        $query .= " FROM $table WHERE";
+
+        $return = $this->concatValue($where, Database::CONCAT_COLUMN_QUESTIONMARK, $query, 'and');
+
+        return $this->execute($return['query'], $return['rowValues']);
+    }
+
+    private function concatValue(array $values, int $concatType, string $query = "", string $prepend = "")
+    {
         $idx = 0;
         $rowValues = [];
         foreach ($values as $rowKey => $value) {
-            // first loop, meaning we shouldn't prepend a , before the value
+            $concatValue = "";
+            switch ($concatType){
+                case (Database::CONCAT_WITH_VALUES):
+                    $concatValue = "{$value}";
+                    break;
+                case (Database::CONCAT_WITH_QUESTIONMARK):
+                    $concatValue = "?";
+                    break;
+                case (Database::CONCAT_COLUMN_QUESTIONMARK):
+                    $concatValue = "{$rowKey} = ?";
+            }
+            // first loop, meaning we shouldn't prepend the value
             $questionMarkOrNull = '?';
             $addValueToValues = true;
             if ($value == CMS_BUILDER::NULL || $value == 'null' || $value == 'NULL') {
-                $questionMarkOrNull = null;
+                $concatValue = null;
                 $addValueToValues = false;
             }
             if ($idx == 0) {
-                $query = $query . "{$rowKey} = " . $questionMarkOrNull;
+                $query .= " {$concatValue}";
             } else {
                 $query = $query . ", {$rowKey} = " . $questionMarkOrNull;
+                $query .= " {$prepend} {$concatValue}";
             }
             if ($addValueToValues) {
                 $rowValues[] = $value;
             }
             $idx++;
         }
-        $query = $query . " WHERE (`{$identifier}` = {$id})";
-        return $this->execute($query, $rowValues);
+        return [
+            'query' => $query,
+            'rowValues' => $rowValues
+        ];
     }
 
     public function deleteEntry(string $table, string $key, string $identifier)
@@ -210,5 +227,10 @@ class Database
     public function selectWhere(string $fields, string $table, string $key, string $identifier)
     {
         return $this->execute("SELECT {$fields} FROM {$table} WHERE {$key}=?", [$identifier]);
+    }
+
+    public function selectCount(string $table, string $key, string $identifier)
+    {
+        return $this->execute("SELECT COUNT(*) FROM {$table} WHERE {$key}=?", [$identifier]);
     }
 }

@@ -541,12 +541,6 @@ class CMS_BUILDER
             'profiles_parents_caretakers_id',
             'profiles_doctors_id',
         ];
-
-        function undefined_index_helper($req, $paramName)
-        {
-            return empty($req->params[$paramName]) ? null : $req->params[$paramName];
-        }
-
         $includes_data = [
             'parent_has_permission' => isset($req->params['parent_has_permission']) ? '1' : '0',
             'kid_has_permission' => isset($req->params['kid_has_permission']) ? '1' : '0',

@@ -13,7 +13,7 @@
                 continue;
             }
 
-            $fieldElem = "";
+                $fieldElem = "";
             switch ($field['html_type']) {
                 case 'input':
                     $fieldElem = "<input type=\"{$field['type']}\" class=\"form-control\" placeholder=\"{$field['placeholder']}\" name=\"{$field['name']}\" required value='{$fieldData[$field['name']]}'>";
