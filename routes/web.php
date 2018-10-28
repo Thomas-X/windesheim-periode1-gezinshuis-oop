@@ -123,4 +123,3 @@ Router::middleware(['AuthenticationMiddleware@shouldNotBeLoggedIn'], [
         'AuthenticationController@onForgotPassword'
     ]
 ]);
-//Router::get($routes['home'], 'HomeController@showHome', [ 'table' => 'users', 'excludes' => ['roles_id', 'fname'] ]);
