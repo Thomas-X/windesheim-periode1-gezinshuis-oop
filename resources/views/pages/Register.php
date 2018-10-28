@@ -1,4 +1,4 @@
-<div class="mainContainer" style="min-height: 100vh">
+<div class="container" style="min-height: 100vh">
     <div>
         <form method="post" action="<?php echo \Qui\lib\Routes::routes['onRegister'] ?>" id="registerForm">
             <?php

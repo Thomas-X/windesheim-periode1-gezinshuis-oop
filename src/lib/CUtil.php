@@ -15,7 +15,17 @@ namespace Qui\lib;
  */
 class CUtil
 {
-
+    public function selectFormatter($data, $idKey, $titleKey)
+    {
+        $arr = [];
+        foreach ($data as $item) {
+            $arr[] = [
+                'value' => $item[$idKey],
+                'title' => $item[$titleKey],
+            ];
+        }
+        return $arr;
+    }
     /*
      * Simple dump and die function, idea stolen from laravel :)
      * */
@@ -23,7 +33,7 @@ class CUtil
      * @param $value
      * @param null $extraValues
      */
-    public function dd($value, $extraValues=null)
+    public function dd($value, $extraValues = null)
     {
         $args = func_get_args();
         if ($args > 1) {

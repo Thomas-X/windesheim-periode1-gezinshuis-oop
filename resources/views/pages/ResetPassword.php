@@ -1,4 +1,4 @@
-<div class="mainContainer" style="min-height: 100vh">
+<div class="container" style="min-height: 100vh">
     <div>
         <div class="jumbotron">
             <h3 class="display-12 title">Reset your password</h3>

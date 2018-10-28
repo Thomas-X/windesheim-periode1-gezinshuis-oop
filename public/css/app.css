@@ -18,7 +18,6 @@ body {
     align-items: center;
 }
 
-
 .title{
     color: grey;
 }
@@ -35,7 +34,7 @@ body {
 footer {
     padding: 1.5em 0;
     width: 100%;
-    background-color: #333333;
+    background-color: #222222;
     color: #ffffff;
 }
 footer a {
@@ -46,6 +45,10 @@ footer a {
 footer a:hover {
     text-decoration: none;
     color: #ffffff
+}
+
+.minimumHeight {
+    min-height: 100vh;
 }
 
 @-webkit-keyframes rotate {
@@ -121,10 +124,26 @@ nav {
 .margin-1 {
     padding: .33em;
 }
-
-@media screen and (max-width: 768px) {
-
+.margin-2 {
+    padding-right: 0.10rem;
 }
+
+.flexCenter {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.buttongrid {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 20px;
+}
+
+.flex1 {
+    flex: 1;
+}
+
 
 @media (max-width: 576px) {
     .alert {

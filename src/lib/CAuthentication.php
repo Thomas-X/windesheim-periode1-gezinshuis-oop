@@ -27,6 +27,7 @@ class CAuthentication
         if ($user['isValid'] == true) {
             // 1 week cookie time()+60*60*24*365 sec = 1 week
             // TODO enable secure option to avoi man-in-the-middle attacks
+            $this->updateUserLastLogin($user['id']);
             if (App::isDevelopmentEnviroment()) {
                 setcookie('token', $user['rememberMeToken'], time() + 60 * 60 * 24 * 7, '/');
             } else if (App::isProductionEnviroment()) {
@@ -92,15 +93,23 @@ class CAuthentication
         }
     }
 
+    public function updateUserLastLogin($id) {
+        DB::updateEntry($id, 'users', [
+            'lastLogin' => date('Y-m-d')
+        ]);
+    }
+
     public function verify($returnUser = false)
     {
         $token = $_COOKIE['token'] ?? false;
         if (!$token) {
             return false;
         } else {
-            $foundUsers = DB::selectWhere($returnUser ? '*' : 'rememberMeToken', 'users', 'rememberMeToken', $token);
+            $foundUsers = DB::selectWhere($returnUser ? '*' : 'rememberMeToken, id', 'users', 'rememberMeToken', $token);
             if (count($foundUsers) == 1) {
+                // Update last login
                 $user = $foundUsers[0];
+                $this->updateUserLastLogin($user['id']);
                 if ($user && !$returnUser) {
                     return true;
                 } else {
@@ -125,7 +134,7 @@ class CAuthentication
 
     private function verifyCredentials(string $email, string $password)
     {
-        $users = DB::select('password, email, rememberMeToken', 'users');
+        $users = DB::selectAll('users');
         foreach ($users as $user) {
             // if matches, user has filled in correct password
             if ($this->verifyHash($user['password'], $password) && $email == $user['email']) {
@@ -136,10 +145,10 @@ class CAuthentication
                         'password' => "{$hash}",
                     ]);
                 }
-                return [
+                return array_merge($user, [
                     'rememberMeToken' => $user['rememberMeToken'],
                     'isValid' => true,
-                ];
+                ]);
             }
         }
         return [

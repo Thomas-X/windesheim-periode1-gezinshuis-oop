@@ -5,6 +5,7 @@
 		}
 	},
 	"require": {
-		"phpdocumentor/phpdocumentor": "2.*"
+		"phpdocumentor/phpdocumentor": "2.*",
+		"fzaninotto/faker": "^1.8"
 	}
 }

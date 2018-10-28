@@ -3,6 +3,9 @@
 use Qui\lib\App;
 use Qui\lib\facades\Router;
 use Qui\lib\Routes;
+use Qui\lib\Request;
+use Qui\lib\Response;
+use Qui\lib\CMS_BUILDER;
 
 /*
  *
@@ -24,6 +27,14 @@ use Qui\lib\Routes;
 Router::get(Routes::routes['home'], 'HomeController@showHome');
 Router::get(Routes::routes['about'], 'AboutController@showAbout');
 Router::get(Routes::routes['contact'], 'ContactController@showContact');
+
+// TODO Authentication middleware profiles_employees only
+// Init CMS routes
+CMS_BUILDER::init();
+
+Router::get(Routes::routes['cms'], 'TableController@showDashboard');
+
+
 
 // Table controller usage
 //Router::get($routes['onRead'], 'TableController@index',['table'=>'users','selectAll' => null,"page"=>"pages.Test","excludes"=>['id',"fname"]]);
@@ -52,10 +63,14 @@ Router::get(Routes::routes['contact'], 'ContactController@showContact');
  * */
 Router::middleware(['AuthenticationMiddleware@resetPassword'], [
     [
-        App::GET, Routes::routes['resetPassword'], 'AuthenticationController@showResetPassword'
+        App::GET,
+        Routes::routes['resetPassword'],
+        'AuthenticationController@showResetPassword'
     ],
     [
-        App::POST, Routes::routes['resetPassword'], 'AuthenticationController@onResetPassword'
+        App::POST,
+        Routes::routes['resetPassword'],
+        'AuthenticationController@onResetPassword'
     ]
 ]);
 
@@ -64,7 +79,9 @@ Router::middleware(['AuthenticationMiddleware@resetPassword'], [
  * */
 Router::middleware(['AuthenticationMiddleware@shouldBeLoggedIn'], [
     [
-        App::GET, Routes::routes['logout'], 'AuthenticationController@onLogout'
+        App::GET,
+        Routes::routes['logout'],
+        'AuthenticationController@onLogout'
     ]
 ]);
 //Router::get($routes['login'], 'LoginController@showLogin');
@@ -76,22 +93,34 @@ Router::middleware(['AuthenticationMiddleware@shouldBeLoggedIn'], [
  * */
 Router::middleware(['AuthenticationMiddleware@shouldNotBeLoggedIn'], [
     [
-        App::GET, Routes::routes['login'], 'AuthenticationController@showLogin'
+        App::GET,
+        Routes::routes['login'],
+        'AuthenticationController@showLogin'
     ],
     [
-        App::GET, Routes::routes['register'], 'AuthenticationController@showRegister'
+        App::GET,
+        Routes::routes['register'],
+        'AuthenticationController@showRegister'
     ],
     [
-        App::GET, Routes::routes['forgotPassword'], 'AuthenticationController@showForgotPassword'
+        App::GET,
+        Routes::routes['forgotPassword'],
+        'AuthenticationController@showForgotPassword'
     ],
     [
-        App::POST, Routes::routes['login'], 'AuthenticationController@onLogin'
+        App::POST,
+        Routes::routes['login'],
+        'AuthenticationController@onLogin'
     ],
     [
-        App::POST, Routes::routes['onRegister'], 'AuthenticationController@onRegister'
+        App::POST,
+        Routes::routes['onRegister'],
+        'AuthenticationController@onRegister'
     ],
     [
-        App::POST, Routes::routes['forgotPassword'], 'AuthenticationController@onForgotPassword'
+        App::POST,
+        Routes::routes['forgotPassword'],
+        'AuthenticationController@onForgotPassword'
     ]
 ]);
 //Router::get($routes['home'], 'HomeController@showHome', [ 'table' => 'users', 'excludes' => ['roles_id', 'fname'] ]);

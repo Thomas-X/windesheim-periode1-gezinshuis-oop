@@ -5,6 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <base href="http://localhost:8000"/>
 
     <!-- Roboto font -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -17,17 +18,16 @@
     <title>Gezinshuis - <?= $title ?></title>
 </head>
 <body>
-<script>
 
-    var NOTIFICATIONS = <?php echo json_encode($notifications) ?>
-</script>
+<?php require(__DIR__ . '/../JSDATA.php') ?>
+
 <script src="js/global.js"></script>
 
-<?php require(__DIR__ . '/../partials/nav.php') ?>
+<?php require(__DIR__ . "/../{$nav_path}") ?>
 
 <?php require($pagePath) ?>
 
-<?php require(__DIR__ . '/../partials/footer.php') ?>
+<?php require(__DIR__ . "/../{$footer_path}") ?>
 
 </body>
 </html>

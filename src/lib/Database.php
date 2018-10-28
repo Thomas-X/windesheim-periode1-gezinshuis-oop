@@ -99,7 +99,7 @@ class Database
         // Hence why were just returning the boolean here
 
         // if it was a select statement, we can fetch the rows
-        if (strpos($stmt->queryString, 'SELECT') !== false||strpos($stmt->queryString, 'show') !== false) {
+        if (strpos($stmt->queryString, 'SELECT') !== false || strpos($stmt->queryString, 'show') !== false) {
             $results = [];
             while ($row = $stmt->fetch()) {
                 $results[] = $row;
@@ -165,29 +165,38 @@ class Database
 
     // DONE avoid SQL injection (because right now the values are put straight into the query)
     // TODO replace query concatanation here with $this->concatValue()
-    public function updateEntry(int $id, string $table, array $values)
+    public function updateEntry(int $id, string $table, array $values, $identifier = 'id')
     {
         $query = "UPDATE {$table} SET ";
         $idx = 0;
         $rowValues = [];
         foreach ($values as $rowKey => $value) {
             // first loop, meaning we shouldn't prepend a , before the value
-            if ($idx == 0) {
-                $query = $query . "{$rowKey} = ?";
-            } else {
-                $query = $query . ", {$rowKey} = ?";
+            $questionMarkOrNull = '?';
+            $addValueToValues = true;
+            if ($value == CMS_BUILDER::NULL || $value == 'null' || $value == 'NULL') {
+                $questionMarkOrNull = null;
+                $addValueToValues = false;
             }
-            $rowValues[] = $value;
+            if ($idx == 0) {
+                $query = $query . "{$rowKey} = " . $questionMarkOrNull;
+            } else {
+                $query = $query . ", {$rowKey} = " . $questionMarkOrNull;
+            }
+            if ($addValueToValues) {
+                $rowValues[] = $value;
+            }
             $idx++;
         }
-        $query = $query . " WHERE (`id` = {$id})";
+        $query = $query . " WHERE (`{$identifier}` = {$id})";
         return $this->execute($query, $rowValues);
     }
+
     public function deleteEntry(string $table, string $key, string $identifier)
     {
-    return $this->execute("DELETE FROM {$table} WHERE {$key}=?", [$identifier]);
+        return $this->execute("DELETE FROM {$table} WHERE {$key}=?", [$identifier]);
     }
-    
+
     public function selectAll(string $table)
     {
         return $this->execute("SELECT * FROM {$table}");
