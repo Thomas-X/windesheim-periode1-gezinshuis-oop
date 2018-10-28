@@ -16,6 +16,9 @@ class Routes
      *
      * Add careforschema uploading to view in /cms/careforschema
      * Add picture uploading to view in /cms/parents, /cms/doctors, /cms/events
+     * /h
+     * /h/events
+     * /h/day2dayinformation
      * */
     public const routes = [
         'home' => '/',
