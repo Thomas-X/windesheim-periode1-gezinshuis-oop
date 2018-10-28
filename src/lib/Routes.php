@@ -11,6 +11,12 @@ namespace Qui\lib;
 
 class Routes
 {
+    /*
+     * 28-10-2018 TODO 'sprint' planning
+     *
+     * Add careforschema uploading to view in /cms/careforschema
+     * Add picture uploading to view in /cms/parents, /cms/doctors, /cms/events
+     * */
     public const routes = [
         'home' => '/',
         'about' => '/about',
