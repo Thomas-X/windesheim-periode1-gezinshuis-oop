@@ -43,6 +43,7 @@ class Routes
         'cms_parents_caretaker' => '/cms/parent_caretaker',
         'cms_kids' => '/cms/kids',
         'cms_employees' => '/cms/employees',
+        'cms_profile' => '/cms/profile',
         // Use query parameters for selecting specific kid / parent / doctor
         'cms_manage_kid' => '/cms/manage/kid', // manage child 'behandeldocument' view rights
         'cms_manage_parent' => '/cms/manage/parent_caretaker', // manage parent 'behandeldocument' view rights

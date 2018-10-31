@@ -318,7 +318,7 @@ class CMS_BUILDER
             },
             'update_get_includes_data' => [
                 'roles' => $roles,
-                'profile_types' => $profile_types_update,
+                'profile_types' => @$profile_types_update,
                 'profiles' => $profiles_update,
             ]
         ]));
