@@ -100,7 +100,7 @@ class TableController
         DB::insertEntry($data['table'], $dbData);
 
         // post-insert hook
-        if (array_key_exists('post_insert', $data)) {
+        if (array_key_exists('post_insert', $data) && $data['post_insert'] != null) {
             $id = DB_PDO::lastInsertId();
             $data['post_insert']($req, $res, $id);
         }
@@ -120,7 +120,7 @@ class TableController
         DB::updateEntry($data["id"], $data['table'], $dbData);
 
         // post-insert hook
-        if (array_key_exists('post_insert', $data)) {
+        if (array_key_exists('post_insert', $data) && $data['post_insert'] != null) {
             $id = DB_PDO::lastInsertId();
             $data['post_insert']($req, $res);
         }
