@@ -77,18 +77,18 @@ class CMS_BUILDER
 
     private static function makeGenerator($req, $res, $opts)
     {
-        $id = $req->params['id'] ?? null;
-        $route = $opts['route'];
-        $table = $opts['table'];
-        $pageFolderName = $opts['pageFolderName'];
-        $create_post_includes = $opts['create_post_includes'] ?? [];
-        $create_post_includes_data = $opts['create_post_includes_data'] ?? [];
-        $create_get_includes_data = $opts['create_get_includes_data'] ?? [];
-        $update_get_includes_data = $opts['update_get_includes_data'] ?? [];
-        $update_post_includes = $opts['update_post_includes'] ?? [];
-        $update_post_includes_data = $opts['update_post_includes_data'] ?? [];
-        $create_post_post_insert = $opts['create_post_post_insert'] ?? [];
-        $update_post_post_insert = $opts['update_post_post_insert'] ?? [];
+        $id = @$req->params['id'] ?? null;
+        $route = @$opts['route'];
+        $table = @$opts['table'];
+        $pageFolderName = @$opts['pageFolderName'];
+        $create_post_includes = @$opts['create_post_includes'] ?? [];
+        $create_post_includes_data = @$opts['create_post_includes_data'] ?? [];
+        $create_get_includes_data = @$opts['create_get_includes_data'] ?? [];
+        $update_get_includes_data = @$opts['update_get_includes_data'] ?? [];
+        $update_post_includes = @$opts['update_post_includes'] ?? [];
+        $update_post_includes_data = @$opts['update_post_includes_data'] ?? [];
+        $create_post_post_insert = @$opts['create_post_post_insert'] ?? [];
+        $update_post_post_insert = @$opts['update_post_post_insert'] ?? [];
         return [
             'selectAll' => [
                 'route' => $route,
