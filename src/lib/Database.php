@@ -97,6 +97,7 @@ class Database
      */
     public function execute($sql, $values = [])
     {
+   
         $stmt = $this->pdo->prepare($sql);
         $val = $stmt->execute($values);
         // If the query is a INSERT/UPDATE/DELETE type then ->fetch is undefined ofcourse
@@ -173,7 +174,9 @@ class Database
     {
         $idx = 0;
         $rowValues = [];
+      
         foreach ($values as $rowKey => $value) {
+      
             $concatValue = "";
             switch ($concatType){
                 case (Database::CONCAT_WITH_VALUES):
@@ -185,6 +188,7 @@ class Database
                 case (Database::CONCAT_COLUMN_QUESTIONMARK):
                     $concatValue = "{$rowKey} = ?";
             }
+        
             // first loop, meaning we shouldn't prepend the value
             $questionMarkOrNull = '?';
             $addValueToValues = true;
@@ -196,13 +200,14 @@ class Database
                 $query .= " {$concatValue}";
             } else {
                 $query = $query . ", {$rowKey} = " . $questionMarkOrNull;
-                $query .= " {$prepend} {$concatValue}";
+                //$query .= " {$prepend} {$concatValue}";
             }
             if ($addValueToValues) {
                 $rowValues[] = $value;
             }
             $idx++;
         }
+
         return [
             'query' => $query,
             'rowValues' => $rowValues
