@@ -452,6 +452,16 @@ class CMS_BUILDER
         ]));
     }
 
+    public static  function push_arr($arr, $msg)
+    {
+        array_push($arr, [
+            'id' => CMS_BUILDER::UNDEFINED_INPUT_INDEX,
+            'nickname' => $msg,
+        ]);
+        return $arr;
+    }
+
+
     private static function employees(Request $req, Response $res)
     {
         $id = $req->params['id'] ?? null;
@@ -482,6 +492,12 @@ class CMS_BUILDER
         return $arr;
     }
 
+    public static function undefined_index_helper($req, $paramName)
+    {
+        return empty($req->params[$paramName]) ? null : $req->params[$paramName];
+    }
+
+
     private static function careforschema(Request $req, Response $res)
     {
         $id = $req->params['id'] ?? null;
@@ -494,14 +510,6 @@ class CMS_BUILDER
         $dparents_caretakers = DB::selectAll('profiles_parents_caretakers');
         $dkids = DB::selectAll('profiles_kids');
 
-        function push_arr($arr, $msg)
-        {
-            array_push($arr, [
-                'id' => CMS_BUILDER::UNDEFINED_INPUT_INDEX,
-                'nickname' => $msg,
-            ]);
-            return $arr;
-        }
 
         // update
         if (isset($id)) {
@@ -514,7 +522,7 @@ class CMS_BUILDER
                     return CMS_BUILDER::unshift_arr($arr, $undefinedIndexTitle);
                 } else {
                     $arr = CMS_BUILDER::moveIndexToFirstIndex($arr, 'id', $_id);
-                    $arr = push_arr($arr, $undefinedIndexTitle);
+                    $arr = CMS_BUILDER::push_arr($arr, $undefinedIndexTitle);
                     return $arr;
                 }
             }
@@ -541,12 +549,14 @@ class CMS_BUILDER
             'profiles_parents_caretakers_id',
             'profiles_doctors_id',
         ];
+
+
         $includes_data = [
             'parent_has_permission' => isset($req->params['parent_has_permission']) ? '1' : '0',
             'kid_has_permission' => isset($req->params['kid_has_permission']) ? '1' : '0',
-            'profiles_kids_id' => undefined_index_helper($req, 'profiles_kids_id'),
-            'profiles_doctors_id' => undefined_index_helper($req, 'profiles_doctors_id'),
-            'profiles_parents_caretakers_id' => undefined_index_helper($req, 'profiles_parents_caretakers_id'),
+            'profiles_kids_id' => CMS_BUILDER::undefined_index_helper($req, 'profiles_kids_id'),
+            'profiles_doctors_id' => CMS_BUILDER::undefined_index_helper($req, 'profiles_doctors_id'),
+            'profiles_parents_caretakers_id' => CMS_BUILDER::undefined_index_helper($req, 'profiles_parents_caretakers_id'),
         ];
         static::make($req, $res, static::makeGenerator($req, $res, [
             'route' => $route,

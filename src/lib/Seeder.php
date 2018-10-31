@@ -34,7 +34,7 @@ class Seeder
     {
         $sqlStatements = $factory();
         foreach ($sqlStatements as $sqlStatement) {
-            DB::execute($sqlStatement);
+            DB::execute($sqlStatement, []);
             if ($postRun != '' && $postRun != null) {
                 $postRun(DB_PDO::lastInsertId());
             }
@@ -52,7 +52,8 @@ class Seeder
             $str = '';
             foreach ($val as $idx => $item) {
                 if (array_search($idx, array_keys($val)) == (count(array_keys($val)) - 1)) {
-                    $str .= $table === 'users' ? "''" : "\"{$item}\"";
+//                    $str .= $table === 'users' ? "\"\"" : "\"{$item}\"";
+                    $str .= "\"{$item}\"";
                 } else {
                     $str .= "\"{$item}\",";
                 }
@@ -130,7 +131,7 @@ class Seeder
         DB::execute('DELETE FROM profiles');
         $faker = Seeder::$faker;
         // because 1:1 1 user 1 profile
-        Seeder::$total = $howMany * 2;
+        Seeder::$total = $howMany;
         Seeder::$totalDone = 0;
         $factory = function () use ($faker, $howMany) {
             return static::factory_generator(function () use ($faker) {
@@ -144,7 +145,7 @@ class Seeder
                     'roles_id' => 1,
                     'password' => Authentication::generateRandomString(),
                     'rememberMeToken' => Authentication::generateRandomString(),
-                    'forgotPasswordToken' => '',
+                    'forgotPasswordToken' => "",
                 ];
             }, "`fname`, `lname`, `email`, `mobile`, `lastLogin`, `roles_id`, `password`, `rememberMeToken`, `forgotPasswordToken`", 'users', $howMany);
         };
@@ -156,10 +157,7 @@ class Seeder
                 'profiles_employees_id',
                 'profiles_kids_id'
             ]);
-            DB::insertEntry('profiles', [
-                'users_id' => $id,
-                $key => '1',
-            ]);
+            DB::execute("INSERT INTO profiles (`users_id`,`{$key}`) VALUES ({$id}, '1')");
         });
     }
 
