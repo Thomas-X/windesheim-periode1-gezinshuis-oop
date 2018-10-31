@@ -497,6 +497,18 @@ class CMS_BUILDER
         return empty($req->params[$paramName]) ? null : $req->params[$paramName];
     }
 
+    public static function sortMoveIndex($cschema, $cschemaKey, $tableName, $undefinedIndexTitle)
+    {
+        $arr = DB::selectAll($tableName);
+        $_id = $cschema[$cschemaKey];
+        if ($_id == CMS_BUILDER::UNDEFINED_INPUT_INDEX) {
+            return CMS_BUILDER::unshift_arr($arr, $undefinedIndexTitle);
+        } else {
+            $arr = CMS_BUILDER::moveIndexToFirstIndex($arr, 'id', $_id);
+            $arr = CMS_BUILDER::push_arr($arr, $undefinedIndexTitle);
+            return $arr;
+        }
+    }
 
     private static function careforschema(Request $req, Response $res)
     {
@@ -514,22 +526,11 @@ class CMS_BUILDER
         // update
         if (isset($id)) {
             $careforschema = DB::selectWhere('profiles_kids_id, profiles_doctors_id, profiles_parents_caretakers_id', 'careforschemas', 'id', $id)[0];
-            function sortMoveIndex($cschema, $cschemaKey, $tableName, $undefinedIndexTitle)
-            {
-                $arr = DB::selectAll($tableName);
-                $_id = $cschema[$cschemaKey];
-                if ($_id == CMS_BUILDER::UNDEFINED_INPUT_INDEX) {
-                    return CMS_BUILDER::unshift_arr($arr, $undefinedIndexTitle);
-                } else {
-                    $arr = CMS_BUILDER::moveIndexToFirstIndex($arr, 'id', $_id);
-                    $arr = CMS_BUILDER::push_arr($arr, $undefinedIndexTitle);
-                    return $arr;
-                }
-            }
+            
 
-            $doctors = sortMoveIndex($careforschema, 'profiles_doctors_id', 'profiles_doctors', 'Geen dokter..');
-            $parents_caretakers = sortMoveIndex($careforschema, 'profiles_parents_caretakers_id', 'profiles_parents_caretakers', 'Geen ouder/verzorger..');
-            $kids = sortMoveIndex($careforschema, 'profiles_kids_id', 'profiles_kids', 'Geen kind..');
+            $doctors = CMS_BUILDER::sortMoveIndex($careforschema, 'profiles_doctors_id', 'profiles_doctors', 'Geen dokter..');
+            $parents_caretakers = CMS_BUILDER::sortMoveIndex($careforschema, 'profiles_parents_caretakers_id', 'profiles_parents_caretakers', 'Geen ouder/verzorger..');
+            $kids = CMS_BUILDER::sortMoveIndex($careforschema, 'profiles_kids_id', 'profiles_kids', 'Geen kind..');
         } else {
             // create
             $doctors = CMS_BUILDER::unshift_arr($ddoctors, 'Geen dokter..');
