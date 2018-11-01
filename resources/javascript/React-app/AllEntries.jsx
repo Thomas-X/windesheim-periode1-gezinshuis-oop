@@ -5,14 +5,15 @@ import Card from "./Card";
 const AllEntries = () => {
 	const data = JSDATA.items;
 	const {baseUri, title, subtitle, newItemName, titleKey, secondTitleKey} = JSDATA;
+	console.log(location.pathname.includes("careforschemas") !== -1);
 	const determineField = (val, idx) => {
         return (
             <li className="list-group-item" key={idx}>
                 <div className="row">
                     <div
-                        className="col-sm-8 flexCenter">{titleKey && secondTitleKey ? (`${val[titleKey]} ${val[secondTitleKey]}`) : val[titleKey]}
+                        className="col-sm-6 flexCenter">{titleKey && secondTitleKey ? (`${val[titleKey]} ${val[secondTitleKey]}`) : val[titleKey]}
                     </div>
-                    <div className="col-sm-4 buttongrid">
+                    <div className="col-sm-6 buttongrid">
                         <a href={`${baseUri}?id=${val.id}&type=update_get`}
                            className="btn btn-success flex1" role="button">
                             <i className="fas fa-sync margin-2"></i>
@@ -26,7 +27,7 @@ const AllEntries = () => {
                                 &thinsp;Remove
                             </button>
                         </form>
-                        {location.pathname.indexOf("careforschemas") !== -1 ? (<button type="button"
+                        {location.pathname.includes("careforschemas") !== -1 ? (<button type="button"
                                                                                        className="btn btn-info" role="button"
                                                                                        style={{width: '100%'}}>
                             <i className="fas fa-download margin-2"></i>
