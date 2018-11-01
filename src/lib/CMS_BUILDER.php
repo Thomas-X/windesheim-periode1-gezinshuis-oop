@@ -198,7 +198,7 @@ class CMS_BUILDER
         $route = Routes::routes['cms_users'];
         $roles = DB::selectAll('roles');
         if (isset($id)) {
-            $usrRoleId = DB::selectWhere('roles_id', 'users', 'id', $id)[0]['roles_id'];
+            $usrRoleId = @DB::selectWhere('roles_id', 'users', 'id', $id)[0]['roles_id'];
             $roles = CMS_BUILDER::moveIndexToFirstIndex($roles, 'id', $usrRoleId);
         }
 
@@ -229,7 +229,7 @@ class CMS_BUILDER
         ];
         $profiles_update = [];
         if (isset($id)) {
-            $profile = (DB::selectWhere('*', 'profiles', 'users_id', $id))[0];
+            $profile = @(DB::selectWhere('*', 'profiles', 'users_id', $id))[0];
             $val = '';
             $key = '';
             $arr = [

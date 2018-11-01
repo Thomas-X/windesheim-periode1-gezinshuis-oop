@@ -8,7 +8,7 @@
     <form action="<?= $baseUri . "?id={$_GET['id']}&type=update_post" ?>" method="post">
         <?php
         foreach ($fields as $field) {
-            if ($field['not_in_update']) {
+            if (@$field['not_in_update']) {
                 echo "<input name=\"{$field['name']}\" style=\"display: none;\" value=\"{$fieldData[$field['name']]}\"/>";
                 continue;
             }
@@ -16,7 +16,7 @@
                 $fieldElem = "";
             switch ($field['html_type']) {
                 case 'input':
-                    $fieldElem = "<input type=\"{$field['type']}\" class=\"form-control\" placeholder=\"{$field['placeholder']}\" name=\"{$field['name']}\" required value='{$fieldData[$field['name']]}'>";
+                    $fieldElem = "<input type=\"{$field['type']}\" class=\"form-control\" placeholder=\"{$field['placeholder']}\" name=\"{$field['name']}\" required value='" . @$fieldData[$field['name']] . "'>";
                     break;
                 case 'textarea':
                     $fieldElem = "<textarea class='form-control' rows='3' name=\"{$field['name']}\" required>" . $fieldData[$field['name']] . "</textarea>";
