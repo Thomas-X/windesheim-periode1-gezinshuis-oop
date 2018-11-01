@@ -71,6 +71,8 @@ class CareForSchemaController
         if (isset($req->params['type'])){
             if ($req->params['type'] === 'update_post' || $req->params['type'] == 'create_post')
                 $this->uploadCareForSchemas($req, $res);
+            if ($req->params['type'] == 'delete_post')
+                $this->deleteCareForSchemas($req, $res);
             else
                 $this->downloadCareForSchemas($req, $res);
         }
@@ -85,11 +87,11 @@ class CareForSchemaController
     public function uploadCareForSchemas(Request $req, Response $res)
     {
         //Check if the parameters are valid.
-        if (isset($req->params['profiles_kids_id']) && trim($req->params['profiles_kids_id']) !== '' && is_numeric($req->params['profiles_kids_id'])
+        if (isset($req->params['id']) && trim($req->params['id']) !== '' && is_numeric($req->params['id'])
             && isset($req->files['careforschema']))
         {
             //Get client id, name of the file and the uploaded file.
-            $clientId = trim($req->params['profiles_kids_id']);
+            $clientId = trim($req->params['id']);
             $file = $req->files['careforschema'];
 
             $fileTmpName = $file['tmp_name'];
@@ -182,6 +184,38 @@ class CareForSchemaController
         return $this->showCareForSchemas($req, $res);
     }
 
+    public function deleteCareForSchemas(Request $req, Response $res)
+    {
+        //Check if the parameters are valid.
+        if (isset($req->params['id']) && trim($req->params['id']) !== "" && is_numeric($req->params['id'])){
+            $clientId = $req->params['id'];
+            $files = glob(CareForSchemaController::DIRECTORY . $clientId . '.*');
+            $succeed = array_map('unlink', $files);
+            if (in_array(false, $succeed)){
+                //Notify the user that de delete failed.
+                NotifierParser::init()
+                    ->newNotification()
+                    ->warning()
+                    ->message('Ongeldige cliënt geselecteerd.');
+                return $this->showCareForSchemas($req, $res);
+            }
+            //Notify the user not a valid client was given.
+            NotifierParser::init()
+                ->newNotification()
+                ->success()
+                ->message('Behandelplan verwijderd.');
+            return $this->showCareForSchemas($req, $res);
+        }
+        else{
+            //Notify the user not a valid client was given.
+            NotifierParser::init()
+                ->newNotification()
+                ->warning()
+                ->message('Ongeldige cliënt geselecteerd.');
+            return $this->showCareForSchemas($req, $res);
+        }
+    }
+
     /**
      * Download the care for schema.
      * @param Request $req An object containing the information for the request
@@ -191,8 +225,8 @@ class CareForSchemaController
     public function downloadCareForSchemas(Request $req, Response $res)
     {
         //Check if the parameters are valid.
-        if (isset($req->params['profiles_kids_id']) && trim($req->params['profiles_kids_id']) !== "" && is_numeric($req->params['profiles_kids_id'])){
-            $clientId = trim($req->params['profiles_kids_id']);
+        if (isset($req->params['id']) && trim($req->params['id']) !== "" && is_numeric($req->params['id'])){
+            $clientId = trim($req->params['id']);
             $files = glob( CareForSchemaController::DIRECTORY . $clientId . '.*');
             if (count($files) > 0) {
                 $file = $files[0];
