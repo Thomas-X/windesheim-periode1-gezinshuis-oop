@@ -27,12 +27,14 @@ const AllEntries = () => {
                                 &thinsp;Remove
                             </button>
                         </form>
-                        {location.pathname.includes("careforschemas") !== -1 ? (<button type="button"
-                                                                                       className="btn btn-info" role="button"
-                                                                                       style={{width: '100%'}}>
-                            <i className="fas fa-download margin-2"></i>
-                            &thinsp;Download
-                        </button>) : null}
+                        {location.pathname.includes("careforschemas") !== -1 ? (<form action={`${baseUri}?id=${val.id}&type=download_post`} method="post">
+							<button type="submit"
+								    className="btn btn-info" role="button"
+								    style={{width: '100%'}}>
+								<i className="fas fa-download margin-2"></i>
+								&thinsp;Download
+                        	</button>
+						</form>) : null}
                     </div>
                 </div>
             </li>

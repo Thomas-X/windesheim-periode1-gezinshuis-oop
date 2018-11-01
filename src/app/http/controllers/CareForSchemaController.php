@@ -69,11 +69,11 @@ class CareForSchemaController
     public function careForSchemasFile(Request $req, Response $res)
     {
         if (isset($req->params['type'])){
-            if ($req->params['type'] === 'update_post' || $req->params['type'] == 'create_post')
+            if ($req->params['type'] === 'update_post' || $req->params['type'] === 'create_post')
                 $this->uploadCareForSchemas($req, $res);
-            if ($req->params['type'] == 'delete_post')
+            elseif ($req->params['type'] === 'delete_post')
                 $this->deleteCareForSchemas($req, $res);
-            else
+            elseif ($req->params['type'] === 'download_post')
                 $this->downloadCareForSchemas($req, $res);
         }
     }
