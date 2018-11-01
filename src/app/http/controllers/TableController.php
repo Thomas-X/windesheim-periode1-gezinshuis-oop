@@ -128,9 +128,13 @@ class TableController
     }
 
     //delete
-    public function delete_post(Request $request, Response $res, $data)
+    public function delete_post(Request $req, Response $res, $data)
     {
         DB::deleteEntry($data["table"], $data["key"], $data["identifier"]);
+
+        if (array_key_exists('post_delete', $data) && $data['post_delete'] != null) {
+            $data['post_delete']($req, $res);
+        }
         $res->redirect($data['redirect'], 200);
     }
 

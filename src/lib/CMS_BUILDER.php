@@ -15,6 +15,7 @@ use Qui\lib\Response;
 use Qui\lib\Routes;
 use Qui\lib\facades\Router;
 use Qui\lib\facades\DB;
+use Qui\lib\CareForSchema;
 
 /*
  * TODO: Protect routes and only show certain data with restrictions.
@@ -577,6 +578,15 @@ class CMS_BUILDER
             'update_post_includes' => $keys,
             'create_post_includes_data' => $includes_data,
             'update_post_includes_data' => $includes_data,
+            'create_post_post_insert' => function ($req, $res, $id){
+                CareForSchema::uploadCareForSchemas($req, $res);
+            },
+            'update_post_post_insert' => function ($req, $res){
+                CareForSchema::uploadCareForSchemas($req, $res);
+            },
+            'delete_post_post_delete' => function ($req, $res){
+                CareForSchema::deleteCareForSchemas($req, $res);
+            }
         ]));
     }
 
