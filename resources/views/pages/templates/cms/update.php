@@ -5,7 +5,7 @@
             <?= $subtitle ? "<p>{$subtitle}</p>" : '' ?>
         </div>
     </div>
-    <form action="<?= $baseUri . "?id={$_GET['id']}&type=update_post" ?>" method="post">
+    <form action="<?= $baseUri . "?id={$_GET['id']}&type=update_post" ?>" method="post" enctype="multipart/form-data>
         <?php
         foreach ($fields as $field) {
             if (@$field['not_in_update']) {

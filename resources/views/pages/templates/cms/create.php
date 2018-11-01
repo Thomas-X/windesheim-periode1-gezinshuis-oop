@@ -4,7 +4,7 @@
             <h1 class="display-4"><?= $title ?></h1>
         </div>
     </div>
-    <form action="<?= $baseUri . '?type=create_post' ?>" method="post">
+    <form action="<?= $baseUri . '?type=create_post' ?>" method="post" enctype="multipart/form-data">
         <?php
         foreach ($fields as $field) {
             $fieldElem = "";
