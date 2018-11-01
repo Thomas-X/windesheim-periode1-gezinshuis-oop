@@ -581,10 +581,10 @@ class CMS_BUILDER
             'create_post_includes_data' => $includes_data,
             'update_post_includes_data' => $includes_data,
             'create_post_post_insert' => function ($req, $res, $id){
-                CareForSchema::uploadCareForSchemas($req, $res);
+                CareForSchema::uploadCareForSchemas($req, $res, $id);
             },
-            'update_post_post_insert' => function ($req, $res){
-                CareForSchema::uploadCareForSchemas($req, $res);
+            'update_post_post_insert' => function ($req, $res, $id){
+                CareForSchema::uploadCareForSchemas($req, $res, $id);
             },
             'delete_post_post_delete' => function ($req, $res){
                 CareForSchema::deleteCareForSchemas($req, $res);

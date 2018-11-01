@@ -36,15 +36,14 @@ class CareForSchema
      * Upload the care for schema associated with the user.
      * @param Request $req An object containing the information for the request
      * @param Response $res An object for the response.
+     * @param int $id The id of the user associated with the care for schema
      */
-    public static function uploadCareForSchemas(Request $req, Response $res)
+    public static function uploadCareForSchemas(Request $req, Response $res, int $id)
     {
         //Check if the parameters are valid.
-        if (isset($req->params['id']) && trim($req->params['id']) !== '' && is_numeric($req->params['id'])
-            && isset($req->files['careforschema']))
+        if (isset($req->files['careforschema']))
         {
             //Get client id, name of the file and the uploaded file.
-            $clientId = trim($req->params['id']);
             $file = $req->files['careforschema'];
 
             $fileTmpName = $file['tmp_name'];
@@ -56,7 +55,7 @@ class CareForSchema
             if (in_array($fileExtension, self::$allowedFileExtensions))
             {
                 //Check if file name exists.
-                $uploadPath = CareForSchema::DIRECTORY . $clientId . '.*';
+                $uploadPath = CareForSchema::DIRECTORY . $id . '.*';
                 $files = glob($uploadPath);
 
                 //Replace the star at the end of the upload path with the proper extension
@@ -71,7 +70,7 @@ class CareForSchema
                 {
                     //If file does exist temporally rename it, upload the new file and remove the old file if th new file is uploaded.
                     $tmpFileExtension = pathinfo($files[0], PATHINFO_EXTENSION);
-                    $tmpUploadPath = CareForSchema::DIRECTORY . $clientId . '.' . $tmpFileExtension;
+                    $tmpUploadPath = CareForSchema::DIRECTORY . $id . '.' . $tmpFileExtension;
                     $tmpPath = CareForSchema::DIRECTORY . 'tmp.' . $fileExtension;
                     $didChange = rename($tmpUploadPath, $tmpPath);
 

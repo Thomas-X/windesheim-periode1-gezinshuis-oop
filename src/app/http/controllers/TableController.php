@@ -122,7 +122,7 @@ class TableController
         // post-insert hook
         if (array_key_exists('post_insert', $data) && $data['post_insert'] != null) {
             $id = DB_PDO::lastInsertId();
-            $data['post_insert']($req, $res);
+            $data['post_insert']($req, $res, $id);
         }
         $res->redirect($data['redirect'], 200);
     }
