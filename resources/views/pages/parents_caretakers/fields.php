@@ -24,6 +24,7 @@ $fields = [
     ],
     [
         'html_type' => 'input',
+        'type' => 'text',
         'name' => 'picture',
         'title' => 'voer hier een directe link naar een foto van de ouder/verzorger in',
         'placeholder' => 'Voer hier de link in'

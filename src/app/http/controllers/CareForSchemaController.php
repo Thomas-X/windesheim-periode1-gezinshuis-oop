@@ -20,6 +20,8 @@ use Qui\lib\Routes;
  */
 class CareForSchemaController
 {
+    public const DIRECTORY = 'uploads/';
+
     private static $allowedFileExtensions = [
                                                 'pdf',
                                                 'doc',
@@ -66,10 +68,12 @@ class CareForSchemaController
 
     public function careForSchemasFile(Request $req, Response $res)
     {
-        if (array_key_exists('upload', $req->params))
-            $this->uploadCareForSchemas($req, $res);
-        else
-            $this->downloadCareForSchemas($req, $res);
+        if (isset($req->params['type'])){
+            if ($req->params['type'] === 'update_post' || $req->params['type'] == 'create_post')
+                $this->uploadCareForSchemas($req, $res);
+            else
+                $this->downloadCareForSchemas($req, $res);
+        }
     }
 
     /**
@@ -80,16 +84,14 @@ class CareForSchemaController
      */
     public function uploadCareForSchemas(Request $req, Response $res)
     {
-
-        $uploadDir = 'uploads/';
-
-        //Get client id and uploaded file.
-        $clientId = trim($req->params['clientId']);
-        $file = $req->files['treatmentDocument'];
-
         //Check if the parameters are valid.
-        if (isset($clientId) && $clientId !== '' && is_numeric($clientId) && isset($file))
+        if (isset($req->params['profiles_kids_id']) && trim($req->params['profiles_kids_id']) !== '' && is_numeric($req->params['profiles_kids_id'])
+            && isset($req->files['careforschema']))
         {
+            //Get client id, name of the file and the uploaded file.
+            $clientId = trim($req->params['profiles_kids_id']);
+            $file = $req->files['careforschema'];
+
             $fileTmpName = $file['tmp_name'];
 
             //Get file extension to check if it is valid.
@@ -99,7 +101,7 @@ class CareForSchemaController
             if (in_array($fileExtension, self::$allowedFileExtensions))
             {
                 //Check if file name exists.
-                $uploadPath = $uploadDir . $clientId . '.*';
+                $uploadPath = CareForSchemaController::DIRECTORY . $clientId . '.*';
                 $files = glob($uploadPath);
 
                 //Replace the star at the end of the upload path with the proper extension
@@ -129,8 +131,8 @@ class CareForSchemaController
                 {
                     //If file does exist temporally rename it, upload the new file and remove the old file if th new file is uploaded.
                     $tmpFileExtension = pathinfo($files[0], PATHINFO_EXTENSION);
-                    $tmpUploadPath = $uploadDir . $clientId . '.' . $tmpFileExtension;
-                    $tmpPath = $uploadDir . 'tmp.' . $fileExtension;
+                    $tmpUploadPath = CareForSchemaController::DIRECTORY . $clientId . '.' . $tmpFileExtension;
+                    $tmpPath = CareForSchemaController::DIRECTORY . 'tmp.' . $fileExtension;
                     $didChange = rename($tmpUploadPath, $tmpPath);
 
                     if ($didChange)
@@ -188,11 +190,10 @@ class CareForSchemaController
      */
     public function downloadCareForSchemas(Request $req, Response $res)
     {
-        $clientId = trim($req->params['clientId']);
-
         //Check if the parameters are valid.
-        if (isset($clientId) && $clientId !== "" && is_numeric($clientId)){
-            $files = glob( 'uploads\\' . $req->params['clientId'] . '.*');
+        if (isset($req->params['profiles_kids_id']) && trim($req->params['profiles_kids_id']) !== "" && is_numeric($req->params['profiles_kids_id'])){
+            $clientId = trim($req->params['profiles_kids_id']);
+            $files = glob( CareForSchemaController::DIRECTORY . $clientId . '.*');
             if (count($files) > 0) {
                 $file = $files[0];
                 $extension = pathinfo($file, PATHINFO_EXTENSION);
@@ -207,18 +208,18 @@ class CareForSchemaController
                 header('Content-Length: ' . filesize($file));
                 readfile($file);
 
-                return $res->redirect(Routes::routes['careForSchemas'] . '?download_status=success');
+                return $res->redirect(Routes::routes['careForSchemas']);
             }
             NotifierParser::init()
                 ->newNotification()
                 ->warning()
                 ->message('Er is geen behandel document voor de cliënt.');
-            return $this->showCareForSchemas($req, $res);
+            return $res->redirect(Routes::routes['careForSchemas']);
         }
         NotifierParser::init()
             ->newNotification()
             ->warning()
             ->message('Ongeldige cliënt geselecteerd.');
-        return $this->showCareForSchemas($req, $res);
+        return $res->redirect(Routes::routes['careForSchemas']);
     }
 }

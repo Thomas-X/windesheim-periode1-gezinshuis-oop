@@ -22,6 +22,7 @@ class Database
     private const CONCAT_WITH_VALUES = 1;
     private const CONCAT_WITH_QUESTIONMARK = 2;
     private const CONCAT_COLUMN_QUESTIONMARK = 3;
+    private const CONCAT_COLUMN = 4;
 
     public function __construct()
     {
@@ -187,6 +188,9 @@ class Database
                     break;
                 case (Database::CONCAT_COLUMN_QUESTIONMARK):
                     $concatValue = "{$rowKey} = ?";
+                    break;
+                case (Database::CONCAT_COLUMN):
+                    $concatValue = "{$rowKey}";
             }
         
             // first loop, meaning we shouldn't prepend the value
@@ -199,8 +203,8 @@ class Database
             if ($idx == 0) {
                 $query .= " {$concatValue}";
             } else {
-                $query = $query . ", {$rowKey} = " . $questionMarkOrNull;
-                //$query .= " {$prepend} {$concatValue}";
+                //$query = $query . ", {$rowKey} = " . $questionMarkOrNull;
+                $query .= " {$prepend} {$concatValue}";
             }
             if ($addValueToValues) {
                 $rowValues[] = $value;

@@ -34,7 +34,6 @@ module.exports = (env, argv) => {
 				'home',
 				'login',
 				'register',
-				'treatmentDocument',
 				'resetpassword',
 				'usercms',
 				{name: 'react-app', type: 'jsx'}

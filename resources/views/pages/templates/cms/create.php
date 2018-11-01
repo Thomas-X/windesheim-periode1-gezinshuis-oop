@@ -35,7 +35,7 @@
 </select>";
                     break;
             }
-            $muteText = !!$field['muteText']
+            $muteText = !!@$field['muteText']
                 ? "<small class=\"form-text text-muted\">{$field['muteText']}</small>"
                 : null;
             $label = $field['html_type'] != 'checkbox' ? "<label>{$field['title']}</label>" : null;
