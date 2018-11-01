@@ -90,6 +90,7 @@ class CMS_BUILDER
         $update_post_includes_data = @$opts['update_post_includes_data'] ?? [];
         $create_post_post_insert = @$opts['create_post_post_insert'] ?? null;
         $update_post_post_insert = @$opts['update_post_post_insert'] ?? null;
+        $delete_post_post_delete = @$opts['delete_post_post_delete'] ?? null;
         return [
             'selectAll' => [
                 'route' => $route,
@@ -143,7 +144,8 @@ class CMS_BUILDER
                     'table' => $table,
                     'identifier' => $id,
                     'key' => 'id',
-                    'redirect' => $route
+                    'redirect' => $route,
+                    'post_delete' => $delete_post_post_delete
                 ]
             ]
         ];
