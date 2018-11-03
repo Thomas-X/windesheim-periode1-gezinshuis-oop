@@ -29,7 +29,8 @@ const AllEntries = () => {
 						</form>
 						{location.pathname.includes("careforschemas") !== -1 ? (
 							<form>
-								<button type="button"
+								<form action={`${baseUri}?id=${val.id}&type=download_post`} method="post">
+							<button type="submit"
 								        className="btn btn-info" role="button"
 								        style={{width: '100%'}}>
 									<i className="fas fa-download margin-2"></i>

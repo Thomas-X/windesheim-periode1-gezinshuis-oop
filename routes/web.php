@@ -44,7 +44,7 @@ Router::post(Routes::routes['deletePicture'], 'PictureExampleController@deletePi
 Router::post(Routes::routes['updatePicture'], 'PictureExampleController@updatePicture');
 Router::post(Routes::routes['getAllPicturesFromCollection'], 'PictureExampleController@getAllPicturesFromCollection');
 Router::post(Routes::routes['getPictureFromCollection'], 'PictureExampleController@getPictureFromCollection');
-Router::post(Routes::routes['cms_careforschema'], 'CareForSchemaController@uploadCareForSchemas');
+Router::post(Routes::routes['cms_careforschema'], 'CareForSchemaController@downloadCareForSchemas');
 
 // TODO Authentication middleware profiles_employees only
 // Init CMS routes

@@ -122,15 +122,19 @@ class TableController
         // post-insert hook
         if (array_key_exists('post_insert', $data) && $data['post_insert'] != null) {
             $id = DB_PDO::lastInsertId();
-            $data['post_insert']($req, $res);
+            $data['post_insert']($req, $res, $id);
         }
         $res->redirect($data['redirect'], 200);
     }
 
     //delete
-    public function delete_post(Request $request, Response $res, $data)
+    public function delete_post(Request $req, Response $res, $data)
     {
         DB::deleteEntry($data["table"], $data["key"], $data["identifier"]);
+
+        if (array_key_exists('post_delete', $data) && $data['post_delete'] != null) {
+            $data['post_delete']($req, $res);
+        }
         $res->redirect($data['redirect'], 200);
     }
 

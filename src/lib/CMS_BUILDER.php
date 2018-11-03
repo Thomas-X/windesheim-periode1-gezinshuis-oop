@@ -15,6 +15,7 @@ use Qui\lib\Response;
 use Qui\lib\Routes;
 use Qui\lib\facades\Router;
 use Qui\lib\facades\DB;
+use Qui\lib\CareForSchema;
 
 /*
  * TODO: Protect routes and only show certain data with restrictions.
@@ -89,6 +90,7 @@ class CMS_BUILDER
         $update_post_includes_data = @$opts['update_post_includes_data'] ?? [];
         $create_post_post_insert = @$opts['create_post_post_insert'] ?? null;
         $update_post_post_insert = @$opts['update_post_post_insert'] ?? null;
+        $delete_post_post_delete = @$opts['delete_post_post_delete'] ?? null;
         return [
             'selectAll' => [
                 'route' => $route,
@@ -142,7 +144,8 @@ class CMS_BUILDER
                     'table' => $table,
                     'identifier' => $id,
                     'key' => 'id',
-                    'redirect' => $route
+                    'redirect' => $route,
+                    'post_delete' => $delete_post_post_delete
                 ]
             ]
         ];
@@ -577,6 +580,15 @@ class CMS_BUILDER
             'update_post_includes' => $keys,
             'create_post_includes_data' => $includes_data,
             'update_post_includes_data' => $includes_data,
+            'create_post_post_insert' => function ($req, $res, $id){
+                CareForSchema::uploadCareForSchemas($req, $res, $id);
+            },
+            'update_post_post_insert' => function ($req, $res, $id){
+                CareForSchema::uploadCareForSchemas($req, $res, $id);
+            },
+            'delete_post_post_delete' => function ($req, $res){
+                CareForSchema::deleteCareForSchemas($req, $res);
+            }
         ]));
     }
 
