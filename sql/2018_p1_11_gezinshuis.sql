@@ -5,15 +5,6 @@
 -- Server version	5.7.24-0ubuntu0.18.04.1
 
 -- Schema 2018_p1_11_gezinshuis
--- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `2018_p1_11_gezinshuis` ;
-
--- -----------------------------------------------------
--- Schema 2018_p1_11_gezinshuis
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `2018_p1_11_gezinshuis` DEFAULT CHARACTER SET utf8 ;
-USE `2018_p1_11_gezinshuis` ;
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -24,6 +15,17 @@ USE `2018_p1_11_gezinshuis` ;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+-- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `2018_p1_11_gezinshuis` ;
+
+-- -----------------------------------------------------
+-- Schema 2018_p1_11_gezinshuis
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `2018_p1_11_gezinshuis` DEFAULT CHARACTER SET utf8 ;
+USE `2018_p1_11_gezinshuis`;
+
 
 --
 -- Table structure for table `careforschemas`
