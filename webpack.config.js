@@ -24,7 +24,8 @@ const javascriptDirectoryHelper = (pages) => {
 module.exports = (env, argv) => {
 
 	let obj = {
-		mode: argv.enviroment === 'production' ? 'production' : 'development',
+		// mode: argv.enviroment === 'production' ? 'production' : 'development',
+		mode: 'development',
 		entry: {
 			global: `${dir}/global/global.js`,
 
