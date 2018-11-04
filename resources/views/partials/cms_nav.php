@@ -5,7 +5,7 @@
             <div class="col-sm-12 col-lg-4">
                 <a href="<?= \Qui\lib\Routes::$routes['cms'] ?>">
                     <img style="width: 100%; height:100%;"
-                         src="/imgs/logo-white.png"
+                         src="imgs/logo-white.png"
                          alt="logo"/>
                 </a>
             </div>
