@@ -12,7 +12,7 @@
             <div class="col-sm-12 col-lg-8">
                 <div class="flexContainer">
                     <a class="nav-item" href="<?= \Qui\lib\Routes::$routes['cms'] ?>">
-                        Beheersysteem thuispagina
+                        beheersysteem thuispagina
                     </a>
                     <a class="nav-item" href="<?= \Qui\lib\Routes::$routes['l_home'] ?>">
                         home thuispagina

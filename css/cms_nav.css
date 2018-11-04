@@ -11,7 +11,7 @@
 }
 
 .nav-item {
-    text-transform: uppercase;
+    text-transform: lowercase;
     font-size: 1.2rem;
     color: white;
     opacity: 1;
