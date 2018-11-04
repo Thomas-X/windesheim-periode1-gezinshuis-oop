@@ -101,6 +101,7 @@ class Request
             return false;
         };
         $this->secure = $getSecureStatus();
+        $this->secure = $getSecureStatus();
     }
 
     private function setMethod()
