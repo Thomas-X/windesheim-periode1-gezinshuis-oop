@@ -38,7 +38,6 @@ class CRouter
      * */
     public function serve(): void
     {
-        dd($this->routes);
         $routeMatches = false;
         foreach ($this->routes as $route) {
             $routeMatches = $this->determineIfRouteMatches($route);
