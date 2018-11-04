@@ -33,7 +33,7 @@ class Request
         $this->setParams();
         $this->setCookies();
         $this->setServer();
-        $this->setHeaders();
+//        $this->setHeaders();
         $this->setFiles();
         $this->setSecure();
         $this->setMethod();
@@ -54,27 +54,27 @@ class Request
     {
         $this->server = $_SERVER;
     }
-    /**
-     * @return array
-     */
-    /**
-     * @return array
-     */
-    private static function getallheaders()
-    {
-        $headers = [];
-        foreach ($_SERVER as $name => $value) {
-            if (substr($name, 0, 5) == 'HTTP_') {
-                $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
-            }
-        }
-        return $headers;
-    }
-
-    private function setHeaders()
-    {
-        $this->headers = Request::getallheaders();
-    }
+//    /**
+//     * @return array
+//     */
+//    /**
+//     * @return array
+//     */
+//    private static function getallheaders()
+//    {
+//        $headers = [];
+//        foreach ($_SERVER as $name => $value) {
+//            if (substr($name, 0, 5) == 'HTTP_') {
+//                $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+//            }
+//        }
+//        return $headers;
+//    }
+//
+//    private function setHeaders()
+//    {
+//        $this->headers = Request::getallheaders();
+//    }
 
     private function setFiles()
     {
