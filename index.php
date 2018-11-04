@@ -1,37 +1,37 @@
 <?php
 
+//
+// Used for (composer) autoloading
+require __DIR__ . '/bootstrap.php';
+
+use Qui\lib\App;
+use Qui\lib\Database;
+use Qui\lib\CView;
+use Qui\lib\CRouter;
+use Qui\lib\CUtil;
+use Qui\lib\CAuthentication;
+use Qui\lib\CValidator;
+use Qui\lib\CMailer;
+use Qui\lib\CNotifierParser;
+
+\Qui\lib\Routes::morphRoutes("/~2018_p1_11/P1_OOAPP_Opdracht");
+
+
+set_error_handler(function($errno, $errstr, $errfile, $errline ){
+    var_dump(new ErrorException($errstr, $errno, 0, $errfile, $errline));
+});
+
+register_shutdown_function(function () {
+    $err = error_get_last();
+    if (! is_null($err)) {
+        var_dump($err);
+        print 'Error#'.$err['message'].'<br>';
+        print 'Line#'.$err['line'].'<br>';
+        print 'File#'.$err['file'].'<br>';
+    }
+});
 echo "hello world";
 die;
-//
-//// Used for (composer) autoloading
-//require __DIR__ . '/bootstrap.php';
-//
-//use Qui\lib\App;
-//use Qui\lib\Database;
-//use Qui\lib\CView;
-//use Qui\lib\CRouter;
-//use Qui\lib\CUtil;
-//use Qui\lib\CAuthentication;
-//use Qui\lib\CValidator;
-//use Qui\lib\CMailer;
-//use Qui\lib\CNotifierParser;
-//
-//\Qui\lib\Routes::morphRoutes("/~2018_p1_11/P1_OOAPP_Opdracht");
-//
-//
-//set_error_handler(function($errno, $errstr, $errfile, $errline ){
-//    var_dump(new ErrorException($errstr, $errno, 0, $errfile, $errline));
-//});
-//
-//register_shutdown_function(function () {
-//    $err = error_get_last();
-//    if (! is_null($err)) {
-//        var_dump($err);
-//        print 'Error#'.$err['message'].'<br>';
-//        print 'Line#'.$err['line'].'<br>';
-//        print 'File#'.$err['file'].'<br>';
-//    }
-//});
 //
 //
 //$_ENV = [];
