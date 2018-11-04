@@ -2,8 +2,8 @@ const path = require('path');
 const fs = require('fs');
 
 // TODO change this path since we will be running our node instance from the project root.
-const outputPath = path.join(__dirname, 'public', 'js');
-const dir = './resources/javascript'
+const outputPath = path.join(__dirname, 'js');
+const dir = './resources/javascript';
 
 const javascriptDirectoryHelper = (pages) => {
 	function capitalizeFirstLetter(string) {
