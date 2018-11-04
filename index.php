@@ -4,9 +4,6 @@
 // Used for (composer) autoloading
 require __DIR__ . '/bootstrap.php';
 
-echo ":(";
-die;
-
 use Qui\lib\App;
 use Qui\lib\Database;
 use Qui\lib\CView;
