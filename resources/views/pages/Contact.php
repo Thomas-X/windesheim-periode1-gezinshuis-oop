@@ -101,4 +101,4 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHFjsKf5IGRxLdVvQaaFGjNyHzSZv6znc&callback=initMap">
 </script>
 
-<script src="js/contact.js"></script>
+<script src="public/js/contact.js"></script>

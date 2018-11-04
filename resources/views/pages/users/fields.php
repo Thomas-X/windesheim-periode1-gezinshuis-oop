@@ -29,7 +29,7 @@ function profileSelector($_data) {
 <script>
     JSDATA.profiles = {$json}
 </script>
-<script src='js/usercms.js'></script>
+<script src='public/js/usercms.js'></script>
 </div>";
 }
 

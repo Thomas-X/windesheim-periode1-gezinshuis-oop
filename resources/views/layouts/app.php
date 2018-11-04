@@ -21,7 +21,7 @@
 
 <?php require(__DIR__ . '/../JSDATA.php') ?>
 
-<script src="js/global.js"></script>
+<script src="public/js/global.js"></script>
 
 <?php require(__DIR__ . "/../{$nav_path}") ?>
 

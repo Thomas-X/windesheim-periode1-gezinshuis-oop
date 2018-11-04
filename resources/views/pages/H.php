@@ -37,4 +37,4 @@
     </div>
 </div>
 
-<script src="js/home.js"></script>
+<script src="public/js/home.js"></script>
