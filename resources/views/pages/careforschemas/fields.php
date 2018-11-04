@@ -25,13 +25,13 @@ $fields = [
         'title' => 'Een korte naam van het behandelplan (bijv behandelplan Tuan N.)',
         'placeholder' => 'Voer hier een naam in'
     ],
-    [
-        'html_type' => 'input',
-        'type' => 'file',
-        'name' => 'careforschema',
-        'title' => 'Het behandelplan',
-        'placeholder' => ''
-    ],
+//    [
+//        'html_type' => 'input',
+//        'type' => 'file',
+//        'name' => 'careforschema',
+//        'title' => 'Het behandelplan',
+//        'placeholder' => ''
+//    ],
     [
         'html_type' => 'input',
         'type' => 'date',

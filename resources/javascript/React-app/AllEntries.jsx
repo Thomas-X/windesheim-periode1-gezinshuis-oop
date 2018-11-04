@@ -11,9 +11,9 @@ const AllEntries = () => {
 			<li className="list-group-item" key={idx}>
 				<div className="row">
 					<div
-						className="col-sm-6 flexCenter">{titleKey && secondTitleKey ? (`${val[titleKey]} ${val[secondTitleKey]}`) : val[titleKey]}
+						className="col-sm-8 flexCenter">{titleKey && secondTitleKey ? (`${val[titleKey]} ${val[secondTitleKey]}`) : val[titleKey]}
 					</div>
-					<div className="col-sm-6 buttongrid">
+					<div className="col-sm-4 buttongrid">
 						<a href={`${baseUri}?id=${val.id}&type=update_get`}
 						   className="btn btn-success flex1" role="button">
 							<i className="fas fa-sync margin-2"></i>
@@ -27,16 +27,6 @@ const AllEntries = () => {
 								&thinsp;Remove
 							</button>
 						</form>
-						{location.pathname.includes("careforschemas") !== -1 ? (
-							<form>
-								<form action={`${baseUri}?id=${val.id}&type=download_post`} method="post">
-							<button type="submit"
-								        className="btn btn-info" role="button"
-								        style={{width: '100%'}}>
-									<i className="fas fa-download margin-2"></i>
-									&thinsp;Download
-								</button>
-							</form>) : null}
 					</div>
 				</div>
 			</li>

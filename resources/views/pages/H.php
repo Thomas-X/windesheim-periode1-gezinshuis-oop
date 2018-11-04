@@ -34,12 +34,6 @@
             <button class="house-btn">lees meer</button>
         </div>
         <br>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-4" >
-                    <p">dashbord maybe?</p>
-                </div>
-        </div>
     </div>
 </div>
 

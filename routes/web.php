@@ -51,7 +51,7 @@ Router::post(Routes::routes['cms_careforschema'], 'CareForSchemaController@downl
 CMS_BUILDER::init();
 
 Router::get(Routes::routes['cms'], 'TableController@showDashboard');
-
+Router::get(Routes::routes['l_home'], 'HController@showH');
 
 
 // Table controller usage
