@@ -4,6 +4,9 @@
 // Used for (composer) autoloading
 require __DIR__ . '/bootstrap.php';
 
+echo ":(";
+die;
+
 use Qui\lib\App;
 use Qui\lib\Database;
 use Qui\lib\CView;
@@ -13,7 +16,6 @@ use Qui\lib\CAuthentication;
 use Qui\lib\CValidator;
 use Qui\lib\CMailer;
 use Qui\lib\CNotifierParser;
-use Qui\lib\Routes;
 
 \Qui\lib\Routes::morphRoutes("/~2018_p1_11/P1_OOAPP_Opdracht");
 
