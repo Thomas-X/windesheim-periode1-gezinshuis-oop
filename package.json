@@ -9,6 +9,7 @@
     "dev": "webpack --watch --enviroment development --config ./webpack.config.js",
     "build": "webpack --enviroment --progress production --config ./webpack.config.js",
     "prod": "npm run build && php executePHP.php",
+    "buildprod": "webpack --progress -config ./webpack.config.js",
     "seed": "php seed.php"
   },
   "author": "Thomas-X",
