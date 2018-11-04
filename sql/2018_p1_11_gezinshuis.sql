@@ -1,10 +1,10 @@
 -- MySQL dump 10.13  Distrib 5.7.24, for Linux (x86_64)
 --
--- Host: localhost    Database: 2018_p1_11_gezinshuis
+-- Host: localhost    Database: 2018_P1_11_gezinshuis
 -- ------------------------------------------------------
 -- Server version	5.7.24-0ubuntu0.18.04.1
 
--- Schema 2018_p1_11_gezinshuis
+-- Schema 2018_P1_11_gezinshuis
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -18,13 +18,13 @@
 
 
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `2018_p1_11_gezinshuis` ;
+DROP SCHEMA IF EXISTS `2018_P1_11_gezinshuis` ;
 
 -- -----------------------------------------------------
--- Schema 2018_p1_11_gezinshuis
+-- Schema 2018_P1_11_gezinshuis
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `2018_p1_11_gezinshuis` DEFAULT CHARACTER SET utf8 ;
-USE `2018_p1_11_gezinshuis`;
+CREATE SCHEMA IF NOT EXISTS `2018_P1_11_gezinshuis` DEFAULT CHARACTER SET utf8 ;
+USE `2018_P1_11_gezinshuis`;
 
 
 --
