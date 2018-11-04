@@ -16,20 +16,20 @@ use Qui\lib\CNotifierParser;
 
 \Qui\lib\Routes::morphRoutes("/~2018_p1_11/P1_OOAPP_Opdracht");
 
-
-set_error_handler(function($errno, $errstr, $errfile, $errline ){
-    var_dump(new ErrorException($errstr, $errno, 0, $errfile, $errline));
-});
-
-register_shutdown_function(function () {
-    $err = error_get_last();
-    if (! is_null($err)) {
-        var_dump($err);
-        print 'Error#'.$err['message'].'<br>';
-        print 'Line#'.$err['line'].'<br>';
-        print 'File#'.$err['file'].'<br>';
-    }
-});
+//
+//set_error_handler(function($errno, $errstr, $errfile, $errline ){
+//    var_dump(new ErrorException($errstr, $errno, 0, $errfile, $errline));
+//});
+//
+//register_shutdown_function(function () {
+//    $err = error_get_last();
+//    if (! is_null($err)) {
+//        var_dump($err);
+//        print 'Error#'.$err['message'].'<br>';
+//        print 'Line#'.$err['line'].'<br>';
+//        print 'File#'.$err['file'].'<br>';
+//    }
+//});
 
 
 $_ENV = [];
