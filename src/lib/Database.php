@@ -98,8 +98,8 @@ class Database
      */
     public function execute($sql, $values = [])
     {
-        var_dump($sql);
-        echo "<br/>";
+//        var_dump($sql);
+//        echo "<br/>";
         $stmt = $this->pdo->prepare($sql);
         $val = $stmt->execute($values);
         // If the query is a INSERT/UPDATE/DELETE type then ->fetch is undefined ofcourse
