@@ -23,21 +23,11 @@ const javascriptDirectoryHelper = (pages) => {
 
 module.exports = (env, argv) => {
 
-	const obj = {
+	let obj = {
 		mode: argv.enviroment === 'production' ? 'production' : 'development',
 		entry: {
 			global: `${dir}/global/global.js`,
-			...javascriptDirectoryHelper([
-				'404',
-				'about',
-				'contact',
-				'home',
-				'login',
-				'register',
-				'resetpassword',
-				'usercms',
-				{name: 'react-app', type: 'jsx'}
-			])
+
 			// add extra files here as well (we need different entry points so javascript that shouldn't be on a page doesn't get executed)
 			// cross-file imports should be:
 			// Use optimization.splitChunks to create bundles of shared application code between each page.
@@ -79,5 +69,17 @@ module.exports = (env, argv) => {
 			]
 		}
 	}
+
+	obj.entry = Object.assign(obj.entry, javascriptDirectoryHelper([
+		'404',
+		'about',
+		'contact',
+		'home',
+		'login',
+		'register',
+		'resetpassword',
+		'usercms',
+		{name: 'react-app', type: 'jsx'}
+	]));
 	return obj;
 }
