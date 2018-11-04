@@ -144,7 +144,7 @@ class TableController
         $allTables = DB::execute('show tables');
         $temp = [];
         foreach ($allTables as $key => $value) {
-            $val = $allTables[$key]["Tables_in_mydb"];
+            $val = $allTables[$key]["Tables_in_2018_P1_11_gezinshuis"];
             $temp[$val] = $val;
         }
         $counts = [];
