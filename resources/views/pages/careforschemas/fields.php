@@ -13,9 +13,9 @@ $dataKid = Qui\lib\facades\Util::selectFormatter($_data['profiles_kids'], 'id', 
 $dataDoctor = Qui\lib\facades\Util::selectFormatter($_data['profiles_doctors'], 'id', 'nickname');
 $dataParentsCareTakers = Qui\lib\facades\Util::selectFormatter($_data['profiles_parents_caretakers'], 'id', 'nickname');
 
-$createKidRoute = Routes::routes['cms_kids'];
-$createParentRoute = Routes::routes['cms_parents_caretaker'];
-$createDoctorRoute = Routes::routes['cms_doctors'];
+$createKidRoute = Routes::$routes['cms_kids'];
+$createParentRoute = Routes::$routes['cms_parents_caretaker'];
+$createDoctorRoute = Routes::$routes['cms_doctors'];
 
 $fields = [
     [

@@ -3,7 +3,7 @@
         <div class="jumbotron">
             <h3 class="display-12 title">Reset your password</h3>
         </div>
-        <form method="post" action="<?php echo \Qui\lib\Routes::routes['resetPassword'] ?>" id="resetPassword">
+        <form method="post" action="<?php echo \Qui\lib\Routes::$routes['resetPassword'] ?>" id="resetPassword">
             <?php
             \Qui\lib\Form::input('Wachtwoord', 'fa-lock',
                 "<input type=\"password\" class=\"form-control ownInput\" id=\"password1\" placeholder=\"Enter your new password\"

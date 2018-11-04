@@ -58,7 +58,7 @@ class AuthenticationController
     public function onResetPassword(Request $req, Response $res)
     {
         $forgotPasswordToken = $req->params['forgotPasswordToken'];
-        $home = Routes::routes['home'];
+        $home = Routes::$routes['home'];
         $password = $req->params['password'];
         if (!isset($password) || !isset($forgotPasswordToken)) {
             return $res->redirect($home, 401);
@@ -82,7 +82,7 @@ class AuthenticationController
 
     public function onForgotPassword(Request $req, Response $res)
     {
-        $home = Routes::routes['home'];
+        $home = Routes::$routes['home'];
         if (!isset($req->params['email'])) $res->redirect($home);
 
         $users = DB::selectWhere('email, id', 'users', 'email', $req->params['email']);
@@ -111,7 +111,7 @@ class AuthenticationController
     {
         $success = Authentication::register($req->params);
         // return some error here if success is false
-        $res->redirect(Routes::routes['home'], 200);
+        $res->redirect(Routes::$routes['home'], 200);
     }
 
     public function onLogin(Request $req, Response $res)

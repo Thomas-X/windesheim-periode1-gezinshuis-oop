@@ -24,6 +24,6 @@ class CareForSchemaController
     {
         if (isset($req->params['type']) && $req->params['type'] === 'download_post')
                 CareForSchema::downloadCareForSchemas($req, $res);
-        $res->redirect(Routes::routes['cms_careforschema']);
+        $res->redirect(Routes::$routes['cms_careforschema']);
     }
 }

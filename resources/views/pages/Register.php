@@ -1,6 +1,6 @@
 <div class="container" style="min-height: 100vh">
     <div>
-        <form method="post" action="<?php echo \Qui\lib\Routes::routes['onRegister'] ?>" id="registerForm">
+        <form method="post" action="<?php echo \Qui\lib\Routes::$routes['onRegister'] ?>" id="registerForm">
             <?php
             \Qui\lib\Form::input('Voornaam', 'fa-user',
                 "<input type=\"text\" class=\"form-control ownInput\" id=\"fname\" placeholder=\"Enter your firstname\" name=\"fname\" required>");

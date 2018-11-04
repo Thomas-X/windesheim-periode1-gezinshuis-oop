@@ -28,25 +28,25 @@ class PictureExampleController
     public function uploadCollection(Request $req, Response $res)
     {
         PictureCollection::createPictureCollection($req->files['files']);
-        $res->redirect(Routes::routes['upload']);
+        $res->redirect(Routes::$routes['upload']);
     }
 
     public function deleteCollection(Request $req, Response $res)
     {
         PictureCollection::deletePictureCollection($req->params['collectionId']);
-        $res->redirect(Routes::routes['upload']);
+        $res->redirect(Routes::$routes['upload']);
     }
 
     public function deletePicture(Request $req, Response $res)
     {
         PictureCollection::deletePicture($req->params['collectionId'], $req->params['pictureId']);
-        $res->redirect(Routes::routes['upload']);
+        $res->redirect(Routes::$routes['upload']);
     }
 
     public function updatePicture(Request $req, Response $res)
     {
         PictureCollection::updatePictureCollection($req->params['collectionId'], $req->params['pictureId'], $req->files['file']);
-        $res->redirect(Routes::routes['upload']);
+        $res->redirect(Routes::$routes['upload']);
     }
 
     public function getAllPicturesFromCollection(Request $req, Response $res)

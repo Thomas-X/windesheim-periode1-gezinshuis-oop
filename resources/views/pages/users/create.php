@@ -8,7 +8,7 @@
 require(__DIR__ . '/fields.php');
 extract([
     'title' => 'Create new user',
-    'baseUri' => \Qui\lib\Routes::routes['cms_users'],
+    'baseUri' => \Qui\lib\Routes::$routes['cms_users'],
     'fields' => $fields
 ]);
 require(__DIR__ . '/../templates/cms/create.php');

@@ -8,7 +8,7 @@
 require(__DIR__ . '/fields.php');
 extract([
     'title' => 'Update daily information item',
-    'baseUri' => \Qui\lib\Routes::routes['cms_day2dayInformation'],
+    'baseUri' => \Qui\lib\Routes::$routes['cms_day2dayInformation'],
     'fields' => $fields
 ]);
 require(__DIR__ . '/../templates/cms/update.php');

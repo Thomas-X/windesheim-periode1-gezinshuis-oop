@@ -8,7 +8,7 @@
 require(__DIR__ . '/fields.php');
 extract([
     'title' => 'Maak een nieuw behandelplan aan',
-    'baseUri' => \Qui\lib\Routes::routes['cms_careforschema'],
+    'baseUri' => \Qui\lib\Routes::$routes['cms_careforschema'],
     'fields' => $fields
 ]);
 require(__DIR__ . '/../templates/cms/create.php');

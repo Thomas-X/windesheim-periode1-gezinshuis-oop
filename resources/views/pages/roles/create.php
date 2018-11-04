@@ -8,7 +8,7 @@
 require(__DIR__ . '/fields.php');
 extract([
     'title' => 'Create new role',
-    'baseUri' => \Qui\lib\Routes::routes['cms_roles'],
+    'baseUri' => \Qui\lib\Routes::$routes['cms_roles'],
     'fields' => $fields
 ]);
 require(__DIR__ . '/../templates/cms/create.php');

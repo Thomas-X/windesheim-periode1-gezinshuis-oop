@@ -1,6 +1,6 @@
 <div class="container" style="min-height: 100vh">
     <div>
-        <form method="post" action="<?php echo \Qui\lib\Routes::routes['forgotPassword'] ?>">
+        <form method="post" action="<?php echo \Qui\lib\Routes::$routes['forgotPassword'] ?>">
 
             <?php
             \Qui\lib\Form::input('E-mail', 'fa-envelope',

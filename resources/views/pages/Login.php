@@ -1,6 +1,6 @@
 <div class="container" style="min-height: 100vh">
     <div>
-        <form method="post" action="<?php echo \Qui\lib\Routes::routes['login'] ?>" id="loginForm">
+        <form method="post" action="<?php echo \Qui\lib\Routes::$routes['login'] ?>" id="loginForm">
             <?php
 
             \Qui\lib\Form::input('E-mail', 'fa-envelope',
@@ -11,7 +11,7 @@
                    placeholder=\"Enter your password\" required/>");
 
             ?>
-            <a id="passwordHelpBlock" class="form-text text-muted" href="<?php echo \Qui\lib\Routes::routes['forgotPassword'] ?>">
+            <a id="passwordHelpBlock" class="form-text text-muted" href="<?php echo \Qui\lib\Routes::$routes['forgotPassword'] ?>">
                 Wachtwoord vergeten?
             </a>
             <button type="submit" class="btn btn-primary house-btn">Submit</button>

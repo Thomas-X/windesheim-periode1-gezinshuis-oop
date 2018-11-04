@@ -8,7 +8,7 @@
 require(__DIR__ . '/fields.php');
 extract([
     'title' => 'Maak een nieuw kind account aan',
-    'baseUri' => \Qui\lib\Routes::routes['cms_kids'],
+    'baseUri' => \Qui\lib\Routes::$routes['cms_kids'],
     'fields' => $fields
 ]);
 require(__DIR__ . '/../templates/cms/create.php');

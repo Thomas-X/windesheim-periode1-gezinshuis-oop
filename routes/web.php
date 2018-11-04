@@ -24,34 +24,34 @@ use Qui\lib\CMS_BUILDER;
 /*
  * GET
  * */
-Router::get(Routes::routes['home'], 'HomeController@showHome');
-Router::get(Routes::routes['about'], 'AboutController@showAbout');
-Router::get(Routes::routes['contact'], 'ContactController@showContact');
-Router::get(Routes::routes['upload'], 'PictureExampleController@showUpload');
+Router::get(Routes::$routes['home'], 'HomeController@showHome');
+Router::get(Routes::$routes['about'], 'AboutController@showAbout');
+Router::get(Routes::$routes['contact'], 'ContactController@showContact');
+Router::get(Routes::$routes['upload'], 'PictureExampleController@showUpload');
 
 // TODO Authentication middleware profiles_employees only
 // Init CMS routes
 CMS_BUILDER::init();
 
-Router::get(Routes::routes['cms'], 'TableController@showDashboard');
+Router::get(Routes::$routes['cms'], 'TableController@showDashboard');
 
 /*
  * POST
  * */
-Router::post(Routes::routes['uploadCollection'], 'PictureExampleController@uploadCollection');
-Router::post(Routes::routes['deleteCollection'], 'PictureExampleController@deleteCollection');
-Router::post(Routes::routes['deletePicture'], 'PictureExampleController@deletePicture');
-Router::post(Routes::routes['updatePicture'], 'PictureExampleController@updatePicture');
-Router::post(Routes::routes['getAllPicturesFromCollection'], 'PictureExampleController@getAllPicturesFromCollection');
-Router::post(Routes::routes['getPictureFromCollection'], 'PictureExampleController@getPictureFromCollection');
-Router::post(Routes::routes['cms_careforschema'], 'CareForSchemaController@downloadCareForSchemas');
+Router::post(Routes::$routes['uploadCollection'], 'PictureExampleController@uploadCollection');
+Router::post(Routes::$routes['deleteCollection'], 'PictureExampleController@deleteCollection');
+Router::post(Routes::$routes['deletePicture'], 'PictureExampleController@deletePicture');
+Router::post(Routes::$routes['updatePicture'], 'PictureExampleController@updatePicture');
+Router::post(Routes::$routes['getAllPicturesFromCollection'], 'PictureExampleController@getAllPicturesFromCollection');
+Router::post(Routes::$routes['getPictureFromCollection'], 'PictureExampleController@getPictureFromCollection');
+Router::post(Routes::$routes['cms_careforschema'], 'CareForSchemaController@downloadCareForSchemas');
 
 // TODO Authentication middleware profiles_employees only
 // Init CMS routes
 CMS_BUILDER::init();
 
-Router::get(Routes::routes['cms'], 'TableController@showDashboard');
-Router::get(Routes::routes['l_home'], 'HController@showH');
+Router::get(Routes::$routes['cms'], 'TableController@showDashboard');
+Router::get(Routes::$routes['l_home'], 'HController@showH');
 
 
 // Table controller usage
@@ -82,12 +82,12 @@ Router::get(Routes::routes['l_home'], 'HController@showH');
 Router::middleware(['AuthenticationMiddleware@resetPassword'], [
     [
         App::GET,
-        Routes::routes['resetPassword'],
+        Routes::$routes['resetPassword'],
         'AuthenticationController@showResetPassword'
     ],
     [
         App::POST,
-        Routes::routes['resetPassword'],
+        Routes::$routes['resetPassword'],
         'AuthenticationController@onResetPassword'
     ]
 ]);
@@ -98,7 +98,7 @@ Router::middleware(['AuthenticationMiddleware@resetPassword'], [
 Router::middleware(['AuthenticationMiddleware@shouldBeLoggedIn'], [
     [
         App::GET,
-        Routes::routes['logout'],
+        Routes::$routes['logout'],
         'AuthenticationController@onLogout'
     ]
 ]);
@@ -109,32 +109,32 @@ Router::middleware(['AuthenticationMiddleware@shouldBeLoggedIn'], [
 Router::middleware(['AuthenticationMiddleware@shouldNotBeLoggedIn'], [
     [
         App::GET,
-        Routes::routes['login'],
+        Routes::$routes['login'],
         'AuthenticationController@showLogin'
     ],
     [
         App::GET,
-        Routes::routes['register'],
+        Routes::$routes['register'],
         'AuthenticationController@showRegister'
     ],
     [
         App::GET,
-        Routes::routes['forgotPassword'],
+        Routes::$routes['forgotPassword'],
         'AuthenticationController@showForgotPassword'
     ],
     [
         App::POST,
-        Routes::routes['login'],
+        Routes::$routes['login'],
         'AuthenticationController@onLogin'
     ],
     [
         App::POST,
-        Routes::routes['onRegister'],
+        Routes::$routes['onRegister'],
         'AuthenticationController@onRegister'
     ],
     [
         App::POST,
-        Routes::routes['forgotPassword'],
+        Routes::$routes['forgotPassword'],
         'AuthenticationController@onForgotPassword'
     ]
 ]);

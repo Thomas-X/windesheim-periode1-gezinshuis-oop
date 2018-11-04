@@ -20,7 +20,7 @@ class Routes
      * /h/events
      * /h/day2dayinformation
      * */
-    public const routes = [
+    static public $routes = [
         'home' => '/',
         'about' => '/about',
         'contact' => '/contact',
@@ -75,4 +75,17 @@ class Routes
         'getAllPicturesFromCollection' => '/getallpicturesfromcollection',
         'getPictureFromCollection' => '/getpicturefromcollection'
     ];
+
+    /**
+     * @param $path
+     */
+    /**
+     * @param $path
+     */
+    public static function morphRoutes($path)
+    {
+        foreach (Routes::$routes as $key => $route) {
+            Routes::$routes[$key] = $path . Routes::$routes[$key];
+        }
+    }
 }

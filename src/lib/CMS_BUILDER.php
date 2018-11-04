@@ -154,7 +154,7 @@ class CMS_BUILDER
     private static function events(Request $req, Response $res)
     {
         $id = $req->params['id'] ?? null;
-        $route = Routes::routes['cms_events'];
+        $route = Routes::$routes['cms_events'];
         static::make($req, $res, static::makeGenerator($req, $res, [
             'route' => $route,
             'table' => 'events',
@@ -198,7 +198,7 @@ class CMS_BUILDER
     private static function users(Request $req, Response $res)
     {
         $id = $req->params['id'] ?? null;
-        $route = Routes::routes['cms_users'];
+        $route = Routes::$routes['cms_users'];
         $roles = DB::selectAll('roles');
         if (isset($id)) {
             $usrRoleId = @DB::selectWhere('roles_id', 'users', 'id', $id)[0]['roles_id'];
@@ -330,7 +330,7 @@ class CMS_BUILDER
     private static function day2dayinformation(Request $req, Response $res)
     {
         $id = $req->params['id'] ?? null;
-        $route = Routes::routes['cms_day2dayInformation'];
+        $route = Routes::$routes['cms_day2dayInformation'];
         static::make($req, $res, static::makeGenerator($req, $res, [
             'route' => $route,
             'table' => 'day2dayinformation',
@@ -359,7 +359,7 @@ class CMS_BUILDER
     private static function comments(Request $req, Response $res)
     {
         $id = $req->params['id'] ?? null;
-        $route = Routes::routes['cms_comments'];
+        $route = Routes::$routes['cms_comments'];
         static::make($req, $res, static::makeGenerator($req, $res, [
             'route' => $route,
             'table' => 'comments',
@@ -376,7 +376,7 @@ class CMS_BUILDER
     private static function roles(Request $req, Response $res)
     {
         $id = $req->params['id'] ?? null;
-        $route = Routes::routes['cms_roles'];
+        $route = Routes::$routes['cms_roles'];
         static::make($req, $res, static::makeGenerator($req, $res, [
             'route' => $route,
             'table' => 'roles',
@@ -395,7 +395,7 @@ class CMS_BUILDER
     private static function doctors(Request $req, Response $res)
     {
         $id = $req->params['id'] ?? null;
-        $route = Routes::routes['cms_doctors'];
+        $route = Routes::$routes['cms_doctors'];
         static::make($req, $res, static::makeGenerator($req, $res, [
             'route' => $route,
             'table' => 'profiles_doctors',
@@ -416,7 +416,7 @@ class CMS_BUILDER
     private static function parent_caretakers(Request $req, Response $res)
     {
         $id = $req->params['id'] ?? null;
-        $route = Routes::routes['cms_parents_caretaker'];
+        $route = Routes::$routes['cms_parents_caretaker'];
         static::make($req, $res, static::makeGenerator($req, $res, [
             'route' => $route,
             'table' => 'profiles_parents_caretakers',
@@ -437,7 +437,7 @@ class CMS_BUILDER
     private static function kids(Request $req, Response $res)
     {
         $id = $req->params['id'] ?? null;
-        $route = Routes::routes['cms_kids'];
+        $route = Routes::$routes['cms_kids'];
         static::make($req, $res, static::makeGenerator($req, $res, [
             'route' => $route,
             'table' => 'profiles_kids',
@@ -468,7 +468,7 @@ class CMS_BUILDER
     private static function employees(Request $req, Response $res)
     {
         $id = $req->params['id'] ?? null;
-        $route = Routes::routes['cms_employees'];
+        $route = Routes::$routes['cms_employees'];
         static::make($req, $res, static::makeGenerator($req, $res, [
             'route' => $route,
             'table' => 'profiles_employees',
@@ -541,7 +541,7 @@ class CMS_BUILDER
             $kids = CMS_BUILDER::unshift_arr($dkids, 'Geen kind..');
         }
 
-        $route = Routes::routes['cms_careforschema'];
+        $route = Routes::$routes['cms_careforschema'];
         $keys = [
             'date_start',
             'date_review',

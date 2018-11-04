@@ -8,7 +8,7 @@
 require(__DIR__ . '/fields.php');
 extract([
     'title' => 'Create new event item',
-    'baseUri' => \Qui\lib\Routes::routes['cms_events'],
+    'baseUri' => \Qui\lib\Routes::$routes['cms_events'],
     'fields' => $fields
 ]);
 

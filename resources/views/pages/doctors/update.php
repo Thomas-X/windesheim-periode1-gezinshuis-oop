@@ -8,7 +8,7 @@
 require(__DIR__ . '/fields.php');
 extract([
     'title' => 'Pas dokter / behandelaar aan',
-    'baseUri' => \Qui\lib\Routes::routes['cms_doctors'],
+    'baseUri' => \Qui\lib\Routes::$routes['cms_doctors'],
     'fields' => $fields
 ]);
 require(__DIR__ . '/../templates/cms/update.php');

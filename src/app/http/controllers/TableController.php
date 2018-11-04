@@ -186,22 +186,22 @@ class TableController
             return compact('link', 'name');
         }
         $links = [
-            linkMaker(Routes::routes['cms_day2dayInformation'], 'dagelijkse informatie'),
-            linkMaker(Routes::routes['cms_events'], 'gebeurtenissen'),
-            linkMaker(Routes::routes['cms_users'], 'gebruikers'),
-            linkMaker(Routes::routes['cms_roles'], 'rollen'),
-            linkMaker(Routes::routes['cms_comments'], 'opmerkingen'),
-            linkMaker(Routes::routes['cms_doctors'], 'dokters / behandelaars'),
-            linkMaker(Routes::routes['cms_parents_caretaker'], 'ouders / verzorgers'),
-            linkMaker(Routes::routes['cms_kids'], 'kinderen'),
-            linkMaker(Routes::routes['cms_employees'], 'medewerkers'),
-            linkMaker(Routes::routes['cms_careforschema'], 'behandelplannen'),
+            linkMaker(Routes::$routes['cms_day2dayInformation'], 'dagelijkse informatie'),
+            linkMaker(Routes::$routes['cms_events'], 'gebeurtenissen'),
+            linkMaker(Routes::$routes['cms_users'], 'gebruikers'),
+            linkMaker(Routes::$routes['cms_roles'], 'rollen'),
+            linkMaker(Routes::$routes['cms_comments'], 'opmerkingen'),
+            linkMaker(Routes::$routes['cms_doctors'], 'dokters / behandelaars'),
+            linkMaker(Routes::$routes['cms_parents_caretaker'], 'ouders / verzorgers'),
+            linkMaker(Routes::$routes['cms_kids'], 'kinderen'),
+            linkMaker(Routes::$routes['cms_employees'], 'medewerkers'),
+            linkMaker(Routes::$routes['cms_careforschema'], 'behandelplannen'),
         ];
         $lastLoginData = DB::select('lastLogin, fname, lname', 'users');
         $hrefLinks = [
-            'users' => Routes::routes['cms_users'],
-            'parents_caretakers' => Routes::routes['cms_parents_caretaker'],
-            'profile' => Routes::routes['cms_profile'],
+            'users' => Routes::$routes['cms_users'],
+            'parents_caretakers' => Routes::$routes['cms_parents_caretaker'],
+            'profile' => Routes::$routes['cms_profile'],
         ];
         $options = [
             'javascript_data' => compact('counts', 'links', 'lastLoginData', 'hrefLinks')

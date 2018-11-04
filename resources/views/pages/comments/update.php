@@ -8,7 +8,7 @@
 require(__DIR__ . '/fields.php');
 extract([
     'title' => 'Update opmerking',
-    'baseUri' => \Qui\lib\Routes::routes['cms_comments'],
+    'baseUri' => \Qui\lib\Routes::$routes['cms_comments'],
     'fields' => $fields
 ]);
 require(__DIR__ . '/../templates/cms/update.php');

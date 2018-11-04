@@ -8,7 +8,7 @@
 require(__DIR__ . '/fields.php');
 extract([
     'title' => 'Pas ouder / verzorger aan',
-    'baseUri' => \Qui\lib\Routes::routes['cms_parents_caretaker'],
+    'baseUri' => \Qui\lib\Routes::$routes['cms_parents_caretaker'],
     'fields' => $fields
 ]);
 require(__DIR__ . '/../templates/cms/update.php');
