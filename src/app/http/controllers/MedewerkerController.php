@@ -30,7 +30,7 @@ class MedewerkerController
     { 
         $success = Authentication::register($request->params);
         // return some error here if success is false
-        $res->redirect('/', 200);
+        $res->redirect(\Qui\lib\Routes::$routes['home'], 200);
     }
     //update
     public function update(Request $request,$res){
@@ -38,7 +38,7 @@ class MedewerkerController
         DB::updateEntry($request->params["id"],'users',array_merge($request->params, [
             'password' => Authentication::generateHash($request->params['password'])
         ]));
-        $res->redirect('/', 200);
+        $res->redirect(\Qui\lib\Routes::$routes['home'], 200);
     }
     //delete
     public function delete(Request $request,$id){

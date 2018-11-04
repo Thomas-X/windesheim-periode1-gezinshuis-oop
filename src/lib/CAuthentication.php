@@ -29,13 +29,13 @@ class CAuthentication
             // TODO enable secure option to avoi man-in-the-middle attacks
             $this->updateUserLastLogin($user['id']);
             if (App::isDevelopmentEnviroment()) {
-                setcookie('token', $user['rememberMeToken'], time() + 60 * 60 * 24 * 7, '/');
+                setcookie('token', $user['rememberMeToken'], time() + 60 * 60 * 24 * 7, Routes::$routes['home']);
             } else if (App::isProductionEnviroment()) {
-                setcookie('token', $user['rememberMeToken'], time() + 60 * 60 * 24 * 7, '/', "", true);
+                setcookie('token', $user['rememberMeToken'], time() + 60 * 60 * 24 * 7, Routes::$routes['home'], "", true);
             }
-            $res->redirect('/', 200);
+            $res->redirect(\Qui\lib\Routes::$routes['home'], 200);
         } else {
-            $res->redirect('/', 401);
+            $res->redirect(\Qui\lib\Routes::$routes['home'], 401);
         }
     }
 
@@ -44,14 +44,14 @@ class CAuthentication
         $token = $req->cookies['token'] ?? false;
         if (!$token) {
             // for some reason $res->redirect is undefined here, I can't be bothered
-            header("Location: /");
+            header("Location: ". Routes::$routes['home']);
         } else {
             if (App::isDevelopmentEnviroment()) {
                 setcookie('token', null, time() + 1, '/');
             } else if (App::isProductionEnviroment()) {
                 setcookie('token', null, time() + 1, '/', "", true);
             }
-            header("Location: /");
+            header("Location: " . Routes::$routes['home']);
         }
     }
 
