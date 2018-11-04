@@ -17,11 +17,11 @@
                 <h3>
                     Links
                 </h3>
-                <a href="/about">
+                <a href="<?= \Qui\lib\Routes::$routes['about'] ?>">
                     About us
                 </a>
                 <br>
-                <a href="/contact">
+                <a href="<?= \Qui\lib\Routes::$routes['contact'] ?>">
                     Contact
                 </a>
             </div>

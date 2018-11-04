@@ -24,7 +24,7 @@
                     // if logged in
                     if ($loggedIn) {
                         $logout = \Qui\lib\Routes::$routes['logout'];
-                        echo "<a class=\"navLink nav-link\" href=\"/{$logout}\">Logout</a>";
+                        echo "<a class=\"navLink nav-link\" href=\"{$logout}\">Logout</a>";
                         echo "<a class=\"navLink nav-link\" href='" . \Qui\lib\Routes::$routes['cms'] . "'>Go to CMS</a>";
                         echo "<a class=\"navLink nav-link\" href=\"#\">Hi, {$user['fname']}!</a>";
                     }
