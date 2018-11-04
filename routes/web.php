@@ -33,24 +33,24 @@ Router::get(Routes::$routes['upload'], 'PictureExampleController@showUpload');
 // Init CMS routes
 CMS_BUILDER::init();
 
-Router::get(Routes::$routes['cms'], 'TableController@showDashboard');
+//Router::get(Routes::$routes['cms'], 'TableController@showDashboard');
 
 /*
  * POST
  * */
-Router::post(Routes::$routes['uploadCollection'], 'PictureExampleController@uploadCollection');
-Router::post(Routes::$routes['deleteCollection'], 'PictureExampleController@deleteCollection');
-Router::post(Routes::$routes['deletePicture'], 'PictureExampleController@deletePicture');
-Router::post(Routes::$routes['updatePicture'], 'PictureExampleController@updatePicture');
-Router::post(Routes::$routes['getAllPicturesFromCollection'], 'PictureExampleController@getAllPicturesFromCollection');
-Router::post(Routes::$routes['getPictureFromCollection'], 'PictureExampleController@getPictureFromCollection');
-Router::post(Routes::$routes['cms_careforschema'], 'CareForSchemaController@downloadCareForSchemas');
+//Router::post(Routes::$routes['uploadCollection'], 'PictureExampleController@uploadCollection');
+//Router::post(Routes::$routes['deleteCollection'], 'PictureExampleController@deleteCollection');
+//Router::post(Routes::$routes['deletePicture'], 'PictureExampleController@deletePicture');
+//Router::post(Routes::$routes['updatePicture'], 'PictureExampleController@updatePicture');
+//Router::post(Routes::$routes['getAllPicturesFromCollection'], 'PictureExampleController@getAllPicturesFromCollection');
+//Router::post(Routes::$routes['getPictureFromCollection'], 'PictureExampleController@getPictureFromCollection');
+//Router::post(Routes::$routes['cms_careforschema'], 'CareForSchemaController@downloadCareForSchemas');
 
 // TODO Authentication middleware profiles_employees only
 // Init CMS routes
-CMS_BUILDER::init();
-
-Router::get(Routes::$routes['cms'], 'TableController@showDashboard');
+//CMS_BUILDER::init();
+//
+//Router::get(Routes::$routes['cms'], 'TableController@showDashboard');
 Router::get(Routes::$routes['l_home'], 'HController@showH');
 
 
