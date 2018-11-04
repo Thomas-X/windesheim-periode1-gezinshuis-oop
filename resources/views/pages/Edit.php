@@ -81,4 +81,4 @@ echo'<div class="mainContainer">
 </div>
 
 
-<script src="public/js/register.js"></script>';
+<script src="js/register.js"></script>';

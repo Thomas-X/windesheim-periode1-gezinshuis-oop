@@ -18,5 +18,5 @@
         </form>
     </div>
 
-    <script src="public/js/resetpassword.js"></script>
+    <script src="js/resetpassword.js"></script>
 </div>

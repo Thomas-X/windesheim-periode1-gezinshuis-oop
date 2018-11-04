@@ -1,5 +1,5 @@
 <div>
     <div id="react-container">
-        <script src="public/js/react-app.js"></script>
+        <script src="js/react-app.js"></script>
     </div>
 </div>

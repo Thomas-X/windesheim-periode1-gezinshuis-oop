@@ -29,4 +29,4 @@
         </div>
     </div>
 
-    <script src="public/js/home.js"></script>
+    <script src="js/home.js"></script>
