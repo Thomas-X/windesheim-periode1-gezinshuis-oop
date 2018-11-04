@@ -299,7 +299,7 @@ class CMS_BUILDER
             },
             'update_post_post_insert' => function ($req, $res) use ($profile_types) {
                 if (isset($req->params['profile_type']) && isset($req->params['profile_value'])) {
-                    $id = $req->params['id'];
+                    $id = $req->params['id'] ?? null;
                     $profile_type = $req->params['profile_type'];
                     $profile_value = $req->params['profile_value'];
                     $cb = function($item) {
