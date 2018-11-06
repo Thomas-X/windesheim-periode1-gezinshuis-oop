@@ -41,6 +41,8 @@ class Response
      */
     public function redirect($path, $code = 302, $permanent=false)
     {
+        var_dump("redirecting to.." . $path . " with status code " . $code);
+        die;
         http_response_code($permanent ? 301 : $code);
         header("Location: {$path}");
         // to avoid further logic after redirect
