@@ -1,0 +1,269 @@
+body {
+  color: grey;
+  font-family: 'Raleway', sans-serif; }
+
+.bg-thirdColor {
+  background: #4CCFAC !important; }
+
+.bg-houseGreen {
+  background: #a0c041 !important; }
+
+.a-thirdColor {
+  color: #4CCFAC !important;
+  border-color: #4CCFAC !important; }
+.a-thirdColor:hover {
+  background: #4CCFAC !important;
+  color: white !important; }
+
+.a-houseGreen {
+  color: #a0c041 !important;
+  border-color: #a0c041 !important; }
+.a-houseGreen:hover {
+  background: #a0c041 !important;
+  color: white !important; }
+
+.a-btn-default {
+  background: white;
+  border-radius: 0;
+  color: #4084bb;
+  border-color: #4084bb; }
+
+.slide {
+  transition: opacity 300ms ease-in-out; }
+
+.slide-inactive {
+  opacity: 0; }
+
+.slide-active {
+  opacity: 1; }
+
+.slider {
+  width: 100%;
+  height: 400px !important;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden; }
+.slider img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: ani 10s linear;
+  filter: grayscale(30%); }
+.slider .arrow {
+  cursor: pointer;
+  position: absolute;
+  color: white;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  z-index: 2;
+  margin: 0 .5em; }
+.slider .arrow i {
+  font-size: 50px !important; }
+.slider #arrow-left {
+  left: 0; }
+.slider #arrow-right {
+  right: 0; }
+.slider .wrap {
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  position: absolute; }
+.slider .wrap .container {
+  height: 100%;
+  position: relative; }
+.slider .wrap .container .speech {
+  width: 345px;
+  background: #a0c041;
+  color: white;
+  padding: 1.5em;
+  position: absolute;
+  left: 0;
+  top: 20%;
+  display: block;
+  border-bottom: 4px solid #88a436;
+  margin-left: 15px; }
+.slider .wrap .container .speech h4 {
+  font-size: 20px; }
+.slider .wrap .container .speech p {
+  font-size: 13px; }
+.slider .wrap .container .speech:after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border: 26px solid transparent;
+  border-left-color: #a0c041;
+  border-right: 0;
+  border-bottom: 0;
+  margin-top: -13px;
+  margin-right: -26px; }
+.slider .wrap .container #speechBlue {
+  background: #4084bb !important;
+  border-color: #3974a3 !important; }
+.slider .wrap .container #speechBlue:after {
+  border-left-color: #4084bb; }
+
+.ownCard {
+  border-radius: 0px;
+  top: -70px;
+  border: none;
+  background: transparent;
+  height: 100%; }
+.ownCard img {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  height: 200px;
+  object-fit: cover; }
+.ownCard .card-body {
+  width: 90%;
+  margin: 0 auto;
+  padding: 1.2em 1em;
+  text-align: center;
+  box-shadow: 0 0px 5px 0 rgba(0, 0, 0, 0.16), 0 0px 10px 0 rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-bottom: 2px solid #4084bb; }
+.ownCard .card-body .card-title {
+  font-size: 25px;
+  color: #4084bb; }
+.ownCard .card-body a:hover {
+  background: #4084bb;
+  color: white; }
+.ownCard .card-body #a-wrap-green a {
+  color: #a0c041 !important;
+  border-color: #a0c041 !important; }
+.ownCard .card-body #a-wrap-green a:hover {
+  background: #a0c041 !important;
+  color: white !important; }
+.ownCard .card-body #a-wrap-grey a {
+  color: #4CCFAC !important;
+  border-color: #4CCFAC !important; }
+.ownCard .card-body #a-wrap-grey a:hover {
+  background: #4CCFAC !important;
+  color: white !important; }
+
+.welcome-wrap {
+  border-bottom: 1px solid #4084bb;
+  border-top: 1px solid #4084bb; }
+.welcome-wrap .left-welcome {
+  border-right: 1px solid #4084bb; }
+.welcome-wrap .left-welcome span {
+  font-size: 20px;
+  font-weight: 600; }
+.welcome-wrap .left-welcome, .welcome-wrap .right-welcome {
+  padding: 3em;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+.welcome-wrap .right-welcome {
+  font-size: medium; }
+
+.blog-card {
+  margin: 1.5em auto; }
+.blog-card .blog-body {
+  width: 100%;
+  height: 100%; }
+.blog-card .blog-body .img-wrap {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.16); }
+.blog-card .blog-body .img-wrap img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover; }
+.blog-card .blog-body .img-wrap .date-wrap {
+  position: absolute;
+  padding: .5em 1em;
+
+  color: white;
+  width: 150px;
+  height: 90px;
+  top: -40px;
+  left: 25px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  box-shadow: 1px 2px 5px 0 rgba(0, 0, 0, 0.2), 1px 2px 10px 0 rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+}
+
+.blog-card .blog-body .img-wrap .date-wrap .date-text .day {
+  font-weight: 100;
+  font-size: 18px; }
+.blog-card .blog-body .blog-name {
+  position: relative; }
+.blog-card .blog-body .blog-name .blog-name-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+.blog-card .blog-body .blog-name .blog-name-wrap .name-button {
+  width: auto;
+  position: absolute;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: .7em;
+  top: -40px; }
+.blog-card .blog-body .blog-name .blog-name-wrap .name-button p {
+  font-size: 16px;
+}
+.blog-card .blog-body .blog-name .blog-name-wrap .name-button a {
+  border-bottom: 2px solid #4084bb; }
+
+@keyframes ani {
+  0% {
+    transform: scale(1.1); }
+  100% {
+    transform: scale(1); } }
+
+
+/* Laptops and desktops (1100-1405px) */
+@media only screen and ( min-width: 1100px ) and ( max-width: 1405px) {
+  .speech{
+    display: none !important;
+  }
+
+  nav{
+    display: none;
+    padding: 5em;
+  }
+
+}
+
+/* Tablets in landscape mode (981-1100px) */
+@media only screen and ( min-width: 979px ) and ( max-width: 1100px ) {
+  .speech{
+    display: none !important;
+  }
+
+}
+
+/* Tablets in portrait mode (768-980px) */
+@media only screen and ( min-width: 768px ) and ( max-width: 980px ) {
+
+  .speech{
+    display: none !important;
+  }
+}
+
+/* Smartphones in landscape mode (480-768px) */
+@media only screen and ( min-width: 480px ) and ( max-width: 767px ) {
+  .speech{
+    display: none !important;
+  }
+}
+
+/* Smartphones in portrait mode (0-479px) */
+@media only screen and ( max-width: 479px ) {
+  .speech{
+    display: none !important;
+  }
+
+}

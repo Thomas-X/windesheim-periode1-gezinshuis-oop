@@ -1,38 +1,155 @@
-<div class="container" style="min-height: 100vh">
-    <div class="home">
-        <div class="col-sm-12">
-            <img src="http://placekitten.com/700/300" style="width: 100%;"/>
+<div class="container-fluid">
+    <div id="ownCourasel" class="slider" >
+        <div id="arrow-left" class="arrow">
+            <i class="fas fa-angle-left"></i>
         </div>
-        <br>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-4">
-                    <h3>Column 1</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+        <div id="img">
+            <div class="slide">
+                <div class="wrap">
+                    <div class="container">
+                        <div id="speechBlue" class="speech">
+                            <h4>Warm huis</h4>
+                            <p>Lorum ipsum kinderen moeten ook diploma halen enzo is goed voor brain en is relevant enzo. Door het schrijven
+                                van deze tekst met daarin woorden als enzo maakt deze hele tekst heel professioneel. </p>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-sm-4">
-                    <h3>Column 2</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+                <img src="imgs/happy-child.jpg" alt="blije kind" />
+            </div>
+            <div class="slide">
+                <div class="wrap">
+                    <div class="container">
+                        <div class="speech">
+                            <h4>Diploma gehaald</h4>
+                            <p>Lorum ipsum kinderen moeten ook diploma halen enzo is goed voor brain en is relevant enzo. Door het schrijven
+                                van deze tekst met daarin woorden als enzo maakt deze hele tekst heel professioneel. </p>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-sm-4">
-                    <h3>Column 3</h3>
-                    <img src="http://placekitten.com/500/500" alt="doeMaarWat" style="width: 100%;"/>
+                <img src="imgs/huis.jpg" alt="blije kind" />
+            </div>
+            <div class="slide">
+                <div class="wrap">
+                    <div class="container">
+                        <div class="speech">
+                            <h4>Dagje uit</h4>
+                            <p>Lorum ipsum kinderen moeten ook diploma halen enzo is goed voor brain en is relevant enzo. Door het schrijven
+                                van deze tekst met daarin woorden als enzo maakt deze hele tekst heel professioneel. </p>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-sm-12">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas posuere facilisis lorem sit amet feugiat. Ut aliquet imperdiet quam, quis vehicula eros pretium id. Ut molestie tincidunt tellus a dignissim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse non enim euismod nisl varius vestibulum ut eu leo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas vel laoreet purus. Duis lacinia, leo vel sollicitudin hendrerit, lacus erat volutpat enim, nec viverra eros erat ac magna. Nullam hendrerit leo lectus, eu congue ante ornare nec. Integer aliquam mi at mi maximus, quis aliquet mauris elementum. Maecenas ultrices faucibus leo, sit amet ullamcorper nisl fermentum sit amet. Curabitur dignissim, ex eget volutpat efficitur, ex leo sodales justo, in hendrerit purus elit eget sapien.
-
-                        In risus eros, dignissim quis suscipit at, rhoncus nec quam. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla congue metus tellus, vitae cursus enim tristique vel. Donec rutrum dignissim elit, id consequat velit finibus vel. Sed in facilisis nisi. Integer porta sapien arcu. Phasellus in justo faucibus, lacinia nunc ut, suscipit neque. Vivamus condimentum pharetra dui nec auctor.
-
-                        Maecenas at diam sem. Aliquam id nisi eget nunc consequat tristique. Fusce rutrum imperdiet ante, vitae dignissim erat varius sit amet. Fusce tortor lorem, placerat non ligula non, dapibus laoreet lorem. Nullam condimentum turpis sit amet turpis dictum interdum. Sed et mauris quis neque varius pretium nec a quam. Curabitur lacinia ligula in tellus vestibulum lacinia nec sed turpis. Quisque quis libero at nunc volutpat pretium ut sed turpis. Pellentesque eleifend nunc at ligula fringilla, non laoreet dolor mollis. Ut rutrum faucibus scelerisque. Nullam tristique ut sem et hendrerit. Nunc vel mauris fringilla velit dictum ullamcorper.</p>
+                <img src="imgs/efteling.jpg" alt="blije kind" />
+            </div>
+        </div>
+        <div id="arrow-right" class="arrow">
+            <i class="fas fa-angle-right"></i>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm12 mb-4">
+            <div class="card ownCard">
+                <img class="card-img-top" src="imgs/meisjesinraam.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title" >over ons</h5>
+                    <p class="card-text">Liefde voor de mens. Ontdekt wat voor organisatie wij zijn.  </p>
+                    <div class="a-wrap">
+                        <a href="about" class="btn btn-primary a-btn-default" >lees meer</a>
+                    </div>
                 </div>
-                <div class="col-sm-12">
-                    <img src="http://placekitten.com/800/100" alt="watAnders" style="width: 100%;"/>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm12 mb-4">
+            <div class="card ownCard">
+                <img class="card-img-top" src="imgs/evenement.jpg" alt="Card image cap">
+                <div class="card-body" style="border-bottom-color: #4CCFAC;">
+                    <h5 class="card-title" style="color: #4CCFAC; " >evenementen</h5>
+                    <p class="card-text">Af en toe doen we leuke evenementen met onze kinderen. Zo nu en dan gaan wij een dagje uit. Ervaar met ons mee wat wij beleven. </p>
+                    <div id="a-wrap-grey" class="a-wrap">
+                        <a href="evenement" class="btn btn-primary a-btn-default">ontdekt meer</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm12 mb-4">
+            <div class="card ownCard">
+                <img class="card-img-top" src="imgs/contact.jpg" alt="Card image cap">
+                <div class="card-body"  style="border-bottom-color: #a0c041">
+                    <h5 class="card-title" style="color: #b2cf5d;">contact</h5>
+                    <p class="card-text">Neem contact met ons op en ontdekt wat voor mogelijkheden wij u te bieden heeft.</p>
+                    <div id="a-wrap-green" class="a-wrap">
+                        <a href="contact" class="btn btn-primary a-btn-default">neem contact</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<div class="container-fluid welcome-wrap mb-5 ">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 left-welcome text-center">
+                <span style="font-size: 20px">Welkom op gezinshuis regterink</span>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 right-welcome">
+                <p> Af en toe doen we leuke evenementen met onze kinderen. Zo nu en dan gaan wij een dagje uit. Ervaar met ons mee wat w
+                    Af en toe doen we leuke evenementen met onze kinderen. Zo nu en dan gaan wij een dagje uit. Ervaar met ons mee wat w
+                    Af en toe doen we leuke evenementen met onze kinderen. Zo nu en dan gaan wij een dagje uit. Ervaar met ons mee wat w</p>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row m-5">
+        <div class="event-header text-center w-100 pt-5">
+            <h3>evenementen bij regtering</h3>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <?php foreach ($events as $key => $event): ?>
+            <div class="col-lg-4 col-md-4 col-sm-6 mt-5 mb-5">
+                <div class="blog-card">
+                    <div class="blog-body">
+                        <div class="img-wrap">
+                            <img src="imgs/event/event<?= ($key + 1) ?>.jpg"/>
+                            <div class="date-wrap">
+                                <div class="date-text">
+                                    <div class="date-num">
+                                        <span><?= substr($event['date_event'], 8, 9)  ?></span>
+                                        <span><?php
+                                                    $d = date_parse_from_format("Y-m-d", $event["date_event"]);
+                                                    echo $month[$d["month"]];
+                                                    ?>
+                                        </span>
+                                    </div>
+                                    <span class="day">
+                                        <?php
+                                            $day = date('N', strtotime($event["date_event"]));
+                                            echo $days[$day - 1];
+                                        ?>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="blog-name">
+                            <div class="blog-name-wrap">
+                                <div class="name-button text-center">
+                                    <p><?= $event['eventname'] ?></p>
+                                    <a href="#" class="btn btn-primary a-btn-default unique-btn">naar evenement</a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+
 
 <script src="js/home.js"></script>
+<script src="js/events.js"></script>

@@ -1,11 +1,11 @@
 // home imgaes slider interactivity
+$(document).ready(function(){
 
 let slides = document.querySelectorAll('.slide'),
     arrowRight = document.querySelector('#arrow-right'),
     arrowLeft = document.querySelector('#arrow-left'),
     current = 0;
 
-if(!slides){
 
     // Set all the imgs slide to display none
     function reset(){
@@ -56,11 +56,6 @@ if(!slides){
 
 
     startSlide();
-}else{
-}
 
-$(document).ready(function(){
 
-    var thisHeight = $("#about-this-height").height();
-    $("#about-height").height(thisHeight);
 });

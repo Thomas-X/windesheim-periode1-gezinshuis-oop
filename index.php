@@ -1,6 +1,6 @@
 <?php
+// Turn off all error reporting
 
-//
 // Used for (composer) autoloading
 require __DIR__ . '/bootstrap.php';
 
@@ -15,7 +15,7 @@ use Qui\lib\CMailer;
 use Qui\lib\CNotifierParser;
 
 \Qui\lib\Routes::morphRoutes("/~2018_p1_11/P1_OOAPP_Opdracht");
-
+//
 //
 //set_error_handler(function($errno, $errstr, $errfile, $errline ){
 //    var_dump(new ErrorException($errstr, $errno, 0, $errfile, $errline));

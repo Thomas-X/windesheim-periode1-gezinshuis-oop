@@ -24,10 +24,12 @@ use Qui\lib\CMS_BUILDER;
 /*
  * GET
  * */
+Router::get(Routes::$routes['evenement'], 'EventController@index');
 Router::get(Routes::$routes['home'], 'HomeController@showHome');
 Router::get(Routes::$routes['about'], 'AboutController@showAbout');
 Router::get(Routes::$routes['contact'], 'ContactController@showContact');
 Router::get(Routes::$routes['upload'], 'PictureExampleController@showUpload');
+
 
 // TODO Authentication middleware profiles_employees only
 // Init CMS routes

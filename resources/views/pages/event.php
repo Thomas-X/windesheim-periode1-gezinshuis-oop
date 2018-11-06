@@ -1,32 +1,62 @@
-<div class="mainContainer" style="min-height: 100vh">
-    <div class="home">
-        <div class="col-sm-8">
-            <h3>BBQ</h3>
-            <img src="http://placekitten.com/600/300" style="width: 100%;"/>
-            <p>Lorem ipsum dolor sit amet, purto posse detraxit qui cu, iisque noluisse scriptorem sed no. Nam in impetus reprehendunt
-                , primis argumentum id quo. Sea ei agam percipit eleifend. Sea affert mnesarchum in. Facer clita placerat duo at.
-                Quo movet inciderint et, per cu mazim nobis abhorreant, elitr tritani ut his. In his idque ridens quaeque. Etiam falli
-                elitr te sed, ut docendi interesset duo. Est timeam fierent partiendo ne, cu pri vivendo sapientem disputando.
-                Vitae praesent ad mea, eos debet partiendo ei. Eos ne expetenda contentiones, mutat eripuit inciderint mei eu.
-                Eos probatus consetetur at, cu atqui conclusionemque eum, te erant graece cetero sit. Nec ne solet prodesset,
-                ipsum idque et eum. Mel ei iuvaret nominavi evertitur, et invenire urbanitas scriptorem pro. Et pro zril quaeque prodesset,
-                liber intellegebat in sit, ei mea modus saepe bonorum. Ea sea invenire dissentias, has putant molestiae posidonium ut.
-                Et nonumy discere theophrastus eos, ei sed iusto quaeque, est facilisis omittantur an. Et mei fuisset ancillae,
-                antiopam maluisset no mei, qui commodo feugiat inciderint ei. Usu ne ubique instructior, eu nam reque pertinax maluisset.
-                At placerat vivendum est, et qui efficiantur definitiones, persius epicuri nec ad. Mei ad natum modus quodsi,
-                ex causae offendit sensibus sed. Sit nibh assueverit contentiones in.</p>
-            <button class="house-btn">schrijf je in</button>
-            <br>
-
-        </div>
-        <br>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-4" >
-                    <p>dashbord maybe?</p>
-                </div>
+<!-- begin image holder -->
+<section>
+    <div class="wrapper" style="height: 40vh;">
+        <div class="mask" style="background: url('imgs/happy-child.jpg');background-repeat: no-repeat;background-size: cover; background-position: center;">
+            <div class="d-flex justify-content-center align-items-center wrapper-body">
+                <h4>evenementen</h4>
             </div>
         </div>
     </div>
+</section>
+<!-- end image holder -->
+<div class="container">
+    <div class="row m-5">
+        <div class="event-header text-center w-100 pt-5">
+            <h3>laatst toegevoegde evenementen</h3>
+        </div>
+        <hr style="width: 100%;"/>
+    </div>
+    <div class="row mt-5">
+        <?php foreach ($events as $key => $event): ?>
+            <div class="col-lg-4 col-md-4 col-sm-6 mt-5 mb-5">
+                <div class="blog-card">
+                    <div class="blog-body">
+                        <div class="img-wrap">
+                            <img src="<?= $event['pictures'] ?>"/>
+                            <div class="date-wrap">
+                                <div class="date-text">
+                                    <div class="date-num">
+                                        <span><?= substr($event['date_event'], 8, 9)  ?></span>
+                                        <span><?php
+                                            $d = date_parse_from_format("Y-m-d", $event["date_event"]);
+                                            echo $month[$d["month"]];
+                                            ?>
+                                        </span>
+                                    </div>
+                                    <span class="day">
+                                        <?php
+                                        $day = date('N', strtotime($event["date_event"]));
+                                        echo $days[$day - 1];
+                                        ?>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="blog-name">
+                            <div class="blog-name-wrap">
+                                <div class="name-button text-center">
+                                    <p><?= $event['eventname'] ?></p>
+                                    <a href="#" class="btn btn-primary a-btn-default unique-btn">naar evenement</a>
+                                </div>
 
-    <script src="js/home.js"></script>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+
+<script src="js/events.js"></script>

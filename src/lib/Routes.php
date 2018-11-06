@@ -30,6 +30,7 @@ class Routes
         'onRegister' => '/register',
         'resetPassword' => '/resetpassword',
         'forgotPassword' => '/forgotpassword',
+        'evenement' => '/evenement',
         // Middleware profiles_owner only
         // CMS
         // Use query parameter for day2dayinfo for which day and which kid

@@ -1,0 +1,23 @@
+body {
+  color: grey;
+  font-family: 'Raleway', sans-serif; }
+
+.bg-thirdColor {
+  background: #4CCFAC !important; }
+
+.bg-houseGreen {
+  background: #a0c041 !important; }
+
+.a-thirdColor {
+  color: #4CCFAC !important;
+  border-color: #4CCFAC !important; }
+  .a-thirdColor:hover {
+    background: #4CCFAC !important;
+    color: white !important; }
+
+.a-houseGreen {
+  color: #a0c041 !important;
+  border-color: #a0c041 !important; }
+  .a-houseGreen:hover {
+    background: #a0c041 !important;
+    color: white !important; }

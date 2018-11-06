@@ -29,6 +29,7 @@ use Qui\lib\facades\Authentication;
  */
 class HomeController
 {
+
     /**
      * @param Request $req
      * @param Response $res
@@ -36,17 +37,26 @@ class HomeController
      */
     public function showHome(Request $req, Response $res, $data)
     {
-//        $val = json_encode($notify['notify']);
-//        header("Notifications: {$val}");
-//        dd($notify);
+        $month = [
+            1 => "januari",
+            2 => "februari",
+            3 => "maart",
+            4 => "april",
+            5 => "mei",
+            6 => "juni",
+            7 => "juli",
+            8 => "augustus",
+            9 => "september",
+            10 => "oktober",
+            11 => "november",
+            12 => "december"
+        ];
 
+        $days = ['maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag', 'zondag' ];
 
-//        $tb = new TableController();
-//        $req = new Request();
-//        $res = new Response();
-//        $events = DB::execute('SELECT * FROM events SORT BY ASC LIMIT 3');
+        $events = DB::execute('SELECT * FROM events LIMIT 3');
 
-        return View::render('pages.Home');
+        return View::render('pages.Home', compact('events', 'month', 'days'));
 //        $id = 1;
 //        Util::dd(Auth::login('Thomas', 'internetcat'));
 //        $users = DB::execute("SELECT * FROM user WHERE id=?", [$id]);
