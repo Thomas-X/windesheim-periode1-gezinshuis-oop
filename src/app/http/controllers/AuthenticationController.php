@@ -88,8 +88,6 @@ class AuthenticationController
         $users = DB::selectWhere('email, id', 'users', 'email', $req->params['email']);
         if (!isset($users)) {
             return $res->redirect($home, 401);
-        } else if (count($users) > 1) {
-            return $res->redirect($home, 401);
         }
         $user = $users[0];
         $forgotPasswordToken = Authentication::generateRandomString();
